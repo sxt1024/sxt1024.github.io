@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="fat32启动扇区格式如下   偏移（字节） 长度（字节） 说明    0x00 3 跳转指令（跳过开头一段区域）   0x03 8 OEM名称（空格补齐）。MS-DOS检查这个区域以确定使用启动记录中的哪一部分数据 [1] 。常见值是IBM 3.3（在“IBM”和“3.3”之间有两个空格）和MSDOS5.0.   0x0b 2 每个扇区的字节数。基本输入输出系统参数块从这里开始。   0x0d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="寒冰小站">
+<meta property="og:url" content="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_fat32%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA%E6%A0%BC%E5%BC%8F/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="fat32启动扇区格式如下   偏移（字节） 长度（字节） 说明    0x00 3 跳转指令（跳过开头一段区域）   0x03 8 OEM名称（空格补齐）。MS-DOS检查这个区域以确定使用启动记录中的哪一部分数据 [1] 。常见值是IBM 3.3（在“IBM”和“3.3”之间有两个空格）和MSDOS5.0.   0x0b 2 每个扇区的字节数。基本输入输出系统参数块从这里开始。   0x0d">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-26T17:08:17.070Z">
+<meta property="article:modified_time" content="2018-08-19T07:43:54.000Z">
+<meta property="article:author" content="sxt1024">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_fat32%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA%E6%A0%BC%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_fat32%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA%E6%A0%BC%E5%BC%8F/","path":"2024/10/27/操作系统/附_fat32主引导扇区格式/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">53</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fat32%E5%90%AF%E5%8A%A8%E6%89%87%E5%8C%BA"><span class="nav-number">1.</span> <span class="nav-text">fat32启动扇区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%A6%82%E4%B8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">格式如下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">汇编代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%A6%82fat32%E7%9A%84%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA"><span class="nav-number">1.3.</span> <span class="nav-text">例如fat32的引导扇区</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_fat32%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA%E6%A0%BC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-27 01:08:17" itemprop="dateCreated datePublished" datetime="2024-10-27T01:08:17+08:00">2024-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2018-08-19 15:43:54" itemprop="dateModified" datetime="2018-08-19T15:43:54+08:00">2018-08-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="fat32启动扇区"><a href="#fat32启动扇区" class="headerlink" title="fat32启动扇区"></a>fat32启动扇区</h1><h2 id="格式如下"><a href="#格式如下" class="headerlink" title="格式如下"></a>格式如下</h2><table>
+<thead>
+<tr>
+<th>偏移（字节）</th>
+<th>长度（字节）</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x00</td>
+<td>3</td>
+<td>跳转指令（跳过开头一段区域）</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>8</td>
+<td>OEM名称（空格补齐）。MS-DOS检查这个区域以确定使用启动记录中的哪一部分数据 [1] 。常见值是IBM 3.3（在“IBM”和“3.3”之间有两个空格）和MSDOS5.0.</td>
+</tr>
+<tr>
+<td>0x0b</td>
+<td>2</td>
+<td>每个扇区的字节数。基本输入输出系统参数块从这里开始。</td>
+</tr>
+<tr>
+<td>0x0d</td>
+<td>1</td>
+<td>每簇扇区数</td>
+</tr>
+<tr>
+<td>0x0e</td>
+<td>2</td>
+<td>保留扇区数（包括启动扇区）</td>
+</tr>
+<tr>
+<td>0x10</td>
+<td>1</td>
+<td>文件分配表数目</td>
+</tr>
+<tr>
+<td>0x11</td>
+<td>2</td>
+<td>最大根目录条目个数</td>
+</tr>
+<tr>
+<td>0x13</td>
+<td>2</td>
+<td>总扇区数（如果是0，就使用偏移0x20处的4字节值）</td>
+</tr>
+<tr>
+<td>0x15</td>
+<td>1</td>
+<td>介质描述</td>
+</tr>
+<tr>
+<td>0x16</td>
+<td>2</td>
+<td>每个文件分配表的扇区（FAT16）</td>
+</tr>
+<tr>
+<td>0x18</td>
+<td>2</td>
+<td>每磁道的扇区</td>
+</tr>
+<tr>
+<td>0x1a</td>
+<td>2</td>
+<td>磁头数</td>
+</tr>
+<tr>
+<td>0x1c</td>
+<td>4</td>
+<td>隐藏扇区</td>
+</tr>
+<tr>
+<td>0x20</td>
+<td>4</td>
+<td>总扇区数（如果超过65535，参见偏移0x13）</td>
+</tr>
+<tr>
+<td>0x24</td>
+<td>4</td>
+<td>每个文件分配表的扇区（FAT32）。扩展基本输入输出系统参数块从这里开始。</td>
+</tr>
+<tr>
+<td>0x24</td>
+<td>1</td>
+<td>物理驱动器个数（FAT16）</td>
+</tr>
+<tr>
+<td>0x25</td>
+<td>1</td>
+<td>当前磁头（FAT16）</td>
+</tr>
+<tr>
+<td>0x26</td>
+<td>1</td>
+<td>签名（FAT16）</td>
+</tr>
+<tr>
+<td>0x27</td>
+<td>4</td>
+<td>ID（FAT16）</td>
+</tr>
+<tr>
+<td>0x28</td>
+<td>2</td>
+<td>Flags（FAT32）</td>
+</tr>
+<tr>
+<td>0x2a</td>
+<td>2</td>
+<td>版本号（FAT32）</td>
+</tr>
+<tr>
+<td>0x2c</td>
+<td>4</td>
+<td>根目录启始簇（FAT32）</td>
+</tr>
+<tr>
+<td>0x2b</td>
+<td>11</td>
+<td>卷标（非FAT32）</td>
+</tr>
+<tr>
+<td>0x30</td>
+<td>2</td>
+<td>FSInfo扇区（FAT32）</td>
+</tr>
+<tr>
+<td>0x32</td>
+<td>2</td>
+<td>引导扇区备份（FAT32）</td>
+</tr>
+<tr>
+<td>0x34</td>
+<td>12</td>
+<td>保留未使用（FAT32）</td>
+</tr>
+<tr>
+<td>0x36</td>
+<td>8</td>
+<td>FAT文件系统类型（如FAT、FAT12、FAT16）</td>
+</tr>
+<tr>
+<td>0x3e</td>
+<td>2</td>
+<td>操作系统自引导代码</td>
+</tr>
+<tr>
+<td>0x40</td>
+<td>1</td>
+<td>BIOS设备代号（FAT32）</td>
+</tr>
+<tr>
+<td>0x41</td>
+<td>1</td>
+<td>未使用（FAT32）</td>
+</tr>
+<tr>
+<td>0x42</td>
+<td>1</td>
+<td>标记（FAT32）</td>
+</tr>
+<tr>
+<td>0x43</td>
+<td>4</td>
+<td>卷序号（FAT32）</td>
+</tr>
+<tr>
+<td>0x47</td>
+<td>11</td>
+<td>卷标（FAT32）</td>
+</tr>
+<tr>
+<td>0x52</td>
+<td>8</td>
+<td>FAT文件系统类型（FAT32）</td>
+</tr>
+<tr>
+<td>0x1FE</td>
+<td>2</td>
+<td>扇区结束符（0x55 0xAA）</td>
+</tr>
+</tbody></table>
+<p>介质描述</p>
+<pre><code>0xF8 	单面、每面80磁道、每磁道9扇区
+0xF9	双面、每面80磁道、每磁道9扇区
+0xFA	单面、每面80磁道、每磁道8扇区
+0xFB	双面、每面80磁道、每磁道8扇区
+0xFC	单面、每面40磁道、每磁道9扇区
+0xFD	双面、每面40磁道、每磁道9扇区
+0xFE	单面、每面40磁道、每磁道8扇区
+0xFF	双面、每面40磁道、每磁道8扇区
+0xFF	双面、每面40磁道、每磁道8扇区
+</code></pre>
+<p>同样的介质描述必须在重复复制到每份FAT的第一个字节。有些操作系统（MSX-DOS 1.0版）全部忽略启动扇区参数，而仅仅使用FAT的第一个字节的介质描述确定文件系统参数。</p>
+<h2 id="汇编代码"><a href="#汇编代码" class="headerlink" title="汇编代码"></a>汇编代码</h2><p>现在流行拿来主义。我们直接使用FAT32文件系统的引导扇区格式。</p>
+<p>FAT32 ： <a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/FAT32#FAT32">http://zh.wikipedia.org/wiki/FAT32#FAT32</a></p>
+<p>在boot目录建立一个boot.asm的文件。使用汇编写出如下代码：</p>
+<p>汇编代码如下：</p>
+<pre><code>;icy os
+;TAB=4
+[BITs 16]
+    ORG     0x7c00 			;指明程序的偏移的基地址
+
+;以下这段是标准FAT12   格式软盘专用的代码   
+    JMP     Entry
+    DB      0x90
+    DB      &quot;ICYBOOT &quot;      ;   启动区的名称可以是任意的字符串（8字节）    
+    DW      512             ;   每个扇区（sector）的大小（必须为512  字节）
+    DB      1               ;   簇（cluster   ）的大小（必须为1个扇区）   
+    DW      1               ;   FAT的起始位置（一般从第一个扇区开始）    
+    DB      2               ;   FAT的个数（必须为2）    
+    DW      224             ;   根目录的大小（一般设成224  项）  
+    DW      2880            ;   该磁盘的大小（必须是2880扇区）   
+    DB      0xf0            ;   磁盘的种类（必须是0xf0）  
+    DW      9               ;   FAT的长度（必须是9扇区）  
+    DW      18              ;   1个磁道（track  ）有几个扇区（必须是18）   
+    DW      2               ;   磁头数（必须是2）   
+    DD      0               ;   不使用分区，必须是0  
+    DD      2880            ;   重写一次磁盘大小    
+    DB      0,0,0x29        ;   意义不明，固定
+    DD      0xffffffff      ;   序列号
+    DB      &quot;ICY_OS     &quot;   ;   磁盘的名称（必须11字节）   
+    DB      &quot;FAT12   &quot;   	;   磁盘格式名称（必须8字节）
+    RESB    18              ;   先空出18字节
+
+;程序核心内容
+Entry:
+    JMP Fin
+
+;程序挂起
+Fin:
+    HLT                     ;让CPU挂起，等待指令。
+    JMP Fin
+
+FillSector:
+    RESB    510-($-$$)       ; 处理当前行$至结束(1FE)的填充
+    DB      0x55, 0xaa
+</code></pre>
+<h2 id="例如fat32的引导扇区"><a href="#例如fat32的引导扇区" class="headerlink" title="例如fat32的引导扇区"></a>例如fat32的引导扇区</h2><pre><code>;以下这段是标准FAT32 格式软盘专用的代码
+        JMP     Entry
+        DB      0x90                ;nop,0x02
+        DB      &quot;RATSBOOT&quot;          ;（8字节）启动区的名称可以是任意的字符串
+        DW      512                 ;每个扇区（sector）的大小（必须为512 字节）
+        DB      8                   ;簇（cluster ）的大小（每个簇为8个扇区）
+        DW      584                 ;保留扇区数,包括启动扇区
+        DB      2                   ;FAT的个数（必须为2）
+        DW      0                   ;最大根目录条目个数
+        DW      0                   ;总扇区数（如果是0，就使用偏移0x20处的4字节值）
+        DB      0x00f8              ;磁盘介质描述
+        DW      0                   ;（FAT16）每个文件分配表的扇区
+        DW      63                  ;每个磁道扇区数
+        dw      255                 ;磁头数
+        dd      63                  ;隐藏扇区
+        dd      3902913             ;磁盘大小，总共扇区数（如果超过65535，参见偏移0x13）
+        dd      3804                ;每个文件分配表的扇区，3804个扇区
+
+        dw      0                   ;Flagss
+        dw      0                   ;版本号
+        dd      2                   ;根目录启始簇
+
+        dw      1                   ;FSInfo扇区
+        dw      6                   ;启动扇区备份
+        times 12 db 0               ;保留未使用
+
+        DW      0                   ;操作系统自引导代码
+        db      0x80                ;BIOS设备代号
+        db      0                   ;未使用
+        db      0x29                ;标记
+        DD      0xffffffff          ;序列号
+        DB      &quot;HELLO-OS   &quot;       ;(11字节)磁盘名称，卷标。字符串长度固定
+        DB      &quot;FAT32   &quot;          ;(8字节)FAT文件系统类型。 0x52
+
+        times 12 db 0
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_BIOS%E4%B8%AD%E6%96%AD%E5%A4%A7%E5%85%A8/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_%E7%BC%96%E5%86%99%E7%A3%81%E7%9B%98%E9%95%9C%E5%83%8F%E5%B7%A5%E5%85%B7/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

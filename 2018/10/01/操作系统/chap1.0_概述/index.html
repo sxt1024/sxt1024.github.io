@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述相关资料：  汇编 原理 1 深入理解计算机系统 实现 1 操作系统真相还原 2 x86汇编语言-从实模式到保护模式 2 30天自制操作系统 3 Orange’s一个操作系统的实现 4 程序员的自我修养 [如何从零开始写一个简单的操作系统？] https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;25628124 https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;22463">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.0_概述">
+<meta property="og:url" content="https://blog.sxt1024.fun/2018/10/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.0_%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="概述相关资料：  汇编 原理 1 深入理解计算机系统 实现 1 操作系统真相还原 2 x86汇编语言-从实模式到保护模式 2 30天自制操作系统 3 Orange’s一个操作系统的实现 4 程序员的自我修养 [如何从零开始写一个简单的操作系统？] https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;25628124 https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;22463">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-20T06:37:02.191Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2018/10/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.0_%E6%A6%82%E8%BF%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/10/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.0_%E6%A6%82%E8%BF%B0/","path":"2018/10/01/操作系统/chap1.0_概述/","title":"1.0_概述"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>1.0_概述 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">53</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2018/10/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.0_%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="1.0_概述 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.0_概述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-01 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-01T00:00:00+08:00">2018-10-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-20 14:37:02" itemprop="dateModified" datetime="2022-03-20T14:37:02+08:00">2022-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>相关资料：</p>
+<p><img src="data:image/jpeg;base64,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" alt="1.0_1.jpg"></p>
+<p><strong>汇编</strong></p>
+<p><strong>原理</strong></p>
+<p>1 深入理解计算机系统</p>
+<p><strong>实现</strong></p>
+<p>1 操作系统真相还原</p>
+<p>2 x86汇编语言-从实模式到保护模式</p>
+<p>2 30天自制操作系统</p>
+<p>3 Orange’s一个操作系统的实现</p>
+<p>4 程序员的自我修养</p>
+<p>[如何从零开始写一个简单的操作系统？]</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/25628124">https://www.zhihu.com/question/25628124</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22463820">https://www.zhihu.com/question/22463820</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/36448683">https://www.zhihu.com/question/36448683</a></p>
+<p>[Bran’s Kernel Development Tutorial]</p>
+<p><a target="_blank" rel="noopener" href="http://www.osdever.net/bkerndev/Docs/gettingstarted.htm">http://www.osdever.net/bkerndev/Docs/gettingstarted.htm</a></p>
+<p>[JamesM’s kernel development tutorials] </p>
+<p><a target="_blank" rel="noopener" href="http://johnvidler.co.uk/mirror/jamesm-kernel-tutorial/">http://johnvidler.co.uk/mirror/jamesm-kernel-tutorial/</a></p>
+<p>[JamesM’s kernel development tutorials -cn ]</p>
+<p><a target="_blank" rel="noopener" href="http://wiki.0xffffff.org/">http://wiki.0xffffff.org</a></p>
+<p>[How-to-Make-a-Computer-Operating-System]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SamyPesse/How-to-Make-a-Computer-Operating-System">https://github.com/SamyPesse/How-to-Make-a-Computer-Operating-System</a></p>
+<p>[Xv6, a simple Unix-like teaching operating system]</p>
+<p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2011/xv6.html">https://pdos.csail.mit.edu/6.828/2011/xv6.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2014/index.html">https://pdos.csail.mit.edu/6.828/2014/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2014/xv6/book-rev8.pdf">https://pdos.csail.mit.edu/6.828/2014/xv6/book-rev8.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2014/xv6/xv6-rev8.pdf">https://pdos.csail.mit.edu/6.828/2014/xv6/xv6-rev8.pdf</a></p>
+<p>[ranxian&#x2F;xv6-chinese · GitHub ]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ranxian/xv6-chinese">https://github.com/ranxian/xv6-chinese</a></p>
+<p>[os67]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SilverRainZ/OS67">https://github.com/SilverRainZ/OS67</a></p>
+<p>[ucore]</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/chyyuu/ucore_os_docs">https://github.com/chyyuu/ucore_os_docs</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_cpu%E7%AE%80%E4%BB%8B/" rel="next" title="1.1_CPU简介">
+                  1.1_CPU简介 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
