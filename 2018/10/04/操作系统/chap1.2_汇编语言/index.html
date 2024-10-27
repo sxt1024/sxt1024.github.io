@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="汇编语言1. 机器语言与汇编语言1.1 机器语言简介对于计算机来说，能识别的只有0,1两个数字。最早的时候，程序员就是用0，1这2个符号来进行编码，不如远古时期的纸带卡片，使用打孔来代表1，不打孔代表0，然后通过纸带机或卡片机来识别运行这种0，1程序。 这种程序方便计算机运行，但是却是不容易让程序员进行编写的。 1.2 汇编语言简介 人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言">
+    <meta name="description" content="1 机器语言与汇编语言1.2 汇编语言简介 人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言比只有0和1组成的机器语言更容易阅读识别 比如 操作：寄存器BX的内容送到AX中 121000100111011000              &#x2F;&#x2F; 机器指令mov ax,bx                    &#x2F;&#x2F; 汇编指令   2. 指令执行2.1 指令寻址  cs寄存器，ip寄存">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1.2_汇编语言">
+<meta property="og:title" content="chap1.2_汇编语言">
 <meta property="og:url" content="https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.2_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/index.html">
 <meta property="og:site_name" content="寒冰小站">
-<meta property="og:description" content="汇编语言1. 机器语言与汇编语言1.1 机器语言简介对于计算机来说，能识别的只有0,1两个数字。最早的时候，程序员就是用0，1这2个符号来进行编码，不如远古时期的纸带卡片，使用打孔来代表1，不打孔代表0，然后通过纸带机或卡片机来识别运行这种0，1程序。 这种程序方便计算机运行，但是却是不容易让程序员进行编写的。 1.2 汇编语言简介 人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言">
+<meta property="og:description" content="1 机器语言与汇编语言1.2 汇编语言简介 人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言比只有0和1组成的机器语言更容易阅读识别 比如 操作：寄存器BX的内容送到AX中 121000100111011000              &#x2F;&#x2F; 机器指令mov ax,bx                    &#x2F;&#x2F; 汇编指令   2. 指令执行2.1 指令寻址  cs寄存器，ip寄存">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-10-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-20T03:31:22.117Z">
+<meta property="article:modified_time" content="2024-10-27T08:51:42.579Z">
 <meta property="article:author" content="sxt1024">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
@@ -37,10 +37,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.2_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/","path":"2018/10/04/操作系统/chap1.2_汇编语言/","title":"1.2_汇编语言"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.2_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/","path":"2018/10/04/操作系统/chap1.2_汇编语言/","title":"chap1.2_汇编语言"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>1.2_汇编语言 | 寒冰小站</title>
+<title>chap1.2_汇编语言 | 寒冰小站</title>
   
 
 
@@ -88,7 +88,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">53</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a></li>
   </ul>
 </nav>
 
@@ -113,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">汇编语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80%E4%B8%8E%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">1. 机器语言与汇编语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8C%87%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">2. 指令执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B5%8B%E5%80%BC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">1. 赋值操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%AE%97%E6%9C%AF%E6%93%8D%E4%BD%9C"><span class="nav-number">1.4.</span> <span class="nav-text">2. 算术操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BD%AC%E7%A7%BB%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">3. 转移操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-number">1.6.</span> <span class="nav-text">4. 跳转指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%A0%88%E6%93%8D%E4%BD%9C"><span class="nav-number">1.7.</span> <span class="nav-text">5. 栈操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">栈操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">其他指令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU%E6%8C%87%E4%BB%A4"><span class="nav-number"></span> <span class="nav-text">CPU指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">栈寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E6%93%8D%E4%BD%9C-1"><span class="nav-number">4.</span> <span class="nav-text">栈操作</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80%E4%B8%8E%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1 机器语言与汇编语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8C%87%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">2. 指令执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B5%8B%E5%80%BC%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">1. 赋值操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%AE%97%E6%9C%AF%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">2. 算术操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BD%AC%E7%A7%BB%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">3. 转移操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-number">6.</span> <span class="nav-text">4. 跳转指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%A0%88%E6%93%8D%E4%BD%9C"><span class="nav-number">7.</span> <span class="nav-text">5. 栈操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E6%93%8D%E4%BD%9C"><span class="nav-number"></span> <span class="nav-text">栈操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">其他指令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU%E6%8C%87%E4%BB%A4"><span class="nav-number"></span> <span class="nav-text">CPU指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC"><span class="nav-number"></span> <span class="nav-text">赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97"><span class="nav-number"></span> <span class="nav-text">运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">栈寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E6%93%8D%E4%BD%9C-1"><span class="nav-number"></span> <span class="nav-text">栈操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">常见的汇编编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nasm%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">Nasm汇编编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%95%BF%E5%BA%A6"><span class="nav-number">3.</span> <span class="nav-text">指令长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">伪指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8NASM"><span class="nav-number"></span> <span class="nav-text">汇编编译器NASM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-nasm%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">1 nasm命令用法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-NASM%E5%88%86%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">2 NASM分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-NASM%E7%9A%84%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">3 NASM的伪指令:</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -177,12 +177,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="1.2_汇编语言 | 寒冰小站">
+      <meta itemprop="name" content="chap1.2_汇编语言 | 寒冰小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          1.2_汇编语言
+          chap1.2_汇编语言
         </h1>
 
         <div class="post-meta-container">
@@ -200,7 +200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-20 11:31:22" itemprop="dateModified" datetime="2022-03-20T11:31:22+08:00">2022-03-20</time>
+      <time title="修改时间：2024-10-27 16:51:42" itemprop="dateModified" datetime="2024-10-27T16:51:42+08:00">2024-10-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -228,21 +228,18 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h2><h3 id="1-机器语言与汇编语言"><a href="#1-机器语言与汇编语言" class="headerlink" title="1. 机器语言与汇编语言"></a>1. 机器语言与汇编语言</h3><p><strong>1.1 机器语言简介</strong><br>对于计算机来说，能识别的只有0,1两个数字。最早的时候，程序员就是用0，1这2个符号来进行编码，不如远古时期的纸带卡片，使用打孔来代表1，不打孔代表0，然后通过纸带机或卡片机来识别运行这种0，1程序。</p>
-<p>这种程序方便计算机运行，但是却是不容易让程序员进行编写的。</p>
-<p><strong>1.2 汇编语言简介</strong></p>
-<p>人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言比机器语言更容易阅读识别</p>
+    <div class="post-body" itemprop="articleBody"><h3 id="1-机器语言与汇编语言"><a href="#1-机器语言与汇编语言" class="headerlink" title="1 机器语言与汇编语言"></a>1 机器语言与汇编语言</h3><p><strong>1.2 汇编语言简介</strong></p>
+<p>人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言比只有0和<br>1组成的机器语言更容易阅读识别</p>
 <p>比如</p>
 <p>操作：寄存器BX的内容送到AX中</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1000100111011000              // 机器指令</span><br><span class="line">mov ax,bx                    // 汇编指令</span><br></pre></td></tr></table></figure>
-
 
 
 <h3 id="2-指令执行"><a href="#2-指令执行" class="headerlink" title="2. 指令执行"></a>2. 指令执行</h3><p><strong>2.1 指令寻址</strong></p>
 <blockquote>
 <p>cs寄存器，ip寄存器</p>
 </blockquote>
-<p>每次从  [cs，ip] 取一条指令执行，执行后ip值增加，指向下一条指令</p>
+<p>每次从  [cs，ip] 指向的内存位置取一条指令执行，执行后ip值增加，指向下一条指令的内存位置</p>
 <p>CPU执行时，会一直的从内存单元中读取指令，坊到指令缓冲器执行。而取指令时，是根据CS寄存器和IP寄存器来获取一个地址<br>[CS:IP]。这个地址指向内存单元中的代码段。CPU从中读取一条指令执行，然后IP指向下一条指令，继续读取执行。如此循环。<br>[CS+IP]：CS&#x3D;段地址,IP&#x3D;偏移地址。CPU一直从[CS+IP]指向的内存单元处读取指令。</p>
 <p><strong>2.2 访问数据</strong><br>当CPU需要获取一个数据时，这时候代码段中能够获得的是DS寄存器和一个偏移地址。<br><code>[DS*0x10 + 偏移地址]</code>，指定地址时候可以不显示的写出DS。<br>这个地址指向内存单元中的数据。CPU根据这个地址获取到需要的数据。<br>基本地址：DS存储的是基本地址，但是在程序中段寄存器DS一般可以不显示说明。只用 <code>[偏移地址]</code> 来表示内存单元的地址。<br>偏移地址：是一个常数，可以直接使用数字来表示，比如：<code>[553]</code>。也可以使用BX，BP，SI，DI（其他的寄存器不能表示内存地址）中的值来表示。比如<code>[BX]</code>。<br><code>[DS+BX]：DS=段地址,BX=偏移地址</code>，内存单元地址为<code>DS*0x10+BX</code>。计算其寻址能力根据可指定的内存范围大概为0-1M之间。</p>
 <p><strong>2.3 指令跳转</strong></p>
@@ -258,7 +255,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0x0018H  		;ax = 0x0018H</span><br><span class="line">mov ax,[0x0c200H] 	;ax = [ds:0x0c200H]</span><br><span class="line">mov ax,bx  	 	  		;ax = bx</span><br></pre></td></tr></table></figure>
 
 <p>1）将值赋给内存单元：mov 内存单元,寄存器|内存单元|立即数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov [0x0a200H],0x0018H   	;ax = 0x0018H</span><br><span class="line">mov [0x0a200H],[0x0c200H] 	;ax = [ds:0x0c200H]</span><br><span class="line">mov [0x0a200H],bx   	  		;ax = bx</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov [0x0a200H],0x0018H   	;ax = 0x0018H</span><br><span class="line">mov [0x0a200H],[0x0c200H] 	;ax = [ds:0x0c200H]</span><br><span class="line">mov [0x0a200H],bx   	  	;ax = bx</span><br></pre></td></tr></table></figure>
 
 
 
@@ -439,6 +436,189 @@ add ax,bx			;ax=ax+bx
 </ol>
 <p>pop 寄存器</p>
 <p>出栈，数据存储到寄存器中</p>
+<p>汇编编译器</p>
+<p>[TOC]</p>
+<h3 id="常见的汇编编译器"><a href="#常见的汇编编译器" class="headerlink" title="常见的汇编编译器"></a>常见的汇编编译器</h3><p>汇编语言目前主要有2种风格式</p>
+<ol>
+<li>intel风格：intel风格</li>
+<li>AT&amp;T风格：多数在linux系统上使用。</li>
+</ol>
+<p>汇编编译器有以下几种</p>
+<ol>
+<li>gas编译器: 与gcc搭配食用，不用详细说了。</li>
+<li>nasm: 目前编写比较优雅的一个。</li>
+<li>masm:微软开发的编译器，可以忽略掉。2333~~</li>
+</ol>
+<h3 id="Nasm汇编编译器"><a href="#Nasm汇编编译器" class="headerlink" title="Nasm汇编编译器"></a>Nasm汇编编译器</h3><p><strong>安装nasm编译器</strong></p>
+<p>ubuntu下使用命令安装</p>
+<blockquote>
+<p>sudo apt-get install nasm</p>
+</blockquote>
+<h3 id="指令长度"><a href="#指令长度" class="headerlink" title="指令长度"></a>指令长度</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>8 位</td>
+<td>字节</td>
+</tr>
+<tr>
+<td>word</td>
+<td>16 位</td>
+<td>词</td>
+</tr>
+<tr>
+<td>dword</td>
+<td>32 位</td>
+<td>双词</td>
+</tr>
+</tbody></table>
+<h3 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h3><p><strong>什么是伪指令</strong></p>
+<p><strong>内存单元表示：[]</strong></p>
+<p>任何被[]包含的变量都是地址。[]表示一个内存单元。内存单元的段地址为ds中的存储数据，偏移地址为[]里面表示的数据。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov [gs,0x10]   0x3F</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>注释: <code>;</code></strong></p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0x02    ;ax=0x02</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>db,dw,dd</strong></p>
+<p>**当前指令开始地址：$	**	<br>被称为当前位置计数器</p>
+<p>在汇编程序对源程序进行汇编的过程中，使用地址计数器来保证当前正在汇编的指令地址。地址计数器值可用“$”来表示，汇编语言也允许用户直接用“$”来引用地址计数器的当前值，因此，ORG $＋5可表示从当前地址开始跳过5个字节存储单元，在指令和伪指令中，也可直接用“$”表示地址计数器的当前值。</p>
+<p>故jmp $进入了一个无限循环。</p>
+<p>**当前段开始地址：$$	**</p>
+<p><strong>写字节：<code>DB，DW，DD</code></strong>	<br>说明：</p>
+<ul>
+<li>DB：写出一个字节（BYTE）。会按照字节输出</li>
+<li>DW ：输出一个字(WORD&#x3D;2BYTE).也就是输出2个字节(16位)。</li>
+<li>DD ：输出两个字(DoubleWord&#x3D;4BYTE).也就是输出4个字节(32位)</li>
+</ul>
+<p><strong>填充：RESB</strong></p>
+<p>说明：</p>
+<p>RESB 510-($-$$)    意思即是510字节位置（0x1fe） 减去这一行现在的字节位置:132。这些都填入0x00</p>
+<p>$表示当前行被汇编后的地址，也就是当前行的地址。$$代表一个section节的开始地址。也就是这个section的开始地址。</p>
+<p>也可以使用times 510-($-$$)  db  0来表示上面的意思。</p>
+<p><strong>重复指令或数据：times</strong></p>
+<p>说明：</p>
+<p>重复指令或数据</p>
+<blockquote>
+<p>例如：</p>
+<p>times 510-($-$$)  db  0</p>
+<p> times前缀引起指令被汇编多次。其中$$表示是该程序的初始代码段的地址，故该指令将会被执行510-($-$$)次。也就是用0来填充剩下的空间，达到510字节。</p>
+</blockquote>
+<p><strong>org</strong></p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ol>
+<li><p>数据类型,基本的数据类型如下</p>
+<p>byte : byte          字节,8位<br>word : word          字，16位<br>dword : double word  双字,32位<br>qword : quadword     四字,64位</p>
+</li>
+<li><p>初始化常量值<br>db	:	define byte 	字节,8位<br>dw :  define word 	字，16位<br>dd :	define doubleworld 双字,32位<br>dq :  define quadword    四字,64位<br>​</p>
+<p>. 非初始化数据	</p>
+<p>resb ：reserve byte<br>resw ：reserve word<br>resd ：reserve doubword<br>resq ：reserve quadword<br>​</p>
+</li>
+</ol>
+<h2 id="汇编编译器NASM"><a href="#汇编编译器NASM" class="headerlink" title="汇编编译器NASM"></a>汇编编译器NASM</h2><h3 id="1-nasm命令用法："><a href="#1-nasm命令用法：" class="headerlink" title="1 nasm命令用法："></a>1 nasm命令用法：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; nasm.exe -f &#123;formart&#125; -o 生成文件 源文件</span><br></pre></td></tr></table></figure>
+
+<p>可以使用查看支持生成的文件的{formart}</p>
+<h3 id="2-NASM分段"><a href="#2-NASM分段" class="headerlink" title="2 NASM分段"></a>2 NASM分段</h3><p>段（Section）： 每个汇编程序都是由段来组成的，有以下的段：</p>
+<ol>
+<li>data:用来声明初始化的数据或常量</li>
+<li>bss:用来声明未初始化的变量</li>
+<li>text:用来存放代码</li>
+</ol>
+<h3 id="3-NASM的伪指令"><a href="#3-NASM的伪指令" class="headerlink" title="3 NASM的伪指令:"></a>3 NASM的伪指令:</h3><p>伪指令属于编译器自定义的特殊指令，在编译过程中由编译器进行处理转换。</p>
+<ol>
+<li><p>org</p>
+<blockquote>
+<p>格式：ORG 偏移地址</p>
+</blockquote>
+<p>例如：org 07c00h</p>
+<p>ORG伪指令用来指出其后的程序段或数据块存放的起始地址的偏移量。汇编程序汇编时把语句中表达式的值作为起始地址，连续存放ORG语句之后的程序和数据，直到出现一个新的ORG指令。若省略ORG语句，则从本段起始地址开始连续存放。偏移地址的范围为(0x0000&#x3D;0xffff)</p>
+<p>在大多数情况下，不需要用ORG语句设置位置指针。由于段定义语句是段的起点，它的偏移地址为0000H，以后每分配一个字节，位置指针自动加1，所以每条指令都有确定的偏移地址。只有程序要求改变这个位置指针时，才需要安排ORG语句。通常ORG语句可以出现在程序中任何位置上。</p>
+<p>使用org 07c00h是因为</p>
+<ol>
+<li>首先DS是默认为0的</li>
+</ol>
+<p>2）引导扇区会被加载在07c00h处，也就是磁盘中的代码和内存的代码有一个偏移量为07c00h</p>
+<p>当我们设置了org之后，后面的偏移都会默认在0x7c00的基础上。也就是说，如果不加org的话，我们在代码中指定指令时就必须制定 偏移 + 07c00h 来达到相同的效果了。</p>
+</li>
+<li><p>; 注释</p>
+<blockquote>
+<p>; 后的文字作为注释</p>
+</blockquote>
+</li>
+<li><p>[] 地址</p>
+<blockquote>
+<p>[立即数]</p>
+<blockquote>
+<p>[存储器]<br>[存储器 + 立即数]</p>
+</blockquote>
+</blockquote>
+<p> 任何不被[]包含的变量都是地址。[]表示一个内存单元。内存单元的段地址为ds中的存储数据，偏移地址为[]里面表示的数据。</p>
+</li>
+<li><p>$ 当前行位置</p>
+<blockquote>
+<p>$表示当前行的地址</p>
+</blockquote>
+<p> 在汇编程序对源程序进行汇编的过程中，使用地址计数器来保证当前正在汇编的指令地址。地址计数器值可用“$”来表示，汇编语言也允许用户直接用“$”来引用地址计数器的当前值，因此，ORG $＋5可表示从当前地址开始跳过5个字节存储单元，在指令和伪指令中，也可直接用“$”表示地址计数器的当前值。</p>
+<p>  故jmp $进入了一个无限循环。</p>
+</li>
+<li><p><code>$$</code>  当前段开始位置  </p>
+<blockquote>
+<p>$ 代表当前段的开始地址</p>
+</blockquote>
+</li>
+<li><p>EQU 定义常量</p>
+<blockquote>
+<p>one equ 1  使用one常量代表1</p>
+</blockquote>
+</li>
+<li><p>DB, DW,DD 输出(1个字节，2个字节，4个字节)</p>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+<blockquote>
+<p>DB 写出一个字节（BYTE）。会按照字节输出</p>
+</blockquote>
+<blockquote>
+<p>DW 输出一个字(WORD&#x3D;2BYTE).也就是输出2个字节(16位)。</p>
+</blockquote>
+<blockquote>
+<p>DD 输出两个字(DoubleWord&#x3D;4BYTE).也就是输出4个字节(32位)</p>
+</blockquote>
+</li>
+<li><p>RESB, RESW, RESD 填充(1个字节，2个字节，4个字节)</p>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+<blockquote>
+<p>RESB 510-($-$$)    意思即是510字节位置（0x1fe） 减去这一行现在的字节位置:132。这些都填入0x00</p>
+</blockquote>
+<blockquote>
+<p>$表示当前行被汇编后的地址，也就是当前行的地址。$$代表一个section节的开始地址。也就是这个section的开始地址。</p>
+</blockquote>
+<blockquote>
+<p>也可以使用times 510-($-$$)  db  0来表示上面的意思。</p>
+</blockquote>
+</li>
+<li><p>times 重复指令或数据</p>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+<blockquote>
+<p>times 510-($-$$) DB 0 前缀引起指令被汇编多次。其中$$表示是该程序的初始代码段的地址，故<code>DB 0</code>该指令将会被执行510-($-$$)次。也就是用0来填充剩下的空间，达到510字节。</p>
+</blockquote>
+</li>
+</ol>
 
     </div>
 
@@ -455,13 +635,13 @@ add ax,bx			;ax=ax+bx
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/10/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_cpu%E7%AE%80%E4%BB%8B/" rel="prev" title="1.1_CPU简介">
-                  <i class="fa fa-angle-left"></i> 1.1_CPU简介
+                <a href="/2018/10/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_CPU%E5%AF%84%E5%AD%98%E5%99%A8/" rel="prev" title="chap1.1_CPU寄存器">
+                  <i class="fa fa-angle-left"></i> chap1.1_CPU寄存器
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/10/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8/" rel="next" title="1.3_汇编编译器">
-                  1.3_汇编编译器 <i class="fa fa-angle-right"></i>
+                <a href="/2018/10/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA/" rel="next" title="chap1.3_主引导扇区">
+                  chap1.3_主引导扇区 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

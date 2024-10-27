@@ -6,7 +6,7 @@
   <link href="https://blog.sxt1024.fun/atom.xml" rel="self"/>
   
   <link href="https://blog.sxt1024.fun/"/>
-  <updated>2018-08-19T07:43:54.000Z</updated>
+  <updated>2024-10-27T13:35:23.027Z</updated>
   <id>https://blog.sxt1024.fun/</id>
   
   <author>
@@ -17,373 +17,451 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/</id>
-    <published>2024-10-26T17:08:17.075Z</published>
-    <updated>2018-08-19T07:43:54.000Z</updated>
+    <title>chap3.2_显示点阵字</title>
+    <link href="https://blog.sxt1024.fun/2019/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.2_%E6%98%BE%E7%A4%BA%E7%82%B9%E9%98%B5%E5%AD%97/"/>
+    <id>https://blog.sxt1024.fun/2019/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.2_%E6%98%BE%E7%A4%BA%E7%82%B9%E9%98%B5%E5%AD%97/</id>
+    <published>2019-02-20T03:27:28.000Z</published>
+    <updated>2024-10-27T13:35:23.027Z</updated>
     
     
       
       
-    <summary type="html">&lt;p&gt;解析ELF文件格式&lt;/p&gt;
-&lt;h2 id=&quot;ELF格式&quot;&gt;&lt;a href=&quot;#ELF格式&quot; class=&quot;headerlink&quot; title=&quot;ELF格式&quot;&gt;&lt;/a&gt;ELF格式&lt;/h2&gt;&lt;p&gt;ELF文件是linux默认使用的执行文件的格式。&lt;br&gt;分为32位版本和64位版本</summary>
+    <summary type="html">&lt;h2 id=&quot;VGA图形模式&quot;&gt;&lt;a href=&quot;#VGA图形模式&quot; class=&quot;headerlink&quot; title=&quot;VGA图形模式&quot;&gt;&lt;/a&gt;VGA图形模式&lt;/h2&gt;&lt;p&gt;include&amp;#x2F;stdint.h&lt;/p&gt;
+&lt;figure class=&quot;highlight</summary>
       
     
     
     
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_%E7%BC%96%E5%86%99%E7%A3%81%E7%9B%98%E9%95%9C%E5%83%8F%E5%B7%A5%E5%85%B7/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_%E7%BC%96%E5%86%99%E7%A3%81%E7%9B%98%E9%95%9C%E5%83%8F%E5%B7%A5%E5%85%B7/</id>
-    <published>2024-10-26T17:08:17.073Z</published>
-    <updated>2018-08-19T07:43:54.000Z</updated>
+    <title>chap2.8_C语言调用汇编</title>
+    <link href="https://blog.sxt1024.fun/2019/02/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.8_C%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8%E6%B1%87%E7%BC%96/"/>
+    <id>https://blog.sxt1024.fun/2019/02/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.8_C%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8%E6%B1%87%E7%BC%96/</id>
+    <published>2019-02-07T03:27:28.000Z</published>
+    <updated>2024-10-27T13:35:15.685Z</updated>
     
     
       
       
-    <summary type="html">&lt;p&gt;1.8 自己编写磁盘镜像工具&lt;/p&gt;
-&lt;h2 id=&quot;软件列表&quot;&gt;&lt;a href=&quot;#软件列表&quot; class=&quot;headerlink&quot; title=&quot;软件列表&quot;&gt;&lt;/a&gt;软件列表&lt;/h2&gt;&lt;p&gt;winimage&lt;/p&gt;
-&lt;h2 id=&quot;1-磁盘镜像格式&quot;&gt;&lt;a href=&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;C语言调用汇编&quot;&gt;&lt;a href=&quot;#C语言调用汇编&quot; class=&quot;headerlink&quot; title=&quot;C语言调用汇编&quot;&gt;&lt;/a&gt;C语言调用汇编&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;C语言头文件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;include&amp;#x2F;io.h&lt;/</summary>
       
     
     
     
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_fat32%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA%E6%A0%BC%E5%BC%8F/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_fat32%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA%E6%A0%BC%E5%BC%8F/</id>
-    <published>2024-10-26T17:08:17.070Z</published>
-    <updated>2018-08-19T07:43:54.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;fat32启动扇区&quot;&gt;&lt;a href=&quot;#fat32启动扇区&quot; class=&quot;headerlink&quot; title=&quot;fat32启动扇区&quot;&gt;&lt;/a&gt;fat32启动扇区&lt;/h1&gt;&lt;h2 id=&quot;格式如下&quot;&gt;&lt;a href=&quot;#格式如下&quot; class=&quot;headerli</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_BIOS%E4%B8%AD%E6%96%AD%E5%A4%A7%E5%85%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%99%84_BIOS%E4%B8%AD%E6%96%AD%E5%A4%A7%E5%85%A8/</id>
-    <published>2024-10-26T17:08:17.068Z</published>
-    <updated>2018-09-09T11:58:36.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;BIOS中断大全&lt;/p&gt;
-&lt;p&gt;参考 &lt;a href=&quot;http://www.moon-soft.com/program/FORMAT/other/VGA.htm&quot;&gt;http://www.moon-soft.com/program/FORMAT/other/VGA.htm&lt;</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Intel%20x86%20IO%20%E7%AB%AF%E5%8F%A3%E8%A1%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Intel%20x86%20IO%20%E7%AB%AF%E5%8F%A3%E8%A1%A8/</id>
-    <published>2024-10-26T17:08:17.061Z</published>
-    <updated>2018-08-31T16:27:30.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Redhat 5 &amp;#x2F;proc&amp;#x2F;ioports 独立编址的IO&lt;/p&gt;
-&lt;p&gt;0000-001f : dma1&lt;/p&gt;
-&lt;p&gt;0020-0021 : pic1&lt;/p&gt;
-&lt;p&gt;0040-0043 : timer0&lt;/p&gt;
-&lt;p&gt;0050-0053 : tim</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/hello-world/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/hello-world/</id>
-    <published>2024-10-26T17:08:17.059Z</published>
-    <updated>2024-10-26T14:34:49.707Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Day8_1%20%E9%87%8D%E5%BB%BA%E4%B8%96%E7%95%8C/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Day8_1%20%E9%87%8D%E5%BB%BA%E4%B8%96%E7%95%8C/</id>
-    <published>2024-10-26T17:08:17.057Z</published>
-    <updated>2018-10-07T02:20:38.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span c</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.7_%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%87%BD%E6%95%B0/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.7_%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%87%BD%E6%95%B0/</id>
-    <published>2024-10-26T17:08:17.055Z</published>
-    <updated>2022-01-22T13:55:30.520Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;流程图&quot;&gt;&lt;a href=&quot;#流程图&quot; class=&quot;headerlink&quot; title=&quot;流程图&quot;&gt;&lt;/a&gt;流程图&lt;/h3&gt;&lt;p&gt;参照x86汇编语言的书，抄了个流程图&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;data:image/png;base64,iVBORw0K</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.6_%E9%94%AE%E7%9B%98%E9%A9%B1%E5%8A%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.6_%E9%94%AE%E7%9B%98%E9%A9%B1%E5%8A%A8/</id>
-    <published>2024-10-26T17:08:17.052Z</published>
-    <updated>2020-01-13T15:49:36.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;li</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.5_%E9%94%AE%E7%9B%98%E4%B8%AD%E6%96%AD/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.5_%E9%94%AE%E7%9B%98%E4%B8%AD%E6%96%AD/</id>
-    <published>2024-10-26T17:08:17.049Z</published>
-    <updated>2022-01-24T07:40:50.810Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;键盘中断&quot;&gt;&lt;a href=&quot;#键盘中断&quot; class=&quot;headerlink&quot; title=&quot;键盘中断&quot;&gt;&lt;/a&gt;键盘中断&lt;/h2&gt;&lt;p&gt;键盘的中断信号连接主片IR1引脚.中断向量号为 0x21&lt;/p&gt;
-&lt;h2 id=&quot;键盘控制芯片&quot;&gt;&lt;a href=&quot;#键盘控</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.4_%E9%94%AE%E7%9B%98%E6%89%AB%E6%8F%8F%E7%A0%81/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.4_%E9%94%AE%E7%9B%98%E6%89%AB%E6%8F%8F%E7%A0%81/</id>
-    <published>2024-10-26T17:08:17.045Z</published>
-    <updated>2022-01-23T15:58:33.551Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;键盘扫描码&quot;&gt;&lt;a href=&quot;#键盘扫描码&quot; class=&quot;headerlink&quot; title=&quot;键盘扫描码&quot;&gt;&lt;/a&gt;键盘扫描码&lt;/h2&gt;&lt;h3 id=&quot;通码和断码&quot;&gt;&lt;a href=&quot;#通码和断码&quot; class=&quot;headerlink&quot; title=&quot;通码和</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.4_%E5%8A%A0%E8%BD%BDIDT/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.4_%E5%8A%A0%E8%BD%BDIDT/</id>
-    <published>2024-10-26T17:08:17.043Z</published>
-    <updated>2022-01-23T17:00:11.647Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;加载IDT&quot;&gt;&lt;a href=&quot;#加载IDT&quot; class=&quot;headerlink&quot; title=&quot;加载IDT&quot;&gt;&lt;/a&gt;加载IDT&lt;/h2&gt;&lt;p&gt;global.h&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;t</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.3_IDT%E4%B8%AD%E6%96%AD%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.3_IDT%E4%B8%AD%E6%96%AD%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/</id>
-    <published>2024-10-26T17:08:17.041Z</published>
-    <updated>2022-01-24T06:25:25.292Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;i&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.2_%E5%88%86%E9%A1%B5/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.2_%E5%88%86%E9%A1%B5/</id>
-    <published>2024-10-26T17:08:17.037Z</published>
-    <updated>2022-01-22T13:56:04.861Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;为什么要分页&quot;&gt;&lt;a href=&quot;#为什么要分页&quot; class=&quot;headerlink&quot; title=&quot;为什么要分页&quot;&gt;&lt;/a&gt;为什么要分页&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;实模式分段:  &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;原因: cpu段寄存器太小,  和cpu</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.2_PIC%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6%E5%99%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.2_PIC%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6%E5%99%A8/</id>
-    <published>2024-10-26T17:08:17.034Z</published>
-    <updated>2022-01-23T15:42:01.573Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;PIC中断控制器&quot;&gt;&lt;a href=&quot;#PIC中断控制器&quot; class=&quot;headerlink&quot; title=&quot;PIC中断控制器&quot;&gt;&lt;/a&gt;PIC中断控制器&lt;/h2&gt;&lt;h2 id=&quot;PIC简介&quot;&gt;&lt;a href=&quot;#PIC简介&quot; class=&quot;headerlink</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.1_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.1_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/</id>
-    <published>2024-10-26T17:08:17.029Z</published>
-    <updated>2022-04-10T01:28:41.365Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;内存信息&quot;&gt;&lt;a href=&quot;#内存信息&quot; class=&quot;headerlink&quot; title=&quot;内存信息&quot;&gt;&lt;/a&gt;内存信息&lt;/h1&gt;&lt;h2 id=&quot;检测内存大小&quot;&gt;&lt;a href=&quot;#检测内存大小&quot; class=&quot;headerlink&quot; title=&quot;检测内存大</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.1_%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E4%B8%AD%E6%96%AD/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap6.1_%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E4%B8%AD%E6%96%AD/</id>
-    <published>2024-10-26T17:08:17.027Z</published>
-    <updated>2022-04-10T00:34:37.409Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;中断&quot;&gt;&lt;a href=&quot;#中断&quot; class=&quot;headerlink&quot; title=&quot;中断&quot;&gt;&lt;/a&gt;中断&lt;/h2&gt;&lt;h3 id=&quot;中断分类&quot;&gt;&lt;a href=&quot;#中断分类&quot; class=&quot;headerlink&quot; title=&quot;中断分类&quot;&gt;&lt;/a&gt;中断分类&lt;/h</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Appe7.2%20%E4%B8%AD%E6%96%AD%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Appe7.2%20%E4%B8%AD%E6%96%AD%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/</id>
-    <published>2024-10-26T17:08:16.923Z</published>
-    <updated>2020-01-16T14:10:32.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;中断描述符表&quot;&gt;&lt;a href=&quot;#中断描述符表&quot; class=&quot;headerlink&quot; title=&quot;中断描述符表&quot;&gt;&lt;/a&gt;中断描述符表&lt;/h3&gt;&lt;p&gt;在实模式下，我们对设备的访问操作其实是通过BIOS进行的。中断向量号由BIOS提供，BIOS控制进行中断控制</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Appe7.1%20%E5%9B%BE%E5%BD%A2%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://blog.sxt1024.fun/2024/10/27/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Appe7.1%20%E5%9B%BE%E5%BD%A2%E6%A8%A1%E5%BC%8F/</id>
-    <published>2024-10-26T17:08:16.920Z</published>
-    <updated>2018-10-06T09:33:04.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;访问显存&quot;&gt;&lt;a href=&quot;#访问显存&quot; class=&quot;headerlink&quot; title=&quot;访问显存&quot;&gt;&lt;/a&gt;访问显存&lt;/h2&gt;&lt;h3 id=&quot;1-显存地址&quot;&gt;&lt;a href=&quot;#1-显存地址&quot; class=&quot;headerlink&quot; title=&quot;1. 显存</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>5.1_VGA显示模式</title>
-    <link href="https://blog.sxt1024.fun/2020/02/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap5.1_VGA%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://blog.sxt1024.fun/2020/02/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap5.1_VGA%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-02-06T03:27:28.000Z</published>
-    <updated>2024-10-26T16:50:23.865Z</updated>
+    <title>chap3.1_VGA显示模式</title>
+    <link href="https://blog.sxt1024.fun/2019/02/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.1_VGA%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://blog.sxt1024.fun/2019/02/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.1_VGA%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/</id>
+    <published>2019-02-06T03:27:28.000Z</published>
+    <updated>2024-10-27T13:35:20.177Z</updated>
     
     
       
       
     <summary type="html">&lt;h1 id=&quot;VGA显示模式&quot;&gt;&lt;a href=&quot;#VGA显示模式&quot; class=&quot;headerlink&quot; title=&quot;VGA显示模式&quot;&gt;&lt;/a&gt;VGA显示模式&lt;/h1&gt;&lt;h2 id=&quot;VGA图形模式&quot;&gt;&lt;a href=&quot;#VGA图形模式&quot; class=&quot;headerlink</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap2.7_解析ELF文件</title>
+    <link href="https://blog.sxt1024.fun/2019/02/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.7_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/"/>
+    <id>https://blog.sxt1024.fun/2019/02/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.7_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/</id>
+    <published>2019-02-03T03:27:28.000Z</published>
+    <updated>2024-10-27T13:35:11.982Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;ELF文件&quot;&gt;&lt;a href=&quot;#ELF文件&quot; class=&quot;headerlink&quot; title=&quot;ELF文件&quot;&gt;&lt;/a&gt;ELF文件&lt;/h2&gt;&lt;p&gt;上次说过了,其实目标文件和可执行文件都是ELF格式文件&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ELF索引表&lt;/strong&gt;</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap2.5_内存规划</title>
+    <link href="https://blog.sxt1024.fun/2019/01/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.5_%E5%86%85%E5%AD%98%E8%A7%84%E5%88%92/"/>
+    <id>https://blog.sxt1024.fun/2019/01/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.5_%E5%86%85%E5%AD%98%E8%A7%84%E5%88%92/</id>
+    <published>2019-01-14T03:27:28.000Z</published>
+    <updated>2024-10-27T13:35:05.589Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;加载器&quot;&gt;&lt;a href=&quot;#加载器&quot; class=&quot;headerlink&quot; title=&quot;加载器&quot;&gt;&lt;/a&gt;加载器&lt;/h1&gt;&lt;h2 id=&quot;引导的第三阶段&quot;&gt;&lt;a href=&quot;#引导的第三阶段&quot; class=&quot;headerlink&quot; title=&quot;引导的第三阶段</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap2.6_C语言程序</title>
+    <link href="https://blog.sxt1024.fun/2019/01/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.6_C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/"/>
+    <id>https://blog.sxt1024.fun/2019/01/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.6_C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/</id>
+    <published>2019-01-11T03:27:28.000Z</published>
+    <updated>2024-10-27T13:35:08.373Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;C语言程序&quot;&gt;&lt;a href=&quot;#C语言程序&quot; class=&quot;headerlink&quot; title=&quot;C语言程序&quot;&gt;&lt;/a&gt;C语言程序&lt;/h3&gt;&lt;h2 id=&quot;工具&quot;&gt;&lt;a href=&quot;#工具&quot; class=&quot;headerlink&quot; title=&quot;工具&quot;&gt;&lt;/a&gt;工</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap2.4_GDT全局描述符表</title>
+    <link href="https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/"/>
+    <id>https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/</id>
+    <published>2019-01-06T03:27:28.000Z</published>
+    <updated>2024-10-27T13:35:02.336Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;GDT全局描述符表&quot;&gt;&lt;a href=&quot;#GDT全局描述符表&quot; class=&quot;headerlink&quot; title=&quot;GDT全局描述符表&quot;&gt;&lt;/a&gt;GDT全局描述符表&lt;/h2&gt;&lt;h3 id=&quot;什么是GDT全局描述符表&quot;&gt;&lt;a href=&quot;#什么是GDT全局描述符表&quot;</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap2.1_保护模式</title>
+    <link href="https://blog.sxt1024.fun/2019/01/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.1_%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://blog.sxt1024.fun/2019/01/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.1_%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F/</id>
+    <published>2019-01-04T03:27:28.000Z</published>
+    <updated>2024-10-27T13:34:48.665Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;保护模式&quot;&gt;&lt;a href=&quot;#保护模式&quot; class=&quot;headerlink&quot; title=&quot;保护模式&quot;&gt;&lt;/a&gt;保护模式&lt;/h2&gt;&lt;h3 id=&quot;保护模式寻址方式&quot;&gt;&lt;a href=&quot;#保护模式寻址方式&quot; class=&quot;headerlink&quot; title=&quot;保</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap2.3_Makefile</title>
+    <link href="https://blog.sxt1024.fun/2018/11/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.3_Makefile/"/>
+    <id>https://blog.sxt1024.fun/2018/11/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.3_Makefile/</id>
+    <published>2018-11-21T03:27:28.000Z</published>
+    <updated>2024-10-27T13:34:58.798Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Makefile&quot;&gt;&lt;a href=&quot;#Makefile&quot; class=&quot;headerlink&quot; title=&quot;Makefile&quot;&gt;&lt;/a&gt;Makefile&lt;/h2&gt;&lt;h3 id=&quot;安装make&quot;&gt;&lt;a href=&quot;#安装make&quot; class=&quot;headerli</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.9_读取磁盘_LBA方式</title>
+    <link href="https://blog.sxt1024.fun/2018/11/17/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.9_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_LBA%E6%96%B9%E5%BC%8F/"/>
+    <id>https://blog.sxt1024.fun/2018/11/17/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.9_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_LBA%E6%96%B9%E5%BC%8F/</id>
+    <published>2018-11-17T03:27:28.000Z</published>
+    <updated>2024-10-27T13:34:45.707Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;读取磁盘-LBA方式&quot;&gt;&lt;a href=&quot;#读取磁盘-LBA方式&quot; class=&quot;headerlink&quot; title=&quot;读取磁盘_LBA方式&quot;&gt;&lt;/a&gt;读取磁盘_LBA方式&lt;/h2&gt;&lt;h3 id=&quot;磁盘寻址：LBA方式&quot;&gt;&lt;a href=&quot;#磁盘寻址：LBA方式&quot;</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.8_读取磁盘_CHS方式</title>
+    <link href="https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.8_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/"/>
+    <id>https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.8_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/</id>
+    <published>2018-11-13T03:27:28.000Z</published>
+    <updated>2024-10-27T13:34:42.062Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;软盘和硬盘&quot;&gt;&lt;a href=&quot;#软盘和硬盘&quot; class=&quot;headerlink&quot; title=&quot;软盘和硬盘&quot;&gt;&lt;/a&gt;软盘和硬盘&lt;/h3&gt;&lt;p&gt;目前主流的硬盘分为两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;机械硬盘&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;固态硬盘&lt;/p</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.7_显示字符串</title>
+    <link href="https://blog.sxt1024.fun/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.7_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>https://blog.sxt1024.fun/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.7_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/</id>
+    <published>2018-11-08T03:27:28.000Z</published>
+    <updated>2024-10-27T13:34:39.030Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;显示字符串&quot;&gt;&lt;a href=&quot;#显示字符串&quot; class=&quot;headerlink&quot; title=&quot;显示字符串&quot;&gt;&lt;/a&gt;显示字符串&lt;/h2&gt;&lt;h3 id=&quot;字符串中断&quot;&gt;&lt;a href=&quot;#字符串中断&quot; class=&quot;headerlink&quot; title=&quot;字符串</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.6_显示字符</title>
+    <link href="https://blog.sxt1024.fun/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6/"/>
+    <id>https://blog.sxt1024.fun/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6/</id>
+    <published>2018-11-05T03:27:28.000Z</published>
+    <updated>2024-10-27T13:34:35.650Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;文本显示模式&quot;&gt;&lt;a href=&quot;#文本显示模式&quot; class=&quot;headerlink&quot; title=&quot;文本显示模式&quot;&gt;&lt;/a&gt;文本显示模式&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h3 id=&quot;显示模式&quot;&gt;&lt;a href=&quot;#显示模式&quot; class=&quot;headerl</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.5_实模式</title>
+    <link href="https://blog.sxt1024.fun/2018/11/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.5_%E5%AE%9E%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://blog.sxt1024.fun/2018/11/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.5_%E5%AE%9E%E6%A8%A1%E5%BC%8F/</id>
+    <published>2018-11-02T03:27:28.000Z</published>
+    <updated>2024-10-27T13:34:31.795Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;实模式&quot;&gt;&lt;a href=&quot;#实模式&quot; class=&quot;headerlink&quot; title=&quot;实模式&quot;&gt;&lt;/a&gt;实模式&lt;/h2&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h3 id=&quot;实模式分段机制&quot;&gt;&lt;a href=&quot;#实模式分段机制&quot; class=&quot;headerlink&quot; t</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap2.2_Bochs虚拟机</title>
+    <link href="https://blog.sxt1024.fun/2018/10/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_Bochs%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    <id>https://blog.sxt1024.fun/2018/10/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_Bochs%E8%99%9A%E6%8B%9F%E6%9C%BA/</id>
+    <published>2018-10-21T16:00:00.000Z</published>
+    <updated>2024-10-27T13:34:52.845Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Bochs&quot;&gt;&lt;a href=&quot;#Bochs&quot; class=&quot;headerlink&quot; title=&quot;Bochs&quot;&gt;&lt;/a&gt;Bochs&lt;/h2&gt;&lt;h3 id=&quot;工具&quot;&gt;&lt;a href=&quot;#工具&quot; class=&quot;headerlink&quot; title=&quot;工具&quot;&gt;&lt;/a&gt;工</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.4_BIOS中断</title>
+    <link href="https://blog.sxt1024.fun/2018/10/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.4_BIOS%E4%B8%AD%E6%96%AD/"/>
+    <id>https://blog.sxt1024.fun/2018/10/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.4_BIOS%E4%B8%AD%E6%96%AD/</id>
+    <published>2018-10-13T16:00:00.000Z</published>
+    <updated>2024-10-27T12:52:39.549Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;需要的工具&quot;&gt;&lt;a href=&quot;#需要的工具&quot; class=&quot;headerlink&quot; title=&quot;需要的工具&quot;&gt;&lt;/a&gt;需要的工具&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;qemu: &lt;a href=&quot;https://www.qemu.org/&quot;&gt;qemu&lt;/a</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.3_主引导扇区</title>
+    <link href="https://blog.sxt1024.fun/2018/10/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA/"/>
+    <id>https://blog.sxt1024.fun/2018/10/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA/</id>
+    <published>2018-10-08T16:00:00.000Z</published>
+    <updated>2024-10-27T12:47:44.359Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;工具&quot;&gt;&lt;a href=&quot;#工具&quot; class=&quot;headerlink&quot; title=&quot;工具&quot;&gt;&lt;/a&gt;工具&lt;/h2&gt;&lt;p&gt;首先，需要的工具软件列表：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;wsl + ubuntu：&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;nasm编译器：&lt;</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.2_汇编语言</title>
+    <link href="https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.2_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/"/>
+    <id>https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.2_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/</id>
+    <published>2018-10-03T16:00:00.000Z</published>
+    <updated>2024-10-27T08:51:42.579Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;1-机器语言与汇编语言&quot;&gt;&lt;a href=&quot;#1-机器语言与汇编语言&quot; class=&quot;headerlink&quot; title=&quot;1 机器语言与汇编语言&quot;&gt;&lt;/a&gt;1 机器语言与汇编语言&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1.2 汇编语言简介&lt;/strong&gt;&lt;/p&gt;
+&lt;p</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.1_CPU寄存器</title>
+    <link href="https://blog.sxt1024.fun/2018/10/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_CPU%E5%AF%84%E5%AD%98%E5%99%A8/"/>
+    <id>https://blog.sxt1024.fun/2018/10/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_CPU%E5%AF%84%E5%AD%98%E5%99%A8/</id>
+    <published>2018-10-01T16:00:00.000Z</published>
+    <updated>2024-10-27T08:51:26.395Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1-数据的描述&quot;&gt;&lt;a href=&quot;#1-数据的描述&quot; class=&quot;headerlink&quot; title=&quot;1 数据的描述&quot;&gt;&lt;/a&gt;1 数据的描述&lt;/h2&gt;&lt;p&gt;对于计算机来说，能识别的只有0和1两个数字。使用0和1这种二进制，位数足够，其实就可以描述无限可能性</summary>
+      
+    
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chap1.0_概述</title>
+    <link href="https://blog.sxt1024.fun/2018/10/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.0_%E6%A6%82%E8%BF%B0/"/>
+    <id>https://blog.sxt1024.fun/2018/10/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.0_%E6%A6%82%E8%BF%B0/</id>
+    <published>2018-09-30T16:00:00.000Z</published>
+    <updated>2024-10-27T07:49:45.078Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;相关资料：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/1_0_1.jpg&quot; alt=&quot;1_0_1.jpg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;st</summary>
       
     
     

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="文本显示模式[TOC] 显示模式计算机在加电自检之后，会将显示初始化为80 x 25的文本模式。此时，我们可以进行文本显示了。 而计算机的显示一般有2种模式，可以通过中断来修改显示模式  文本模式 图形模式  文本模式只能显示字符，一般通过BIOS中断修改。不过首先我们尝试修改显存的方式来显示字符。 而计算机的显示一般有2种模式：  文本模式：开始地址地址：0xB8000 图形模式:  开始地址地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chap1.6_显示字符">
+<meta property="og:url" content="https://blog.sxt1024.fun/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="文本显示模式[TOC] 显示模式计算机在加电自检之后，会将显示初始化为80 x 25的文本模式。此时，我们可以进行文本显示了。 而计算机的显示一般有2种模式，可以通过中断来修改显示模式  文本模式 图形模式  文本模式只能显示字符，一般通过BIOS中断修改。不过首先我们尝试修改显存的方式来显示字符。 而计算机的显示一般有2种模式：  文本模式：开始地址地址：0xB8000 图形模式:  开始地址地">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-11-05T03:27:28.000Z">
+<meta property="article:modified_time" content="2024-10-27T13:34:35.650Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6/","path":"2018/11/05/操作系统/chap1.6_显示字符/","title":"chap1.6_显示字符"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>chap1.6_显示字符 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">文本显示模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.0.1.</span> <span class="nav-text">显示模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F-1"><span class="nav-number">1.0.2.</span> <span class="nav-text">文本显示模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6"><span class="nav-number">1.1.</span> <span class="nav-text">显示字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%AD%E6%96%AD%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.1.1.</span> <span class="nav-text">字符中断显示字符串</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="chap1.6_显示字符 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chap1.6_显示字符
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-05 11:27:28" itemprop="dateCreated datePublished" datetime="2018-11-05T11:27:28+08:00">2018-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-27 21:34:35" itemprop="dateModified" datetime="2024-10-27T21:34:35+08:00">2024-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="文本显示模式"><a href="#文本显示模式" class="headerlink" title="文本显示模式"></a>文本显示模式</h1><p>[TOC]</p>
+<h3 id="显示模式"><a href="#显示模式" class="headerlink" title="显示模式"></a>显示模式</h3><p>计算机在加电自检之后，会将显示初始化为80 x 25的文本模式。此时，我们可以进行文本显示了。</p>
+<p>而计算机的显示一般有2种模式，可以通过中断来修改显示模式</p>
+<ul>
+<li>文本模式</li>
+<li>图形模式</li>
+</ul>
+<p>文本模式只能显示字符，一般通过BIOS中断修改。不过首先我们尝试修改显存的方式来显示字符。</p>
+<p>而计算机的显示一般有2种模式：</p>
+<ul>
+<li>文本模式：开始地址地址：0xB8000</li>
+<li>图形模式:  开始地址地址：0xA0000</li>
+</ul>
+<p>图形模式，存储的内容主要是颜色信息，而文字模式，存储的内容主要是文字信息。</p>
+<p>比如，刚启动linux时，输出的一堆的启动信息就是，进入文本模式。而开启xwindows才会进入图形模式。</p>
+<p>根据分辨率，可用的显示模式如下所列：</p>
+<h3 id="文本显示模式-1"><a href="#文本显示模式-1" class="headerlink" title="文本显示模式"></a>文本显示模式</h3><p><strong>2. 80 x 25文本模式</strong></p>
+<p>刚开始启动计算机时，系统默认进入文本模式。在计算机在加电自检完成之后，会默认将显示初始化为80 x 25的文本模式</p>
+<p>在 80 x 25的文本模式，屏幕可以显示25行80列。显示地址段是位于0xB8000-oxBffff的地址段。</p>
+<p>我们可以通过修改0xB8000-oxBffff地址段的值，来在屏幕上显示文本。</p>
+<p>此模式下每2个内存地址为一组，32位代表一个文字输出： 高地址16位为颜色信息，低地址16位为文字信息</p>
+<p>因此我们可以通过修改这段显示地址区域的值，从而来控制屏幕输出文字。</p>
+<p>例如：80x25文本模式的颜色如下：</p>
+<p>在 80 x 25的文本模式，显存地址是位于0xB8000-oxBffff。</p>
+<p>背景色颜色（背景），4位分别为 KRGB，K为是否闪烁</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>颜色</th>
+<th>值</th>
+<th>颜色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>黑色</td>
+<td>4</td>
+<td>红色</td>
+</tr>
+<tr>
+<td>1</td>
+<td>蓝色</td>
+<td>5</td>
+<td>紫色</td>
+</tr>
+<tr>
+<td>2</td>
+<td>绿色</td>
+<td>6</td>
+<td>黄色</td>
+</tr>
+<tr>
+<td>3</td>
+<td>青色</td>
+<td>7</td>
+<td>白色</td>
+</tr>
+</tbody></table>
+<p>前景色颜色（文字），4位，分别为 IRGB</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>颜色</th>
+<th>值</th>
+<th>颜色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>黑色</td>
+<td>8</td>
+<td>灰色</td>
+</tr>
+<tr>
+<td>1</td>
+<td>蓝色</td>
+<td>9</td>
+<td>淡蓝色</td>
+</tr>
+<tr>
+<td>2</td>
+<td>绿色</td>
+<td>A</td>
+<td>淡绿色</td>
+</tr>
+<tr>
+<td>3</td>
+<td>青色</td>
+<td>B</td>
+<td>淡青色</td>
+</tr>
+<tr>
+<td>4</td>
+<td>红色</td>
+<td>C</td>
+<td>淡红色</td>
+</tr>
+<tr>
+<td>5</td>
+<td>紫色</td>
+<td>D</td>
+<td>淡紫色</td>
+</tr>
+<tr>
+<td>6</td>
+<td>黄色</td>
+<td>E</td>
+<td>淡黄色</td>
+</tr>
+<tr>
+<td>7</td>
+<td>白色</td>
+<td>F</td>
+<td>亮白色</td>
+</tr>
+</tbody></table>
+<h2 id="显示字符"><a href="#显示字符" class="headerlink" title="显示字符"></a>显示字符</h2><p><strong>1. 通过修改内存数据来显示字符</strong></p>
+<p>启动后实模式下-文本模式下的初始显存地址范围为[0xB8000-0xBFFFFF]。</p>
+<p>显存地址的值对应屏幕的显示数据，我们可以修改显存值来改变屏幕显示。</p>
+<p>我们使用段和偏移来表示这段显存信息，段基本地址为0xB800，偏移为0x0000到0xFFFF。</p>
+<p>代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0xb800</span><br><span class="line">mov ds,ax                ;配置显存段地址</span><br><span class="line">mov byte [0x00],&#x27;r&#x27;      ;输出字符，内存地址为 DS&lt;&lt;4 + 0x00</span><br><span class="line">mov byte [0x01],0x17     ;设置颜色(背景色蓝，前景色白)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="字符中断显示字符串"><a href="#字符中断显示字符串" class="headerlink" title="字符中断显示字符串"></a>字符中断显示字符串</h3><p><strong>1. 字符中断</strong> </p>
+<p>当BIOS执行显示字符调用显示服务 INT 10H，AH＝0EH，可以进行单个字符的显示</p>
+<p>首先需要配置入口参数：</p>
+<p>中断号：INT10</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>说明</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AH</td>
+<td>功能：在Teletype模式下显示字符</td>
+<td>0EH</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>字符</td>
+<td>—</td>
+</tr>
+<tr>
+<td>BH</td>
+<td>页码</td>
+<td>—</td>
+</tr>
+<tr>
+<td>BL</td>
+<td>前景色(图形模式)</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<p>例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ah,0x0e				;BIOS中断参数：显示一个文字</span><br><span class="line">mov byte al,&#x27;A&#x27;</span><br><span class="line">mov bl,0x03				;BIOS中断参数：指定字符颜色</span><br><span class="line">int 0x10				;调用BIOS中断操作显卡。输出字符</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 显示一个字符</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">;------------------</span><br><span class="line">;显示一个字符，si = 字符串文本地址</span><br><span class="line">.putChar:</span><br><span class="line">    mov al,[si]				;将[di]指向的内存单元的一个字节放入AL。</span><br><span class="line">    inc si					;di指向下一个字节</span><br><span class="line">    cmp al,0				;判断[di]中的字符值是否==0</span><br><span class="line"></span><br><span class="line">    je .putEnd			    ;为0字符则串结束</span><br><span class="line">    mov ah,0x0e				;BIOS中断参数：中断模式</span><br><span class="line">    mov bl,0x03				;BIOS中断参数：指定字符颜色</span><br><span class="line">    int 0x10				;调用BIOS中断操作显卡。输出字符</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>3.循环调用，显示字符串</strong> </p>
+<p>通过中断来显示一个字符，我们可以通过循环操作字符中断的方式，来显示多个字符。</p>
+<p>显示字符串代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 显示字串函数:PrintString</span><br><span class="line">; 参数:</span><br><span class="line">; si = 字符串文本地址</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">PrintString:</span><br><span class="line">    ; ------------------</span><br><span class="line">    ; 显示一个字符，si = 字符串文本地址</span><br><span class="line">    .putChar:</span><br><span class="line">        mov al,[si]    ; 将[di]指向的内存单元的一个字节放入AL。</span><br><span class="line">        inc si         ; di指向下一个字节</span><br><span class="line">        cmp al,0       ; 判断[di]中的字符值是否==0</span><br><span class="line"></span><br><span class="line">        je .putEnd     ; 为0字符则串结束</span><br><span class="line">        mov ah,0x0e    ; BIOS中断参数：中断模式</span><br><span class="line">        mov bl,0x03    ; BIOS中断参数：指定字符颜色</span><br><span class="line">        int 0x10       ; 调用BIOS中断操作显卡。输出字符</span><br><span class="line">        jmp .putChar</span><br><span class="line">   .putEnd:</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>4. 代码</strong></p>
+<p>这一段的代码如下：<br>boot.asm</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">; ASTRAOS BOOT</span><br><span class="line">[bits 16]</span><br><span class="line"></span><br><span class="line">org     0x7c00         ; 指明程序的偏移的基地址</span><br><span class="line"></span><br><span class="line">jmp     Entry          ; 跳转到程序入口</span><br><span class="line">db 		0x90</span><br><span class="line">db      &quot;ASTRAOS&quot;</span><br><span class="line"></span><br><span class="line">; ----------------------------</span><br><span class="line">; 程序入口</span><br><span class="line">; ----------------------------</span><br><span class="line">Entry:</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 清除屏幕</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov ah,0x06</span><br><span class="line">    mov bh,0x07</span><br><span class="line">    mov al,0</span><br><span class="line">    mov cx,0</span><br><span class="line">    mov dx,0xffff</span><br><span class="line">    mov bh,0x17        ; 属性为蓝底白字</span><br><span class="line">    int 0x10</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 光标位置初始化</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov ah,0x02</span><br><span class="line">    mov bh,0</span><br><span class="line">    mov dx,0</span><br><span class="line">    int 0x10</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 输出字符串</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov  si,HelloMsg   ; 将HelloMsg的地址放入si</span><br><span class="line">    call PrintString   ; 调用函数</span><br><span class="line"></span><br><span class="line">    jmp $              ; 进入死循环，不再往下执行。</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 字符串常量</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">HelloMsg: db &quot;Hello,AstraOS!&quot;,0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 显示字串函数:PrintString</span><br><span class="line">; 参数:</span><br><span class="line">; si = 字符串文本地址</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">PrintString:</span><br><span class="line">    ; ------------------</span><br><span class="line">    ; 显示一个字符，si = 字符串文本地址</span><br><span class="line">    .putChar:</span><br><span class="line">        mov al,[si]    ; 将[di]指向的内存单元的一个字节放入AL。</span><br><span class="line">        inc si         ; di指向下一个字节</span><br><span class="line">        cmp al,0       ; 判断[di]中的字符值是否==0</span><br><span class="line"></span><br><span class="line">        je .putEnd     ; 为0字符则串结束</span><br><span class="line">        mov ah,0x0e    ; BIOS中断参数：中断模式</span><br><span class="line">        mov bl,0x03    ; BIOS中断参数：指定字符颜色</span><br><span class="line">        int 0x10       ; 调用BIOS中断操作显卡。输出字符</span><br><span class="line">        jmp .putChar</span><br><span class="line">   .putEnd:</span><br><span class="line">        ret</span><br><span class="line"></span><br><span class="line">FillSector:</span><br><span class="line">    resb    510-($-$$) ; 处理当前行$至结束(1FE)的填充</span><br><span class="line">    db      0x55, 0xaa</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>运行</strong></p>
+<p>创建build.sh脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">NASM=nasm</span><br><span class="line">mkdir build</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">NASM -f bin -o build/boot.bin boot/boot.asm</span></span><br><span class="line">dd if=/dev/zero of=build/astraos.img bs=512 count=2880</span><br><span class="line">dd if=build/boot.bin  of=build/astraos.img bs=512 count=1  conv=notrunc</span><br></pre></td></tr></table></figure>
+
+<p>创建run.sh脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">QEMU=qemu-system-x86_64</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">QEMU -m 128 -rtc base=localtime -fda build/astraos.img</span></span><br></pre></td></tr></table></figure>
+
+<p>创建run.bat</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set qume=&quot;C:/Program Files/qemu/qemu-system-x86_64w.exe&quot;</span><br><span class="line">%qume% -m 128 -rtc base=localtime -fda build/astraos.img</span><br></pre></td></tr></table></figure>
+
+<p>结果如图</p>
+<p><img src="data:image/png;base64,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ACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsAAACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQAAAEBSxA4AAAAgKWIHAAAAkBSxAwAAAEiK2AEAAAAkRewAAAAAkiJ2AAAAAEkROwAAAICkiB0AAABAUsQOAAAAICliBwAAAJAUsQMAAABIitgBAAAAJEXsAAAAAJIidgAAAABJETsA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AACApIgdAAAAQFLEDgAAACApYgcAAACQFLEDAAAASIrYAQAAACRF7AAAAACSInYAAAAASRE7AAAAgKSIHQD8/+3asYnDUBRFwb9IKHQuUA12rv4LcBFqQ7DBlrCGD8czyUtvfHgAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkLLOHgAAAADwGfd9D58dAAAAQIzYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAyjp7AAAAAMBnLMsyfHYAAAAAMWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkCJ2AAAAACliBwAAAJAidgAAAAApYgcAAACQInYAAAAAKWIHAAAAkLL+nefrMXcHAAAAwH88X4/3e4wxfs7zvK5r9h46tm2bPQEAAIDvte/7OsY4jmP2EjqWZZk9AQAAgK/2C13EdZasIsd+AAAAAElFTkSuQmCC" alt="(images/1_7_1.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.5_%E5%AE%9E%E6%A8%A1%E5%BC%8F/" rel="prev" title="chap1.5_实模式">
+                  <i class="fa fa-angle-left"></i> chap1.5_实模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.7_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="next" title="chap1.7_显示字符串">
+                  chap1.7_显示字符串 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

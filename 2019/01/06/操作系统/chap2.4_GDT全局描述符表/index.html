@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="GDT全局描述符表什么是GDT全局描述符表GDT全称为Global Descriptor Table,全局描述符表。 保护模式的寻址方式不在使用寄存器分段的方式直接寻址方式了。而采用的是使用GDT（全局分段描述表）来寻址。从而使用更多的内存地址。 创建GDT全局描述符表使用到一个48位的寄存器：GDTR寄存器。 1）首先，在内存中划分一些内存段，并且每个内存段赋予一个索引。 2）然后，使用lgdt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chap2.4_GDT全局描述符表">
+<meta property="og:url" content="https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="GDT全局描述符表什么是GDT全局描述符表GDT全称为Global Descriptor Table,全局描述符表。 保护模式的寻址方式不在使用寄存器分段的方式直接寻址方式了。而采用的是使用GDT（全局分段描述表）来寻址。从而使用更多的内存地址。 创建GDT全局描述符表使用到一个48位的寄存器：GDTR寄存器。 1）首先，在内存中划分一些内存段，并且每个内存段赋予一个索引。 2）然后，使用lgdt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.sxt1024.fun/2_1_1.png">
+<meta property="og:image" content="https://blog.sxt1024.fun/2_1_1.png">
+<meta property="article:published_time" content="2019-01-06T03:27:28.000Z">
+<meta property="article:modified_time" content="2024-10-27T13:35:02.336Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.sxt1024.fun/2_1_1.png">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/","path":"2019/01/06/操作系统/chap2.4_GDT全局描述符表/","title":"chap2.4_GDT全局描述符表"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>chap2.4_GDT全局描述符表 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">GDT全局描述符表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">什么是GDT全局描述符表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDT%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">GDT格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AE%B5%E9%80%89%E6%8B%A9%E5%AD%90"><span class="nav-number">1.3.</span> <span class="nav-text">段选择子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GDT%E4%B8%B4%E6%97%B6%E5%88%86%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">GDT临时分段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GDT%E4%B8%B4%E6%97%B6%E6%AE%B5%E8%AF%B4%E6%98%8E"><span class="nav-number">2.1.</span> <span class="nav-text">GDT临时段说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDT%E8%A7%A3%E6%9E%90%E5%AE%8F"><span class="nav-number">2.2.</span> <span class="nav-text">GDT解析宏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDT-%E6%8F%8F%E8%BF%B0%E7%AC%A6%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89"><span class="nav-number">2.3.</span> <span class="nav-text">GDT 描述符属性定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8"><span class="nav-number">2.4.</span> <span class="nav-text">定义GDT全局描述符表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.5.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="chap2.4_GDT全局描述符表 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chap2.4_GDT全局描述符表
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-06 11:27:28" itemprop="dateCreated datePublished" datetime="2019-01-06T11:27:28+08:00">2019-01-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-27 21:35:02" itemprop="dateModified" datetime="2024-10-27T21:35:02+08:00">2024-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="GDT全局描述符表"><a href="#GDT全局描述符表" class="headerlink" title="GDT全局描述符表"></a>GDT全局描述符表</h2><h3 id="什么是GDT全局描述符表"><a href="#什么是GDT全局描述符表" class="headerlink" title="什么是GDT全局描述符表"></a>什么是GDT全局描述符表</h3><p>GDT全称为<code>Global Descriptor Table</code>,全局描述符表。</p>
+<p>保护模式的寻址方式不在使用寄存器分段的方式直接寻址方式了。而采用的是使用GDT（全局分段描述表）来寻址。从而使用更多的内存地址。</p>
+<p>创建GDT全局描述符表使用到一个48位的寄存器：GDTR寄存器。</p>
+<p>1）首先，在内存中划分一些内存段，并且每个内存段赋予一个索引。</p>
+<p>2）然后，使用lgdt指令，设置GDT的索引和表信息的内存地址到GDTR寄存器。</p>
+<p>3）进入保护模式，指令跳转，从实模式分段方式寻址切换到使用GDT分段方式寻址。</p>
+<ol start="4">
+<li>GDT可以被放在内存的任何地方,只要提供内存地址给GDTR寄存器就可以了。</li>
+</ol>
+<h3 id="GDT格式"><a href="#GDT格式" class="headerlink" title="GDT格式"></a>GDT格式</h3><p><strong>GDT全局描述符表</strong></p>
+<ul>
+<li>表基地址，表基地址位GDT段表在内存的地址，GDT段表是一个列表，存储了多个 GDT段描述符。</li>
+<li>表界限：GDT段表的空间信息，以字节为单位。</li>
+</ul>
+<p><img src="/2_1_1.png" alt="2_1_1.png"></p>
+<blockquote>
+<p>GDT全局描述符表 &#x3D; GDT段表基地址 | 16位表界限</p>
+<p>GDT段表 &#x3D;　 GDT段描述符　｜　 GDT段描述符　｜　GDT段描述符 …</p>
+<p>表界限 &#x3D; GDT字节数 - 1  （表示 0 - 0x…）</p>
+</blockquote>
+<p><strong>GDT段描述符</strong></p>
+<p><img src="data:image/png;base64,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lARYADbKbOVEMQEmwASYABNgAkyACTABJsAEmIA+ARaA9YnwORNgAkyACTABJsAEmAATYAJMgAkYJQEWgI0yWzlRTIAJMAEmwASYABNgAkyACTABJqBPgAVgfSJ8zgSYABNgAkyACTABJsAEmAATYAJGSYAFYKPMVk4UE2ACTIAJMAEmwASYABNgAkyACegTYAFYnwifMwEmwASYABNgAkyACTABJsAEmIBREmAB2CizlRPFBJgAE2ACTIAJMAEmwASYABNgAvoEWADWJ8LnTIAJMAEmwASYABNgAkyACTABJmCUBFgANsps5UQxASbABJgAE2ACTIAJMAEmwASYgD4BFoD1ifA5E2ACTIAJMAEmwASYABNgAkyACRglARaAjTJbOVFMgAkwASbABJgAE2ACTIAJMAEmoE+ABWB9InzOBJgAE2ACTIAJMAEmwASYABNgAkZJgAVgo8xWThQTYAJMgAkwASbABJgAE2ACTIAJ6BNgAVifCJ8zASbABJgAE2ACTIAJMAEmwASYgFESYAHYKLOVE8UEmAATYAJMgAkwASbABJgAE2AC+gRYANYnwudMgAkwASbABJgAE2ACTIAJMAEmYJQEWAA2ymzlRDEBJsAEmAATYAJMgAkwASbABJiAPgEWgPWJ8DkTYAJMgAkwASbABJgAE2ACTIAJGCUBFoCNMls5UUyACTABJsAEmAATYAJMgAkwASagT4AFYH0ifM4EmAATYAJMgAkwASbABJgAE2ACRkmABWCjzFZOFBNgAkyACTABJsAEmAATYAJMgAnoE2ABWJ8InzMBJsAEmAATYAJMgAkwASbABJiAURJgAdgos5UTxQSYABNgAkyACTABJsAEmAATYAL6BP4/PJOkIwoxYaMAAAAASUVORK5CYII=" alt="images/003.png"></p>
+<p>GDT段描述符，用来描述在GDT方式在内存中分配的一个段信息，总共8字节64位。</p>
+<p>GDT段描述符结构</p>
+<p>为了兼容以前的CPU，GDT段描述符的信息被分割成几个部分，格式如下：</p>
+<blockquote>
+<p>GDT段描述符　＝　</p>
+<p>段基址 （8位）| 段描述符（4位） |  段界限（4位） | 段描述符（8位）  段基址 （8位）</p>
+<p>段基址 （16位） | 段界限（16位）</p>
+</blockquote>
+<p>段描述符定义</p>
+<ul>
+<li>段基址：规定段的起始地址,长度32位.</li>
+<li>段界限：规定段的大小,长度20位。段界限可以是以<code>4KB</code>或者<code>1B</code>为单元大小</li>
+<li>段属性：确定段的各种性质.长度(12位)</li>
+</ul>
+<p>段属性：</p>
+<ul>
+<li>G 粒度位: 段界限的单位大小，G&#x3D;1表示段界限以<code>4KB</code>为单元单位，G&#x3D;0表示段界限以<code>1B</code>为单元单位</li>
+<li>D&#x2F;B 表示操作数为多少位， 0表示16位操作数，1表示32位操作数</li>
+<li>L ： 0 表示非64位代码段，1表示64位代码段</li>
+<li>AVL ：可用字段，暂时没什么用</li>
+<li>P   段存在位:通常为1，表示段存在于内存中，0则此段为非法的，不能被用来实现地址转换</li>
+<li>DPL 特权级(2位): 用来实现保护机制</li>
+<li>S  为0表示系统段，为1表示非系统段</li>
+<li>type 类型(4位): 用于区别不同类型的描述符。内存段或者门的子类型</li>
+</ul>
+<p>type值</p>
+<table>
+<thead>
+<tr>
+<th>Type位</th>
+<th>说明</th>
+<th>取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>代码段时</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>X：3位</td>
+<td>代码段值为1</td>
+<td>0：为数据段<br>1：为代码段</td>
+</tr>
+<tr>
+<td>C：2位</td>
+<td>访问位</td>
+<td>0：为普通段<br>1：为一致码段</td>
+</tr>
+<tr>
+<td>R：1位</td>
+<td>是否可读</td>
+<td>0：只执行<br>1：可读</td>
+</tr>
+<tr>
+<td>A：0位</td>
+<td>访问位. 该段是否被访问过</td>
+<td>0 ：未访问<br>1：已访问</td>
+</tr>
+<tr>
+<td><strong>数据段时</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>X：3位</td>
+<td>数据段值为1</td>
+<td>0：为数据段 <br>1：为代码段</td>
+</tr>
+<tr>
+<td>E：2位</td>
+<td>扩展方向</td>
+<td>0：向高位扩展 <br>1：向低位扩展</td>
+</tr>
+<tr>
+<td>W：1位</td>
+<td>是否可写</td>
+<td>0：只读<br>1：可写</td>
+</tr>
+<tr>
+<td>A：0位</td>
+<td>访问位</td>
+<td>0： 未访问<br>1：已访问<td></td>
+</tr>
+</tbody></table>
+<p>段界限:</p>
+<p>段界限边界值 &#x3D;  （描述符的段界限值 + 1） × （段界限颗粒读：4Kb 或者 1b） -1</p>
+<p>反之：<br>  描述符的段界限值 &#x3D; （段界限边界值 + 1） &#x2F;（段界限颗粒读：4Kb 或者 1b）</p>
+<p>例如：</p>
+<p>  16MB的段界限值 &#x3D;  0x1000000  &#x2F;（段界限颗粒读：4Kb 或者 1b - 1）&#x3D; 0x0fff</p>
+<h3 id="段选择子"><a href="#段选择子" class="headerlink" title="段选择子"></a>段选择子</h3><p>段选择子包括三部分：描述符索引（index）、TI、请求特权级（RPL） </p>
+<p><strong>GDTR寄存器</strong></p>
+<p>在内存中建立完成GDT信息后，CPU会将GDT的内存地址 和 段界限 数据加载入GDTR寄存器</p>
+<p>GDTR寄存器数据(48位)：</p>
+<blockquote>
+<p>GDTR定义数据(48位) ＝ GDT全局描述符表的大小(16位)  +  GDT全局描述符表的地址(32位)</p>
+</blockquote>
+<p><strong>lgdt指令</strong></p>
+<blockquote>
+<p>lgdt GDTR定义数据</p>
+</blockquote>
+<p>其中GDT全局描述符表数据格式如下</p>
+<blockquote>
+<p>GDT全局描述符表 &#x3D;  GDT段描述符(64位) |  GDT段描述符(64位) | GDT段描述符(64位) …</p>
+<p>GDT段描述符 &#x3D;  段基址 （8位）| 段描述符（4位） |  段界限（4位） | 段描述符（8位） | 段基址 （8位） | 段基址 （16位） | 段界限（16位）</p>
+</blockquote>
+<p>其中，第一个GDT段的数据为空。</p>
+<p>、</p>
+<h2 id="GDT临时分段"><a href="#GDT临时分段" class="headerlink" title="GDT临时分段"></a>GDT临时分段</h2><h3 id="GDT临时段说明"><a href="#GDT临时段说明" class="headerlink" title="GDT临时段说明"></a>GDT临时段说明</h3><p>现在已经进入了保护模式, 目前的改变</p>
+<ul>
+<li>可以访问1M以上的内存了</li>
+<li>可以使用32位的指令</li>
+</ul>
+<p>问题：</p>
+<p>由于以前的是实式下段寄存器寻址方式无法使用了，我们必须切换到使用GDT段方式来寻址</p>
+<p>首要的任务就是先建立一个临时的GDT段，以便我们接下来的指令操作</p>
+<p>目前准备建立3个段，如下：</p>
+<blockquote>
+<p>Base, Limit, Attr</p>
+<p>代码段：0x00000000, 0xfffff,  1100_1001_1010B &#x3D;  db 0x0000ffff, 0x00cf9a00 </p>
+<p>数据段：0x00000000, 0xfffff,  1100_1001_0010B &#x3D; db  0x0000ffff, 0x00cf9200</p>
+<p>vga显卡内存数据段：x000b8000, 0x07fff, 1100_1001_0010B</p>
+</blockquote>
+<h3 id="GDT解析宏"><a href="#GDT解析宏" class="headerlink" title="GDT解析宏"></a>GDT解析宏</h3><p>首先创建一个nasm宏，可以进行GDT解析</p>
+<p>参数为GDT的Base, Limit, Attr，也就是段基址(32位),段界限(20位),段描述符(12位)，然后生成GDT在内存中的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">;---------------------------------------------------------</span><br><span class="line">; 描述符</span><br><span class="line">; usage: Gdt_Descriptor Base, Limit, Attr ：  段基址(32位),段界限(20位),段描述符(12位)</span><br><span class="line">;        Base:  dd</span><br><span class="line">;        Limit: dd (low 20 bits available)</span><br><span class="line">;        Attr:  dw (lower 4 bits of higher byte are always 0)</span><br><span class="line">;---------------------------------------------------------</span><br><span class="line">%macro Gdt_Descriptor  3</span><br><span class="line">dw %2 &amp; 0xFFFF</span><br><span class="line">dw %1 &amp; 0xFFFF</span><br><span class="line">db (%1 &gt;&gt; 16) &amp; 0xFF</span><br><span class="line">db %3 &amp; 0xFF</span><br><span class="line">db ((%3 &gt;&gt; 4 ) &amp; 0xF0 ) | ((%2 &gt;&gt; 16) &amp; 0x0F )</span><br><span class="line">db (%1 &gt;&gt; 24) &amp; 0xFF</span><br><span class="line">%endmacro</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="GDT-描述符属性定义"><a href="#GDT-描述符属性定义" class="headerlink" title="GDT 描述符属性定义"></a>GDT 描述符属性定义</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">;--------------   gdt描述符属性  -------------</span><br><span class="line">DESC_G_4K   equ	  1000_0000_0000b   </span><br><span class="line">DESC_D_32   equ	  0100_0000_0000b</span><br><span class="line">DESC_L	    equ	  0000_0000_0000b	;  64位代码标记，此处标记为0便可。</span><br><span class="line">DESC_AVL    equ	  0000_0000_0000b	;  cpu不用此位，暂置为0  </span><br><span class="line">DESC_P	    equ	  0000_1000_0000b</span><br><span class="line">DESC_DPL_0  equ	        000_0000b</span><br><span class="line">DESC_DPL_1  equ	        010_0000b</span><br><span class="line">DESC_DPL_2  equ	        100_0000b</span><br><span class="line">DESC_DPL_3  equ	        110_0000b</span><br><span class="line">DESC_S_CODE equ	          1_0000b</span><br><span class="line">DESC_S_DATA equ	          1_0000b</span><br><span class="line">DESC_S_SYS  equ		      0_0000b</span><br><span class="line">DESC_TYPE_CODE  equ	        1010b	;x=1可执行代码段,c=0普通,r=1可读,a=0已访问位a清0  </span><br><span class="line">DESC_TYPE_DATA  equ	        0010b	;x=0数据段,e=0向高位扩展,w=1可写,a=0已访问位a清0.</span><br><span class="line"></span><br><span class="line">;--------------   选择子属性  ---------------</span><br><span class="line">RPL0    equ   00b</span><br><span class="line">RPL1    equ   01b</span><br><span class="line">RPL2    equ   10b</span><br><span class="line">RPL3    equ   11b</span><br><span class="line">TI_GDT	equ   000b</span><br><span class="line">TI_LDT	equ   100b</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">DESC_CODE equ  DESC_G_4K + DESC_D_32 + DESC_L + DESC_AVL + DESC_P + DESC_DPL0 + DESC_S_CODE + DESC_TYPE_CODE </span><br><span class="line">DESC_DATA equ  DESC_G_4K + DESC_D_32 + DESC_L + DESC_AVL + DESC_P + DESC_DPL0 + DESC_S_DATA + DESC_TYPE_DATA </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="定义GDT全局描述符表"><a href="#定义GDT全局描述符表" class="headerlink" title="定义GDT全局描述符表"></a>定义GDT全局描述符表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">;---------------------------------</span><br><span class="line">;定义GDT全局描述符表</span><br><span class="line">;code: 0x0000ffff, 0x00cf9a00   </span><br><span class="line">;data: 0x0000ffff, 0x00cf9200</span><br><span class="line">;vga:</span><br><span class="line">Gdt_Addr:</span><br><span class="line">    dw		8*4-1						;指定段上限为4(GDT全局描述符表的大小)</span><br><span class="line">    dd		gdt_table_addr				;GDT全局描述符表的地址</span><br><span class="line">Gdt_Table_Addr:</span><br><span class="line">    		    Gdt_Descriptor 0,0,0</span><br><span class="line">Label_Sel_Code:	Gdt_Descriptor 0x00000000, 0xfffff, DESC_CODE  ;可以执行的段</span><br><span class="line">Label_Sel_Data:	Gdt_Descriptor 0x00000000, 0xfffff, DESC_DATA  ;可以读写的段</span><br><span class="line">Label_Sel_VGA:	Gdt_Descriptor 0x000b8000, 0x07fff, DESC_DATA  ;vga段</span><br><span class="line">    dw		0	</span><br><span class="line"></span><br><span class="line">;--------------------------------</span><br><span class="line">;选择子</span><br><span class="line">Selector_Code  equ	 Label_Sel_Code - Gdt_Table_Addr</span><br><span class="line">Selector_Data  equ	 Label_Sel_Data - Gdt_Table_Addr</span><br><span class="line">Selector_VGA  equ	 Label_Sel_VGA - Gdt_Table_Addr</span><br></pre></td></tr></table></figure>
+
+<p>加载gdt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">;---------------------------</span><br><span class="line">;加载GDT</span><br><span class="line">lgdt [Gdt_Addr]</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>创建常量头文件</p>
+<p>创建 boot.inc文件。用来配置常量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">; boot.inc</span><br><span class="line">;---------------------------------------------------------</span><br><span class="line">; 描述符</span><br><span class="line">; usage: Gdt_Descriptor Base, Limit, Attr ：  段基址(32位),段界限(20位),段描述符(12位)</span><br><span class="line">;        Base:  dd</span><br><span class="line">;        Limit: dd (low 20 bits available)</span><br><span class="line">;        Attr:  dw (lower 4 bits of higher byte are always 0)</span><br><span class="line">;---------------------------------------------------------</span><br><span class="line">%macro Gdt_Descriptor  3</span><br><span class="line">dw %2 &amp; 0xFFFF</span><br><span class="line">dw %1 &amp; 0xFFFF</span><br><span class="line">db (%1 &gt;&gt; 16) &amp; 0xFF</span><br><span class="line">db %3 &amp; 0xFF</span><br><span class="line">db ((%3 &gt;&gt; 4 ) &amp; 0xF0 ) | ((%2 &gt;&gt; 16) &amp; 0x0F )</span><br><span class="line">db (%1 &gt;&gt; 24) &amp; 0xFF</span><br><span class="line">%endmacro</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">;--------------   gdt描述符属性  -------------</span><br><span class="line">DESC_G_4K   equ	  1000_0000_0000b   </span><br><span class="line">DESC_D_32   equ	  0100_0000_0000b</span><br><span class="line">DESC_L	    equ	  0000_0000_0000b	;  64位代码标记，此处标记为0便可。</span><br><span class="line">DESC_AVL    equ	  0000_0000_0000b	;  cpu不用此位，暂置为0  </span><br><span class="line">DESC_P	    equ	  0000_1000_0000b</span><br><span class="line">DESC_DPL_0  equ	        000_0000b</span><br><span class="line">DESC_DPL_1  equ	        010_0000b</span><br><span class="line">DESC_DPL_2  equ	        100_0000b</span><br><span class="line">DESC_DPL_3  equ	        110_0000b</span><br><span class="line">DESC_S_CODE equ	          1_0000b</span><br><span class="line">DESC_S_DATA equ	          1_0000b</span><br><span class="line">DESC_S_SYS  equ		      0_0000b</span><br><span class="line">DESC_TYPE_CODE  equ	        1010b	;x=1可执行代码段,c=0普通,r=1可读,a=0已访问位a清0  </span><br><span class="line">DESC_TYPE_DATA  equ	        0010b	;x=0数据段,e=0向高位扩展,w=1可写,a=0已访问位a清0.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">;--------------   选择子属性  ---------------</span><br><span class="line">RPL0    equ   00b</span><br><span class="line">RPL1    equ   01b</span><br><span class="line">RPL2    equ   10b</span><br><span class="line">RPL3    equ   11b</span><br><span class="line">TI_GDT	equ   000b</span><br><span class="line">TI_LDT	equ   100b</span><br><span class="line"></span><br><span class="line">DESC_CODE equ  DESC_G_4K + DESC_D_32 + DESC_L + DESC_AVL + DESC_P + DESC_DPL_0 + DESC_S_CODE + DESC_TYPE_CODE </span><br><span class="line">DESC_DATA equ  DESC_G_4K + DESC_D_32 + DESC_L + DESC_AVL + DESC_P + DESC_DPL_0 + DESC_S_DATA + DESC_TYPE_DATA </span><br><span class="line"></span><br><span class="line">;----------- loader const ------------------</span><br><span class="line">LOADER_SECTOR_LBA  		equ 0x1		;第2个逻辑扇区开始</span><br><span class="line">LOADER_SECTOR_NUM		equ 9		;读取9个扇区</span><br><span class="line">LOADER_BASE_ADDR 		equ 0x9000  ;内存地址0x9200</span><br><span class="line">LOADER1_BASE_ADDR       equ 0x9800  ;内存地址0x9200</span><br><span class="line">;-------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>loader.asm文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">;GloxOS LOADER [0x9000]</span><br><span class="line">;Tab=4</span><br><span class="line">[bits 16]</span><br><span class="line"></span><br><span class="line">%include &quot;boot/boot.inc&quot;</span><br><span class="line"></span><br><span class="line">section loader vstart=LOADER_BASE_ADDR ;指明程序的偏移的基地址</span><br><span class="line"></span><br><span class="line">jmp Entry;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">;程序核心内容</span><br><span class="line">Entry:</span><br><span class="line">    </span><br><span class="line">    ;----------------------</span><br><span class="line">    ;禁止CPU级别的中断，进入保护模式时没有建立中断表</span><br><span class="line">    ;----------------------</span><br><span class="line">    cli	</span><br><span class="line"></span><br><span class="line">    ;----------------------</span><br><span class="line">    ;打开A20</span><br><span class="line">    ;----------------------</span><br><span class="line">    in 		al,0x92</span><br><span class="line">    or 		al,0000_0010B       ;设置第1位为1</span><br><span class="line">    out 	0x92,al</span><br><span class="line">    </span><br><span class="line">    ;----------------------</span><br><span class="line">    ;加载GDT</span><br><span class="line">    ;----------------------</span><br><span class="line">    lgdt [Gdt_Addr]</span><br><span class="line"></span><br><span class="line">	;----------------------</span><br><span class="line">    ;进入保护模式</span><br><span class="line">    ;----------------------</span><br><span class="line">    mov 	eax,cr0</span><br><span class="line">    or 		eax,0x1      ;设置第0位为1</span><br><span class="line">    mov 	cr0,eax</span><br><span class="line"></span><br><span class="line">;程序挂起</span><br><span class="line">Fin:</span><br><span class="line">    hlt 					;让CPU挂起，等待指令。</span><br><span class="line">    jmp Fin</span><br><span class="line">    </span><br><span class="line">;---------------------------------</span><br><span class="line">;定义GDT全局描述符表</span><br><span class="line">;code: 0x0000ffff, 0x00cf9a00   </span><br><span class="line">;data: 0x0000ffff, 0x00cf9200</span><br><span class="line">;vga:</span><br><span class="line">;---------------------------------</span><br><span class="line">Gdt_Addr:</span><br><span class="line">    dw		8*4-1						;指定段上限为4(GDT全局描述符表的大小)</span><br><span class="line">    dd		Gdt_Table_Addr				;GDT全局描述符表的地址</span><br><span class="line">Gdt_Table_Addr:</span><br><span class="line">    Gdt_Descriptor 0,0,0</span><br><span class="line">    Gdt_Descriptor 0x00000000, 0xfffff, DESC_CODE  ;可以执行的段</span><br><span class="line">    Gdt_Descriptor 0x00000000, 0xfffff, DESC_DATA  ;可以读写的段</span><br><span class="line">    Gdt_Descriptor 0x000b8000, 0x07fff, DESC_DATA  ;vga段</span><br><span class="line">    dw		0	    </span><br><span class="line"></span><br><span class="line">times	512-($-$$) db  0 ; 处理当前行$至结束(1FE)的填充</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>使用bochs执行</p>
+<p>打好断点后，执行并查看gtd描述符数据是否正确。</p>
+<blockquote>
+<p>info gdt</p>
+</blockquote>
+<p><img src="/2_1_1.png" alt="2_1_1.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.1_%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F/" rel="prev" title="chap2.1_保护模式">
+                  <i class="fa fa-angle-left"></i> chap2.1_保护模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.6_C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/" rel="next" title="chap2.6_C语言程序">
+                  chap2.6_C语言程序 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
