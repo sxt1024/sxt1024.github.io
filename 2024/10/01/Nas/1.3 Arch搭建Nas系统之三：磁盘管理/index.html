@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="3.1 数据磁盘分配说明3.1.1 数据文件系统 为安装nas的Nas系统我准备总共有7块硬盘，分配如下：a) 1块M2固态硬盘：大小为1T，做Nas系统盘使用。b) 6块SATA机械硬盘：每块大小为8T，5块做数据盘，1块做校验盘。 为了方便使用，不碎片话，需要把5块数据磁盘整合然后挂到同一个目录下。因此使用联合文件系统mergerfs。 a)  Nas系统盘，创建 &#x2F;data 目录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.3 Arch搭建Nas系统之三：磁盘管理">
+<meta property="og:url" content="https://blog.sxt1024.fun/2024/10/01/Nas/1.3%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%89%EF%BC%9A%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="3.1 数据磁盘分配说明3.1.1 数据文件系统 为安装nas的Nas系统我准备总共有7块硬盘，分配如下：a) 1块M2固态硬盘：大小为1T，做Nas系统盘使用。b) 6块SATA机械硬盘：每块大小为8T，5块做数据盘，1块做校验盘。 为了方便使用，不碎片话，需要把5块数据磁盘整合然后挂到同一个目录下。因此使用联合文件系统mergerfs。 a)  Nas系统盘，创建 &#x2F;data 目录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-01T04:27:28.000Z">
+<meta property="article:modified_time" content="2024-10-27T14:55:27.570Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="nas">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2024/10/01/Nas/1.3%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%89%EF%BC%9A%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2024/10/01/Nas/1.3%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%89%EF%BC%9A%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/","path":"2024/10/01/Nas/1.3 Arch搭建Nas系统之三：磁盘管理/","title":"1.3 Arch搭建Nas系统之三：磁盘管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>1.3 Arch搭建Nas系统之三：磁盘管理 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">33</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%95%B0%E6%8D%AE%E7%A3%81%E7%9B%98%E5%88%86%E9%85%8D%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">3.1 数据磁盘分配说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-mergerfs"><span class="nav-number">2.</span> <span class="nav-text">3.2 mergerfs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-snapraid"><span class="nav-number">3.</span> <span class="nav-text">3.3 snapraid</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC"><span class="nav-number">3.2.</span> <span class="nav-text">3.4 定时备份脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%85%B6%E4%BB%96"><span class="nav-number">3.3.</span> <span class="nav-text">3.4 其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-%E7%A3%81%E7%9B%98%E4%BC%91%E7%9C%A0"><span class="nav-number">4.</span> <span class="nav-text">3.5 磁盘休眠</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2024/10/01/Nas/1.3%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%89%EF%BC%9A%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="1.3 Arch搭建Nas系统之三：磁盘管理 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.3 Arch搭建Nas系统之三：磁盘管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-01 12:27:28" itemprop="dateCreated datePublished" datetime="2024-10-01T12:27:28+08:00">2024-10-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-27 22:55:27" itemprop="dateModified" datetime="2024-10-27T22:55:27+08:00">2024-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/nas/" itemprop="url" rel="index"><span itemprop="name">nas</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="3-1-数据磁盘分配说明"><a href="#3-1-数据磁盘分配说明" class="headerlink" title="3.1 数据磁盘分配说明"></a>3.1 数据磁盘分配说明</h2><p><strong>3.1.1 数据文件系统</strong></p>
+<p>为安装nas的Nas系统我准备总共有7块硬盘，分配如下：<br>a) 1块M2固态硬盘：大小为1T，做Nas系统盘使用。<br>b) 6块SATA机械硬盘：每块大小为8T，5块做数据盘，1块做校验盘。</p>
+<p>为了方便使用，不碎片话，需要把5块数据磁盘整合然后挂到同一个目录下。因此使用联合文件系统mergerfs。</p>
+<p>a)  Nas系统盘，创建 &#x2F;data 目录。用来挂载5块磁盘。&#x2F;data目录，使用空间大小为40T。<br>b）5块磁盘全部格式化为btrfs文件系统。<br>c）使用mergerfs将5块4T磁盘，联合成一个整的20T磁盘使用。</p>
+<p><strong>3.1.2 数据备份</strong></p>
+<p>放弃raid，家用环境中raid是不可靠的，且恢复难度极大。多份冷备份才能减少数据丢失的概率。</p>
+<p>a）重要数据做一份单独磁盘的复制冷备份。</p>
+<p>b）Nas系统使用一块4T磁盘做snapraid的快照备份。</p>
+<h2 id="3-2-mergerfs"><a href="#3-2-mergerfs" class="headerlink" title="3.2 mergerfs"></a>3.2 mergerfs</h2><p><strong>3.2.1 查看磁盘信息</strong></p>
+<p>查看硬盘列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br><span class="line">或</span><br><span class="line">lsblk</span><br></pre></td></tr></table></figure>
+
+<p>查看挂载信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">blkid</span><br><span class="line">或</span><br><span class="line">df -h</span><br></pre></td></tr></table></figure>
+
+<p> 查看硬盘详细信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">paru hwinfo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>3.2.2 格式化数据盘</strong></p>
+<p>我的5块数据盘如下：【sda,sdb,sdc，sdd，sde】</p>
+<p>使用btrfs格式化 ，以第一块盘sda为例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 安装btrfs文件系统</span><br><span class="line">pacman -S btrfs-progs</span><br><span class="line"></span><br><span class="line"># 格式化磁盘</span><br><span class="line">mkfs.btrfs -L &quot;sda&quot;  /dev/sda </span><br><span class="line"></span><br><span class="line"># 如果需要强制格式化</span><br><span class="line">mkfs.btrfs -f -L &quot;sda&quot;  /dev/sda</span><br></pre></td></tr></table></figure>
+
+<p>挂载到&#x2F;mnt目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /mnt/sda</span><br><span class="line">chown -R archnas:archnas /mnt/sda</span><br><span class="line">mount /dev/sda /mnt/sda -o compress=zstd</span><br></pre></td></tr></table></figure>
+
+<p>其他磁盘一样，这样有5块磁盘分别挂载如下：</p>
+<p>【磁盘：&#x2F;dev&#x2F;sda，挂载：&#x2F;mnt&#x2F;sda】</p>
+<p>【磁盘：&#x2F;dev&#x2F;sdb，挂载：&#x2F;mnt&#x2F;sdb】</p>
+<p>【磁盘：&#x2F;dev&#x2F;sdc，挂载：&#x2F;mnt&#x2F;sdc】</p>
+<p>【磁盘：&#x2F;dev&#x2F;sdd，挂载：&#x2F;mnt&#x2F;sdd】</p>
+<p>【磁盘：&#x2F;dev&#x2F;sde，挂载：&#x2F;mnt&#x2F;sde】</p>
+<p><strong>3.2.3 配置mergerfs</strong></p>
+<p>安装mergerfs</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru  mergerfs</span><br></pre></td></tr></table></figure>
+
+<p>整合所有的btrfs磁盘到一个mergerfs文件系统，并挂载mergerfs文件系统到 &#x2F;data目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /data</span><br><span class="line">chown -R archnas:archnas /data</span><br><span class="line">mergerfs -o cache.files=partial,dropcacheonclose=true,category.create=epmfs \</span><br><span class="line">/mnt/sda:/mnt/sdb:/mnt/sdc:/mnt/sdd:/mnt/sdd:/mnt/sde /data </span><br></pre></td></tr></table></figure>
+
+<p>重新加载所有磁盘</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">重新加载所有磁盘</span><br><span class="line">mount -a</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.2.4 配置fstab</strong></p>
+<p>手动挂载磁盘，重启后就失效了。如果要开机自动挂载磁盘，需要配置fastab</p>
+<p>mergerfs配置示例如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line"></span><br><span class="line">添加内容：</span><br><span class="line">UUID=XXXXXXXXXXXXXXXXXXXXXXXXXX   /mnt/sda    btrfs           rw,relatime,compress=zstd    0 0</span><br><span class="line">UUID=XXXXXXXXXXXXXXXXXXXXXXXXXX   /mnt/sdb    btrfs           rw,relatime,compress=zstd    0 0</span><br><span class="line">UUID=XXXXXXXXXXXXXXXXXXXXXXXXXX   /mnt/sdc    btrfs           rw,relatime,compress=zstd    0 0</span><br><span class="line">UUID=XXXXXXXXXXXXXXXXXXXXXXXXXX   /mnt/sde    btrfs           rw,relatime,compress=zstd    0 0</span><br><span class="line">UUID=XXXXXXXXXXXXXXXXXXXXXXXXXX   /mnt/sde    btrfs           rw,relatime,compress=zstd    0 0</span><br><span class="line">/mnt/sda:/mnt/sdb:/mnt/sdc:/mnt/sdd:/mnt/sde    /data       mergerfs     cache.files=partial,dropcacheonclose=true,category.create=epmfs 0 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-snapraid"><a href="#3-3-snapraid" class="headerlink" title="3.3 snapraid"></a>3.3 snapraid</h2><p>将第6块校验盘使用btrfs格式化，并挂载到 &#x2F;mnt&#x2F;sdf 目录、</p>
+<p><strong>3.3.1 安装配置snapraid</strong></p>
+<p>安装snapraid</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru  snapraid</span><br></pre></td></tr></table></figure>
+
+<p>配置snapraid</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /nas/snapraid</span><br><span class="line">sudo chown -R archnas:archnas /nas/snapraid</span><br><span class="line"></span><br><span class="line">vim /etc/snapraid.conf </span><br><span class="line"></span><br><span class="line">添加内容</span><br><span class="line">data d1 /mnt/sda</span><br><span class="line">data d2 /mnt/sdb</span><br><span class="line">data d3 /mnt/sdc</span><br><span class="line">data d4 /mnt/sdd</span><br><span class="line">data d5 /mnt/sde</span><br><span class="line">parity /mnt/sdf/SnapRAID.parity</span><br><span class="line">content /nas/snapraid/SnapRAID.content</span><br><span class="line">content /mnt/sdf/SnapRAID.content</span><br><span class="line">exclude /lost+found/</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：</p>
+<ol>
+<li>disk 指定所需要备份的目录, 配置为数据盘挂载点</li>
+<li>parity 指定校验文件的存放位置，配置为校验盘目录文件</li>
+<li>content 指定文件索引等备份所需要的元信息,需要配置两个不同磁盘目录</li>
+</ol>
+</blockquote>
+<p><strong>3.3.2 备份数据</strong><br>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snapraid sync</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.3.3 还原数据</strong></p>
+<p>例如 &#x2F;dev&#x2F;sdb 盘挂掉。<br>a)  首先停止掉定时备份的脚本<br>b)  拆掉旧硬盘，替换新硬盘，并将新硬盘挂载到  &#x2F;mnt&#x2F;sdb_recovery 目录<br>c）修改&#x2F;etc&#x2F;snapraid.conf，替换</p>
+<p>d）执行恢复命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snapraid -d d2 -l recovery.log fix</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.3.4 取消删除</strong><br>取消删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">snapraid fix -f FILENAME</span><br><span class="line">（使用 file 或 dir 的完整 PATH 更好。file path 相对于所有根目录）</span><br></pre></td></tr></table></figure>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="3-4-定时备份脚本"><a href="#3-4-定时备份脚本" class="headerlink" title="3.4 定时备份脚本"></a>3.4 定时备份脚本</h3><h3 id="3-4-其他"><a href="#3-4-其他" class="headerlink" title="3.4 其他"></a>3.4 其他</h3><p>btrfs磁盘管理命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 添加磁盘</span><br><span class="line">btrfs device add /dev/sdZ /mnt/sda</span><br><span class="line"></span><br><span class="line"># 强制添加</span><br><span class="line">btrfs device add -f /dev/sdZ  /mnt/sda</span><br><span class="line"></span><br><span class="line"># 移除硬盘</span><br><span class="line">btrfs device delete /dev/sdZ  /mnt/sda</span><br><span class="line"></span><br><span class="line"># 添加后重新均衡文件</span><br><span class="line">btrfs balance start  /mnt/sda</span><br><span class="line"></span><br><span class="line"># 查看文件系统上各种数据的用量</span><br><span class="line">btrfs filesystem df /data</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-5-磁盘休眠"><a href="#3-5-磁盘休眠" class="headerlink" title="3.5 磁盘休眠"></a>3.5 磁盘休眠</h2><ol>
+<li>安装<br>安装 hdparm 软件包 和 smartmontools 软件包<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pacman -S hdparm</span><br><span class="line">pacman -S smartmontools</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>2）设置</p>
+<p>设置休眠</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/systemd/system/hdparm.service</span><br><span class="line"></span><br><span class="line">内容</span><br><span class="line">---</span><br><span class="line">[Unit]</span><br><span class="line">Description=hdparm sleep</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line">ExecStart=/usr/bin/hdparm -q -S 241 -y /dev/sda /dev/sdb</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start hdparm &amp;&amp; systemctl enable hdparm</span><br></pre></td></tr></table></figure>
+
+<p>241指30分钟</p>
+<blockquote>
+<p>时间数值说明<br>120：10分钟， 180：15分组，241：30分钟，242：1小时<br>从1到240的值指定5秒的倍数，从而产生5秒到20分钟的超时。<br>从241到251的值指定30分钟的1到11个单位，从而产生30分钟到5.5小时的超时。<br>值252表示超时21分钟。</p>
+</blockquote>
+<p>3）查看硬盘活动状态<br>smartctl -i -n standby &#x2F;dev&#x2F;sda</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nas/" rel="tag"># nas</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/" rel="prev" title="1.5 Arch搭建Nas系统之五：Docker容器">
+                  <i class="fa fa-angle-left"></i> 1.5 Arch搭建Nas系统之五：Docker容器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/" rel="next" title="1.13 Arch搭建Nas系统之后篇：安全篇">
+                  1.13 Arch搭建Nas系统之后篇：安全篇 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

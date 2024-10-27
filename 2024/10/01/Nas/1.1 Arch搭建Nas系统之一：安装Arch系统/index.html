@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1.1 准备U盘准备一个8G以上的U盘 1.2 准备安装包下载Arch的ISO文件： 下载地址：Download . Arch 下载Ventoy安装工具 下载地址： Download . Ventoy 1.2.2 安装 Ventoy 解压ventoy压缩包，执行 Ventoy2Disk.exe  设备选择U盘，点击安装. 等待安装完成 1.2.3 复制ISO文件到u盘 将下载好的arch的ISO文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.1 Arch搭建Nas系统之一：安装Arch系统">
+<meta property="og:url" content="https://blog.sxt1024.fun/2024/10/01/Nas/1.1%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85Arch%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="1.1 准备U盘准备一个8G以上的U盘 1.2 准备安装包下载Arch的ISO文件： 下载地址：Download . Arch 下载Ventoy安装工具 下载地址： Download . Ventoy 1.2.2 安装 Ventoy 解压ventoy压缩包，执行 Ventoy2Disk.exe  设备选择U盘，点击安装. 等待安装完成 1.2.3 复制ISO文件到u盘 将下载好的arch的ISO文">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-01T04:27:28.000Z">
+<meta property="article:modified_time" content="2024-10-27T14:55:22.401Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="nas">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2024/10/01/Nas/1.1%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85Arch%E7%B3%BB%E7%BB%9F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2024/10/01/Nas/1.1%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85Arch%E7%B3%BB%E7%BB%9F/","path":"2024/10/01/Nas/1.1 Arch搭建Nas系统之一：安装Arch系统/","title":"1.1 Arch搭建Nas系统之一：安装Arch系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>1.1 Arch搭建Nas系统之一：安装Arch系统 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">33</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%87%86%E5%A4%87U%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">1.1 准备U盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">1.2 准备安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">1.3 磁盘分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E6%8C%82%E8%BD%BD%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">4.</span> <span class="nav-text">1.4. 挂载磁盘分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E5%AE%89%E8%A3%85Arch%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">1.5. 安装Arch系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E5%AE%89%E8%A3%85%E5%BC%95%E5%AF%BC"><span class="nav-number">6.</span> <span class="nav-text">1.6 安装引导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E9%85%8D%E7%BD%AEnas%E7%94%A8%E6%88%B7"><span class="nav-number">7.</span> <span class="nav-text">1.7 配置nas用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-11-%E9%87%8D%E5%90%AF%E7%B3%BB%E7%BB%9F"><span class="nav-number">8.</span> <span class="nav-text">1.11 重启系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-%E9%85%8D%E7%BD%AESSH"><span class="nav-number">9.</span> <span class="nav-text">1.8 配置SSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-12-%E5%85%B6%E4%BB%96%EF%BC%9A%E6%97%A0%E7%BA%BF%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">1.12 其他：无线联网方式</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2024/10/01/Nas/1.1%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85Arch%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="1.1 Arch搭建Nas系统之一：安装Arch系统 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.1 Arch搭建Nas系统之一：安装Arch系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-01 12:27:28" itemprop="dateCreated datePublished" datetime="2024-10-01T12:27:28+08:00">2024-10-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-27 22:55:22" itemprop="dateModified" datetime="2024-10-27T22:55:22+08:00">2024-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/nas/" itemprop="url" rel="index"><span itemprop="name">nas</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="1-1-准备U盘"><a href="#1-1-准备U盘" class="headerlink" title="1.1 准备U盘"></a>1.1 准备U盘</h3><p>准备一个8G以上的U盘</p>
+<h3 id="1-2-准备安装包"><a href="#1-2-准备安装包" class="headerlink" title="1.2 准备安装包"></a>1.2 准备安装包</h3><p>下载Arch的ISO文件：</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://archlinux.org/download/">Download . Arch</a></p>
+<p>下载Ventoy安装工具</p>
+<p>下载地址： <a target="_blank" rel="noopener" href="https://www.ventoy.net/cn/download.html">Download . Ventoy</a></p>
+<p><strong>1.2.2 安装 Ventoy</strong></p>
+<p>解压ventoy压缩包，执行 Ventoy2Disk.exe</p>
+<p><img src="data:image/png;base64,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gaG0pYiIiIjkw6xcsPD9Y13FDkNERERESp5Zt3RZeUUF2P0Dg8UORkRERERKmGUYRk1N7YmTn8ZisWIHIyIiIiIlzOrt7l7R2BgMDF/1+YodjIiIiIiUMLPf5zUM46rfZ9jRYgcjIiIiIiUsPp6l2+0eHh4pbigiIiIiUtKshZ5FhmFUVVVHo6qzFBEREZHpsxpvXXnq008unDsTDkdmemc1NTWA3++/BvYiIiIiIhOYGPh93jtXPq3BjAAAIABJREFU31azsLrYwYiIiIhICbPO9vVGI+GBgcFZGM/SySNmyik6r2dfN7vkLWTfWu7bFBEREZEcmbFg4Dvr1/n8fsuyih2MiIiIiJQw67v3fDscDpeXlfUzVOxgYOq5zNRlsmciVYUpIiIiMkPiow4tWbIkGpnxHjwiIiIicg0bewK+oHr+7OyysPnC1Bxk9jpOZStFREREZogJYNvYdv3y5cUORkRERERKmIVt28UOIh+pOcjkHujZlxQRERGRAjKLHYCIiIiIXCNmaaSh7BnE7BWQqTnITEtmXyb3/uMiIiIiMg2W5bZidszlUvJSRERERPJivbJ7TyQSCQwP29gbN26cod2kZiiTf84lg5jLOJfZt5MphlzWFREREZFJWdt//FgoFDp69GixIxERERGR0jblOsvLly/nuOTixYsnXSZTP+7sy6f+7Gwh9+2kbiFV7kcqIiIici3JpRWXlsorRURERKQwptk3fNot2bSSM5e59PvOvp3UtaY3F3lhj1FERERk7svzma1yliIiIiJSGLM0nmU+NN+3iIiISElQzlJERERECqPIOcvkfGRqteVUs5WZqien2mdcRERERKZBOUsRERERKYyi5Swz5SOnl61MXjeXvSiLKSIiIlJwylmKiIiISGEULWeZPY+YOjeP+oaLiIiIzHHKWYqIiIhIYRQhZ5k633fq61NdMnWZXF4XERERkQKy9u/fHw5HfD6vDW1tbcWOR0RERERKlbVlyw9CoVBn57Gi7D736snsS6oKU0RERKTorGg0GotFYzG72JGIiIiISGlTDx4RERERKQwTULpSRERERPI3mrNU81JERERE8mJiFDsEEREREbkmmO8cee/s2XNgKG0pIiIiIvkwKxcsfP9YV7HDEBEREZGSZ9YtXVZeUQF2/8BgsYMRERERkRJmGYZRU1N74uSnsVis2MGI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" alt="assets/nas001.pg"></p>
+<p>设备选择U盘，点击安装. 等待安装完成</p>
+<p><strong>1.2.3 复制ISO文件到u盘</strong></p>
+<p>将下载好的arch的ISO文件复制到准备好的U盘根目录</p>
+<p><strong>1.2.4 准备安装Arch</strong></p>
+<p>a) 将U盘插入电脑，从USB启动，进入Ventoy安装界面，然后后选择 Arch 的镜像，等待重启加载。</p>
+<p>b) 当引导加载程序菜单出现时，选择 <em>Arch Linux install medium</em> 并按 <code>Enter</code> 进入安装环境。</p>
+<p>c) 成功进入root用户的命令行界面。</p>
+<h3 id="1-3-磁盘分区"><a href="#1-3-磁盘分区" class="headerlink" title="1.3 磁盘分区"></a>1.3 磁盘分区</h3><p><strong>1.3.1 格式化分区</strong></p>
+<p>首先需要查看所有磁盘，并决定系统安装在哪一个盘。</p>
+<p>a) 查看当前所有磁盘：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>例如如果为m2固态，名称类似&#x2F;dev&#x2F;nvme0n。如果为机械盘，名称类似&#x2F;dev&#x2F;sda。</p>
+</blockquote>
+<p>b) 对指定磁盘执行分区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">parted   /dev/nvme0n1                    #【选择一个磁盘进行分区】</span><br><span class="line"></span><br><span class="line">mklabel gpt                              #【建立gpt分区表】</span><br><span class="line"></span><br><span class="line">mkpart &quot;EFI&quot; fat32  1MiB 1025MiB               #【建立ESP分区，用于挂载efi分区（uefi模式必须要有efi分区）】   </span><br><span class="line"></span><br><span class="line">mkpart &quot;root&quot; ext4  1025MiB  100%             #【创建/分区，剩余所有容量 】</span><br><span class="line"></span><br><span class="line">p                                         #【打印分区信息】</span><br><span class="line"></span><br><span class="line">set 1 esp on                              #【设定ESP分区标志为boot】</span><br><span class="line"></span><br><span class="line">q                                         # 【退出】                                                                 #【退出】</span><br></pre></td></tr></table></figure>
+
+
+<p>格式化分区命令</p>
+<p>mkfs.vfat -F 32 &#x2F;dev&#x2F;nvme0n1p1     【esp】</p>
+<p>mkfs.ext4 &#x2F;dev&#x2F;nvme0n1p2           【根目录】</p>
+<h3 id="1-4-挂载磁盘分区"><a href="#1-4-挂载磁盘分区" class="headerlink" title="1.4. 挂载磁盘分区"></a>1.4. 挂载磁盘分区</h3><p>挂载分区</p>
+<p>执行blkid查看分区</p>
+<p>挂载分区，安装系统时可以访问，并安装boot，home，data目录文件到挂载的分区。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mount /dev/nvme0n1p2 /mnt                #【首先挂载根目录】</span><br><span class="line"></span><br><span class="line">mkdir /mnt/boot</span><br><span class="line">mount /dev/nvme0n1p1 /mnt/boot           #【在根目录下挂载boot分区】      </span><br></pre></td></tr></table></figure>
+
+<p>执行查看挂载结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df-h</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-安装Arch系统"><a href="#1-5-安装Arch系统" class="headerlink" title="1.5. 安装Arch系统"></a>1.5. 安装Arch系统</h3><p><strong>1.5.1 测试网络</strong></p>
+<p>使用ping命令测试网络延迟</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping -c 3 www.qq.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.5.2 设置软件源</strong></p>
+<p>我觉得不换速度也OK，可以尝试换国内源。具体自行百度。</p>
+<p><strong>1.5.3 安装基本包</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt base base-devel linux linux-firmware dhcpcd  iwd </span><br><span class="line">pacstrap /mnt vim nano wget</span><br></pre></td></tr></table></figure>
+
+<p>系统会安装并挂载在&#x2F;mnt目录下面</p>
+<p><strong>1.5.4 生成fstab文件</strong></p>
+<p>生成fstab文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-安装引导"><a href="#1-6-安装引导" class="headerlink" title="1.6 安装引导"></a>1.6 安装引导</h3><p><strong>1.6.1 进入系统</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.6.2 安装Systemd-boot引导</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bootctl  install</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.6.3 修改引导配置</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vim /boot/loader/entries/arch.conf</span><br><span class="line"></span><br><span class="line">内容</span><br><span class="line">title          Arch Linux</span><br><span class="line">linux          /vmlinuz-linux</span><br><span class="line">initrd         /initramfs-linux.img</span><br><span class="line">options        root=UUID=XXXXXXXXXXXXXXXXXXX rw</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>XXXXXXXXXXXXXXXXXXX配置为磁盘分区的UUID</p>
+<p>注意是查找的 系统  &#x2F;根目录挂载分区  UUID 名称。</p>
+<p>例如：&#x2F;dev&#x2F;sdaX 的 UUID&#x3D;”d4539375-8c4d-4721-ac18-ed3f645bc589”</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vim /boot/loader/loader.conf</span><br><span class="line"></span><br><span class="line">内容</span><br><span class="line">default  arch  </span><br><span class="line">timeout  5</span><br><span class="line">console-mode max  </span><br><span class="line">editor   no </span><br><span class="line">:wq!</span><br></pre></td></tr></table></figure>
+
+<p>使用bootctl更新Systemd-boot：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bootctl update</span><br></pre></td></tr></table></figure>
+
+<p>检查当前的Systemd-boot配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bootctl list</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-配置nas用户"><a href="#1-7-配置nas用户" class="headerlink" title="1.7 配置nas用户"></a>1.7 配置nas用户</h3><p><strong>1.7.1 设置root密码</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># passwd root</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.7.2 创建nas用户</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd archnas</span><br><span class="line">useradd -m -g archnas archnas</span><br><span class="line">passwd archnas</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.7.2 加入sudo权限</strong></p>
+<p>编辑sudo配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch /etc/sudoers.d/sudo_users</span><br><span class="line">echo &quot;archnas ALL=(ALL:ALL)  NOPASSWD:ALL&quot;  &gt;&gt; /etc/sudoers.d/sudo_users</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-11-重启系统"><a href="#1-11-重启系统" class="headerlink" title="1.11 重启系统"></a>1.11 重启系统</h3><p>重启系统，看下是否能正常进入引导。如果无法引导，那么就说明引导的配置有问题，需要检查配置。</p>
+<p>如果重启成功引导并进入系统就可以进行下一步配置了。</p>
+<p>exit<br>reboot</p>
+<h3 id="1-8-配置SSH"><a href="#1-8-配置SSH" class="headerlink" title="1.8 配置SSH"></a>1.8 配置SSH</h3><p><strong>1.8.2 配置有线网络</strong></p>
+<p>a) 查询网卡名称</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br></pre></td></tr></table></figure>
+
+<p>根据列表。找到有线网卡名称：eth0 或者其他名例如（enp1s0）</p>
+<p>b) 修改网络配置</p>
+<p>不配置的话通常地址IP是自动获取的，会变。所以需要设置成静态地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/dhcpcd.conf</span><br><span class="line"></span><br><span class="line">文件的最后加入内容</span><br><span class="line">interface  enp1s0</span><br><span class="line">static ip_address=192.168.10.222/24    </span><br><span class="line">static routers=192.168.10.1</span><br><span class="line">static domain_name_servers=192.168.10.1</span><br></pre></td></tr></table></figure>
+
+<p>以上配置只供参考。需要配置你自己当前环境的网段IP。我的网段是（192.168.10.X）</p>
+<p>c) 保存后，重启dhtpcd网络服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart dhcpcd &amp;&amp; systemctl enable dhcpcd</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="1-12-其他：无线联网方式"><a href="#1-12-其他：无线联网方式" class="headerlink" title="1.12 其他：无线联网方式"></a>1.12 其他：无线联网方式</h3><p>查看设备</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br></pre></td></tr></table></figure>
+
+<p>执行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 开启iwctl服务（如果失败，可能需要重启）</span><br><span class="line">systemctl enable --now iwd</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">## 查看网卡设备</span><br><span class="line">iwctl device list</span><br><span class="line">iwctl station list</span><br><span class="line"></span><br><span class="line">## 搜索可以连接的wifi</span><br><span class="line">iwctl station [设备名] scan</span><br><span class="line"></span><br><span class="line">## 连接</span><br><span class="line">iwctl station [设备名] connect [wifi网络名]</span><br><span class="line">输入密码</span><br><span class="line"></span><br><span class="line">## 查看连接状态</span><br><span class="line">iwctl station  show</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>Archinstall方式<br>执行 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">archinstall</span><br><span class="line"></span><br><span class="line">1) archinstall language，选English</span><br><span class="line">2) Mirrors，选china</span><br><span class="line">2）Locale language 选择 zh_CN.UTF-8</span><br><span class="line">3）创建分区，选择m2盘，建议分区，不使用home目录 </span><br><span class="line">  ---（如果磁盘已经有分区，需要进parted删除分区）</span><br><span class="line">4）新增安装包，选择vim nano wget</span><br><span class="line">4）修改hostname</span><br><span class="line">5）修改root密码</span><br><span class="line">6）创建用户账号</span><br><span class="line">7) Profile，选择Minumal</span><br><span class="line">7）网络， 手动添加静态IP</span><br><span class="line">8）时区，选择Asia/shanghai</span><br></pre></td></tr></table></figure>
+
+<p>点击install安装</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nas/" rel="tag"># nas</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="prev" title="1.10 Arch搭建Nas系统之十：图书笔记">
+                  <i class="fa fa-angle-left"></i> 1.10 Arch搭建Nas系统之十：图书笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
