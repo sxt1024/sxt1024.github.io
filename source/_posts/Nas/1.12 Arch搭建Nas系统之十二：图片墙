@@ -1,0 +1,40 @@
+
+
+## 安装pigallery2
+
+
+
+mkdir -p /nas/pigallery2
+vim /nas/pigallery2/docker-compose.yml
+
+
+```
+version: '3'
+services:
+  pigallery2:
+    image: bpatrik/pigallery2:latest
+    container_name: pigallery2
+    environment:
+      - NODE_ENV=production # set to 'debug' for full debug logging
+      # - NODE_OPTIONS=--enable-source-maps # enable source map support on the backend for development
+    volumes:
+      - "/nas/pigallery2/config:/app/data/config" # CHANGE ME
+      - "/nas/pigallery2/db-data:/app/data/db"
+      - "/data/images:/app/data/images:ro" # CHANGE ME, ':ro' means read-only
+    ports:
+      - 8480:80
+    restart: unless-stopped
+
+```
+
+
+> cd /nas/pigallery2
+> sudo docker-compose up -d
+
+登录
+http://192.168.10.222:8680/
+
+
+默认管理员 admin/admin
+登录后新建一个管理账号，使用新管理账号登录并删除admin
+重启docker镜像
