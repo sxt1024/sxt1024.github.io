@@ -1,22 +1,22 @@
 ---
-title: "1.0_概述"
+title: chap1.0_概述
 date: 2018-10-01
 lastmod: 2021-03-20
 timezone: UTC+8
-tags: ["操作系统"]
-categories: ["操作系统"]
+tags:
+  - 操作系统
+categories: 操作系统
 draft: false
 ---
 
 
 
-## 概述
+## 参考资料
 
 相关资料：
 
 
-
-![1.0_1.jpg](images/1.0_1.jpg)
+![1_0_1.jpg](1_0_1.jpg)
 
 **汇编**
 
@@ -27,10 +27,7 @@ draft: false
 1 深入理解计算机系统
 
 
-
 **实现**
-
-
 
 1 操作系统真相还原
 
