@@ -6,7 +6,7 @@
   <link href="https://blog.sxt1024.fun/atom.xml" rel="self"/>
   
   <link href="https://blog.sxt1024.fun/"/>
-  <updated>2024-10-27T14:55:22.401Z</updated>
+  <updated>2024-10-27T14:55:02.546Z</updated>
   <id>https://blog.sxt1024.fun/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>1.10 Arch搭建Nas系统之十：图书笔记</title>
+    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
+    <published>2024-10-01T04:27:28.000Z</published>
+    <updated>2024-10-27T14:55:02.546Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;安装电子书管理工具&quot;&gt;&lt;a href=&quot;#安装电子书管理工具&quot; class=&quot;headerlink&quot; title=&quot;安装电子书管理工具&quot;&gt;&lt;/a&gt;安装电子书管理工具&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;calibre客户端工具&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下载页面：</summary>
+      
+    
+    
+    
+    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
+    
+    
+    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
+    
+  </entry>
   
   <entry>
     <title>1.1 Arch搭建Nas系统之一：安装Arch系统</title>
@@ -40,17 +63,16 @@
   </entry>
   
   <entry>
-    <title>1.10 Arch搭建Nas系统之十：图书笔记</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
+    <title>1.13 Arch搭建Nas系统之后篇：安全篇</title>
+    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/"/>
+    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/</id>
     <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:55:02.546Z</updated>
+    <updated>2024-10-27T14:58:47.434Z</updated>
     
     
       
       
-    <summary type="html">&lt;h3 id=&quot;安装电子书管理工具&quot;&gt;&lt;a href=&quot;#安装电子书管理工具&quot; class=&quot;headerlink&quot; title=&quot;安装电子书管理工具&quot;&gt;&lt;/a&gt;安装电子书管理工具&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;calibre客户端工具&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;下载页面：</summary>
+    <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span c</summary>
       
     
     
@@ -108,28 +130,6 @@
   </entry>
   
   <entry>
-    <title>1.13 Arch搭建Nas系统之后篇：安全篇</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/</id>
-    <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:58:47.434Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span c</summary>
-      
-    
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
-    
-  </entry>
-  
-  <entry>
     <title>1.3 Arch搭建Nas系统之三：磁盘管理</title>
     <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.3%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%89%EF%BC%9A%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/"/>
     <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.3%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B8%89%EF%BC%9A%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/</id>
@@ -140,28 +140,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;3-1-数据磁盘分配说明&quot;&gt;&lt;a href=&quot;#3-1-数据磁盘分配说明&quot; class=&quot;headerlink&quot; title=&quot;3.1 数据磁盘分配说明&quot;&gt;&lt;/a&gt;3.1 数据磁盘分配说明&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;3.1.1 数据文件系统&lt;/strong&gt;&lt;</summary>
-      
-    
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>1.5 Arch搭建Nas系统之五：Docker容器</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/</id>
-    <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:55:15.074Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;5-1-安装Docker&quot;&gt;&lt;a href=&quot;#5-1-安装Docker&quot; class=&quot;headerlink&quot; title=&quot;5.1 安装Docker&quot;&gt;&lt;/a&gt;5.1 安装Docker&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;5.1.1 安装docker&lt;/strong</summary>
       
     
     
@@ -206,6 +184,28 @@
       
       
     <summary type="html">&lt;h3 id=&quot;6-1-安装web文件浏览器&quot;&gt;&lt;a href=&quot;#6-1-安装web文件浏览器&quot; class=&quot;headerlink&quot; title=&quot;6.1 安装web文件浏览器&quot;&gt;&lt;/a&gt;6.1 安装web文件浏览器&lt;/h3&gt;&lt;h3 id=&quot;6-2-安装私有云盘：nextcl</summary>
+      
+    
+    
+    
+    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
+    
+    
+    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>1.5 Arch搭建Nas系统之五：Docker容器</title>
+    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/"/>
+    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/</id>
+    <published>2024-10-01T04:27:28.000Z</published>
+    <updated>2024-10-27T14:55:15.074Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;5-1-安装Docker&quot;&gt;&lt;a href=&quot;#5-1-安装Docker&quot; class=&quot;headerlink&quot; title=&quot;5.1 安装Docker&quot;&gt;&lt;/a&gt;5.1 安装Docker&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;5.1.1 安装docker&lt;/strong</summary>
       
     
     
