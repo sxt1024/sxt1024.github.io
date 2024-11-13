@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="显示字符串：使用字符串中断字符串中断上面一篇通过循环调用字符中断显示字符串，这次通过AH＝13H字符串中断来显示字符串。 1. 字符串中断  当BIOS执行显示字符串调用显示服务 INT 10H，AH＝13H，可以进行单个字符的显示 首先需要配置入口参数： 中断号：INT10    寄存器 说明 值    AH 功能：在Teletype模式下显示字符 13H   AL 显示输出方式 —-   BH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chap1.7_显示字符串">
+<meta property="og:url" content="https://blog.sxt1024.fun/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.9_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B22/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="显示字符串：使用字符串中断字符串中断上面一篇通过循环调用字符中断显示字符串，这次通过AH＝13H字符串中断来显示字符串。 1. 字符串中断  当BIOS执行显示字符串调用显示服务 INT 10H，AH＝13H，可以进行单个字符的显示 首先需要配置入口参数： 中断号：INT10    寄存器 说明 值    AH 功能：在Teletype模式下显示字符 13H   AL 显示输出方式 —-   BH">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-11-08T03:27:28.000Z">
+<meta property="article:modified_time" content="2024-11-09T04:12:08.452Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.9_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B22/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.9_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B22/","path":"2018/11/08/操作系统/chap1.9_显示字符串2/","title":"chap1.7_显示字符串"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>chap1.7_显示字符串 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%96%AD"><span class="nav-number">1.</span> <span class="nav-text">显示字符串：使用字符串中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%96%AD"><span class="nav-number">1.1.</span> <span class="nav-text">字符串中断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">显示字符串函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">程序代码</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.9_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="chap1.7_显示字符串 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chap1.7_显示字符串
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-08 11:27:28" itemprop="dateCreated datePublished" datetime="2018-11-08T11:27:28+08:00">2018-11-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-09 12:12:08" itemprop="dateModified" datetime="2024-11-09T12:12:08+08:00">2024-11-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="显示字符串：使用字符串中断"><a href="#显示字符串：使用字符串中断" class="headerlink" title="显示字符串：使用字符串中断"></a>显示字符串：使用字符串中断</h2><h3 id="字符串中断"><a href="#字符串中断" class="headerlink" title="字符串中断"></a>字符串中断</h3><p>上面一篇通过循环调用字符中断显示字符串，这次通过AH＝13H字符串中断来显示字符串。</p>
+<p><strong>1. 字符串中断</strong> </p>
+<p>当BIOS执行显示字符串调用显示服务 INT 10H，AH＝13H，可以进行单个字符的显示</p>
+<p>首先需要配置入口参数：</p>
+<p>中断号：INT10</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>说明</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AH</td>
+<td>功能：在Teletype模式下显示字符</td>
+<td>13H</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>显示输出方式</td>
+<td>—-</td>
+</tr>
+<tr>
+<td>BH</td>
+<td>页码</td>
+<td>—</td>
+</tr>
+<tr>
+<td>BL</td>
+<td>属性，背景色和文字颜色</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CX</td>
+<td>字符串长度</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DH, DL</td>
+<td>坐标(行,列)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ES, BP</td>
+<td>字符串的地址</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<p>AL＝显示输出方式</p>
+<blockquote>
+<p>0–字符串中只含显示字符，其显示属性在BL中。显示后，光标位置不变</p>
+<p>1–字符串中只含显示字符，其显示属性在BL中。显示后，光标位置改变</p>
+<p>2–字符串中含显示字符和显示属性。显示后，光标位置不变</p>
+<p>3–字符串中含显示字符和显示属性。显示后，光标位置改变</p>
+</blockquote>
+<h3 id="显示字符串函数"><a href="#显示字符串函数" class="headerlink" title="显示字符串函数"></a>显示字符串函数</h3><p>我们设置字符串遇到0表示结束，然后将读取的内容调用BIOS中断进行显示。</p>
+<p>此处使用汇编定义了一个显示字符串的函数。然后进行调用。</p>
+<p>函数如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 显示字符串函数:PrintString</span><br><span class="line">; 参数:</span><br><span class="line">; si = 字符串开始地址,</span><br><span class="line">; dh = 第N行，0开始</span><br><span class="line">; dl = 第N列，0开始</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">PrintString:</span><br><span class="line">			mov cx,0			;BIOS中断参数：显示字符串长度</span><br><span class="line">			mov bx,si</span><br><span class="line">	.s1:;获取字符串长度</span><br><span class="line">			mov al,[bx]			;读取1个字节到al</span><br><span class="line">			add bx,1			;读取下个字节</span><br><span class="line">			cmp al,0			;是否以0结束</span><br><span class="line">			je .s2</span><br><span class="line">			add	cx,1			;计数器</span><br><span class="line">			jmp .s1</span><br><span class="line">	.s2:;显示字符串</span><br><span class="line">			mov bx,si</span><br><span class="line">			mov bp,bx</span><br><span class="line">			mov ax,ds</span><br><span class="line">			mov es,ax			;BIOS中断参数：计算[ES:BP]为显示字符串开始地址</span><br><span class="line"></span><br><span class="line">			mov ah,0x13			;BIOS中断参数：显示文字串</span><br><span class="line">			mov al,0x01			;BIOS中断参数：文本输出方式(40×25 16色 文本)</span><br><span class="line">			mov bh,0x0			;BIOS中断参数：指定分页为0</span><br><span class="line">			mov bl,0x1F			;BIOS中断参数：指定白色文字			</span><br><span class="line">			mov dl,0			;列号为0</span><br><span class="line">			int 0x10			;调用BIOS中断操作显卡。输出字符串</span><br><span class="line">			ret</span><br></pre></td></tr></table></figure>
+
+<h3 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h3><p>内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">; RASTOS BOOT</span><br><span class="line">[bits 16]</span><br><span class="line"></span><br><span class="line">org     0x7c00           ; 指明程序的偏移的基地址</span><br><span class="line"></span><br><span class="line">                         ; 引导扇区代码</span><br><span class="line">jmp     Entry</span><br><span class="line">db      0x90</span><br><span class="line">db      &quot;ASTRABOOT&quot;       ; 启动区的名称可以是任意的字符串（8字节）</span><br><span class="line"></span><br><span class="line">                         ; 程序核心内容</span><br><span class="line">Entry:</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 清除屏幕</span><br><span class="line">     ; ---------------------------</span><br><span class="line">    mov ah,0x06</span><br><span class="line">    mov al,0</span><br><span class="line">    mov cx,0</span><br><span class="line">    mov dx,0xffff</span><br><span class="line">    mov bh,0x17          ; 属性为蓝底白字</span><br><span class="line">    int 0x10</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 光标位置初始化</span><br><span class="line">     ; ---------------------------</span><br><span class="line">    mov ah,0x02</span><br><span class="line">    mov dx,0</span><br><span class="line">    mov bh,0</span><br><span class="line">    mov dh,0x0</span><br><span class="line">    mov dl,0x0</span><br><span class="line">    int 0x10</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 输出字符串</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov si,HelloMsg      ; 将HelloMsg的地址放入si</span><br><span class="line">    mov dh,0             ; 设置显示行</span><br><span class="line">    mov dl,0             ; 设置显示列</span><br><span class="line">    call PrintString     ; 调用函数</span><br><span class="line"></span><br><span class="line">    jmp $                ; 进入死循环</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 字符串常量</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">HelloMsg: db &quot;Hello,ASTRAOS!&quot;,0</span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 显示字符串函数:PrintString</span><br><span class="line">; 参数:</span><br><span class="line">; si = 字符串开始地址,</span><br><span class="line">; dh = 第N行，0开始</span><br><span class="line">; dl = 第N列，0开始</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">PrintString:</span><br><span class="line">            mov cx,0     ; BIOS中断参数：显示字符串长度</span><br><span class="line">            mov bx,si</span><br><span class="line">    .s1:                 ; 获取字符串长度</span><br><span class="line">            mov al,[bx]  ; 读取1个字节到al</span><br><span class="line">            add bx,1     ; 读取下个字节</span><br><span class="line">            cmp al,0     ; 是否以0结束</span><br><span class="line">            je .s2</span><br><span class="line">            inc	cx       ; 计数器</span><br><span class="line">            jmp .s1</span><br><span class="line">    .s2:                 ; 显示字符串</span><br><span class="line">            mov bx,si</span><br><span class="line">            mov bp,bx</span><br><span class="line">            mov ax,ds</span><br><span class="line">            mov es,ax    ; BIOS中断参数：计算[ES:BP]为显示字符串开始地址</span><br><span class="line"></span><br><span class="line">            mov ah,0x13  ; BIOS中断参数：中断模式</span><br><span class="line">            mov al,0x01  ; BIOS中断参数：输出方式</span><br><span class="line">            mov bh,0x0   ; BIOS中断参数：指定分页为0</span><br><span class="line">            mov bl,0x1F  ; BIOS中断参数：显示属性，指定白色文字</span><br><span class="line">            int 0x10     ; 调用BIOS中断操作显卡。输出字符串</span><br><span class="line">            ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FillSector:</span><br><span class="line">    resb    510-($-$$)   ; 处理当前行$至结束(1FE)的填充</span><br><span class="line">    db      0x55, 0xaa</span><br></pre></td></tr></table></figure>
+
+
+<p>结果如图</p>
+<p><img src="data:image/png;base64,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AICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApAg7AAAAgKQIOwAAAICkCDsAAACApOz7ZrdHAAAAALCN9kWIOwAAAIB0WMYCAAAAJEXYAQAAACRF2AEAAAAkRdgBAAAAJGXfN/qTAgAAAAlR2QEAAAAkxdazAAAAQFJUdgAAAABJ2aeuAwAAAEjJvv/gP+yLiMovdnsgAAAAANth37978P9FROzf7YEAAAAAbId9/+X/8Pcj4n/7X3d7IAAAAADbQYNSAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKftKpXJEROR3eSAAAAAA22FfoSDmAAAAANJhGQsAAACQFGEHAAAAkBRhBwAAAJAUYQcAAACQFGEHAAAAkBRhBwAAAJAUYQcAAACQFGEHAAAAkBRhBwAAAJAUYQcAAACQlH0PHjyIiIj8Lg8EAAAAYDvse/LJJ3d7DAAAAADbxjIWAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACApwg4AAAAgKcIOAAAAICnCDgAAACAp+x48eBAREfldHggAAADAdtj35JNP7vYYAAAAALaNZSwAAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AAABAUoQdAAAAQFKEHQAAAEBShB0AwP/fvh2jRhGAYRj+J6wEIgZkQYuEtHZJLmDlGfaUuUt6qxDBMgfYziImxkIIuDD4+jwMM1MMw1e/zAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKQc7ff7tTcAAAAAHMzR8fHx2hsAAAAADsZvLAAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAyubh4WFmZt6vPAQAAADgEHzZAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEnxVsSAAAE+UlEQVQAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKRsttvt2hsAAAAADsaXHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAECK2AEAAACkiB0AAABAitgBAAAApIgdAAAAQIrYAQAAAKSIHQAAAEDK5vFyeXW67g4AAACAv3F5dXp7O/MYO3a73W638iAAAACefbn+PDPfv94vsxwtyzJPx7Isv556ef9HJ9cfZubu7m55YWae37S86jXwD7j/NjNzdna2mZmbm5uV5wAAAPDCyfbdzHz8dL78LBpP59+6xKsqxZvTtzNzcXGhcfD/+AE/UzsvQoo68AAAAABJRU5ErkJggg==" alt="images/1_9_1.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.7_%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F/" rel="prev" title="chap1.6_显示字符">
+                  <i class="fa fa-angle-left"></i> chap1.6_显示字符
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.8_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B21/" rel="next" title="chap1.7_显示字符串">
+                  chap1.7_显示字符串 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

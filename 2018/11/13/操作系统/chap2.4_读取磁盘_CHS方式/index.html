@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="软盘和硬盘软盘  软盘，目前已经淘汰。  目前主流的硬盘分为两种：  机械硬盘 固态硬盘  硬盘最早分为两种接口方式：  并行接口（PATA），目前已经淘汰。 串行接口（SATA）。  磁盘寻址两种方式：CHS和LBACHS方式, LAB28 和 LAB48 IO操作读取硬盘的三种寻址方式：  chs寻址方式 ：小于8G (8064MB) LBA28寻址方式：小于137GB LBA48寻址方式：小">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chap1.8_读取磁盘_CHS方式">
+<meta property="og:url" content="https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="软盘和硬盘软盘  软盘，目前已经淘汰。  目前主流的硬盘分为两种：  机械硬盘 固态硬盘  硬盘最早分为两种接口方式：  并行接口（PATA），目前已经淘汰。 串行接口（SATA）。  磁盘寻址两种方式：CHS和LBACHS方式, LAB28 和 LAB48 IO操作读取硬盘的三种寻址方式：  chs寻址方式 ：小于8G (8064MB) LBA28寻址方式：小于137GB LBA48寻址方式：小">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.sxt1024.fun/2_1_1.png">
+<meta property="article:published_time" content="2018-11-13T03:27:28.000Z">
+<meta property="article:modified_time" content="2024-11-09T05:58:19.739Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.sxt1024.fun/2_1_1.png">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/","path":"2018/11/13/操作系统/chap2.4_读取磁盘_CHS方式/","title":"chap1.8_读取磁盘_CHS方式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>chap1.8_读取磁盘_CHS方式 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E7%9B%98%E5%92%8C%E7%A1%AC%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">软盘和硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%AF%BB%E5%9D%80%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9ACHS%E5%92%8CLBA"><span class="nav-number">2.</span> <span class="nav-text">磁盘寻址两种方式：CHS和LBA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHS%E5%92%8CLBA%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">3.</span> <span class="nav-text">CHS和LBA的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%AF%BB%E5%9D%80%EF%BC%9ACHS%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">磁盘寻址：CHS方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E7%9B%98"><span class="nav-number"></span> <span class="nav-text">软盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98-CHS%E6%96%B9%E5%BC%8F"><span class="nav-number"></span> <span class="nav-text">读取磁盘_CHS方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">BIOS读取磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%A3%81%E7%9B%98%E8%AF%BB%E5%8F%96%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">定义磁盘读取函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHS%E6%96%B9%E5%BC%8F%E8%AF%BB%E5%8F%96%EF%BC%88%E4%BD%BF%E7%94%A8LBA%E5%80%BC%E8%BD%AC%E6%8D%A2%E5%90%8E%E8%AF%BB%E5%8F%96%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">CHS方式读取（使用LBA值转换后读取）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E9%9D%A2%E4%BB%A3%E7%A0%81%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number"></span> <span class="nav-text">上面代码的作用</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="chap1.8_读取磁盘_CHS方式 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chap1.8_读取磁盘_CHS方式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-13 11:27:28" itemprop="dateCreated datePublished" datetime="2018-11-13T11:27:28+08:00">2018-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-09 13:58:19" itemprop="dateModified" datetime="2024-11-09T13:58:19+08:00">2024-11-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="软盘和硬盘"><a href="#软盘和硬盘" class="headerlink" title="软盘和硬盘"></a>软盘和硬盘</h3><p>软盘</p>
+<ul>
+<li>软盘，目前已经淘汰。</li>
+</ul>
+<p>目前主流的硬盘分为两种：</p>
+<ul>
+<li>机械硬盘</li>
+<li>固态硬盘</li>
+</ul>
+<p>硬盘最早分为两种接口方式：</p>
+<ul>
+<li>并行接口（PATA），目前已经淘汰。</li>
+<li>串行接口（SATA）。</li>
+</ul>
+<h3 id="磁盘寻址两种方式：CHS和LBA"><a href="#磁盘寻址两种方式：CHS和LBA" class="headerlink" title="磁盘寻址两种方式：CHS和LBA"></a>磁盘寻址两种方式：CHS和LBA</h3><p><strong>CHS方式, LAB28 和 LAB48</strong></p>
+<p>IO操作读取硬盘的三种寻址方式：</p>
+<ul>
+<li>chs寻址方式 ：小于8G (8064MB)</li>
+<li>LBA28寻址方式：小于137GB</li>
+<li>LBA48寻址方式：小于144,000,000 GB</li>
+</ul>
+<h3 id="CHS和LBA的转换"><a href="#CHS和LBA的转换" class="headerlink" title="CHS和LBA的转换"></a>CHS和LBA的转换</h3><p>CHS地址可用以下公式转成LBA,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LBA = (C * H + H) * S + S - 1     </span><br></pre></td></tr></table></figure>
+<p>LBA可用以下公式对应到CHS:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C = LBA / (SPT * HPC)</span><br><span class="line">H = (LBA / SPT ) % HPC</span><br><span class="line">S = (LBA % SPT ) + 1 </span><br></pre></td></tr></table></figure>
+
+<p>C &#x3D;  cylinder : 磁柱编号<br>H &#x3D;  head:  磁头编号<br>S  &#x3D;  sector:  扇区编号<br>HPC&#x3D;heads per cylinder，每个磁柱的磁头数<br>SPT&#x3D;sectors per track，每磁道的扇区数</p>
+<p>功能08H 功能描述：读取驱动器参数 入口参数：</p>
+<p>AH＝08H </p>
+<p>DL＝驱动器，00H<del>7FH：软盘；80H</del>0FFH：硬盘 </p>
+<p>出口参数：</p>
+<p>CF＝1——操作失败，</p>
+<p>AH＝状态代码，参见功能号01H中的说明，否则， BL＝01H — 360K ＝02H — 1.2M ＝03H — 720K ＝04H — 1.44M </p>
+<p>CH＝柱面数的低8位 </p>
+<p>CL的位7-6＝柱面数的该2位</p>
+<p> CL的位5-0＝扇区数 </p>
+<p>DH＝磁头数 </p>
+<p>DL＝驱动器数 </p>
+<p>ES:DI＝磁盘驱动器参数表地址 </p>
+<h3 id="磁盘寻址：CHS方式"><a href="#磁盘寻址：CHS方式" class="headerlink" title="磁盘寻址：CHS方式"></a>磁盘寻址：CHS方式</h3><p>磁盘的三层定位结构分别为</p>
+<ul>
+<li>磁头(Head) ：每张磁盘的正面和反面都有一个磁头，一个磁头对应着一张磁盘的一个面，因此，用第几个磁头就能表示数据在哪个盘面.</li>
+<li>柱面(Cylinder): 由所有磁盘中半径相同的同心磁道构成，在这一系列的磁道水质叠放在一起，就形成了一个柱面的形状。所以柱面数 &#x3D; 磁道数。</li>
+<li>扇区(Sector): 一个扇区512字节</li>
+</ul>
+<p>磁盘寻址，是指根据给出的方式找到扇区的位置。</p>
+<p>按顺序根据柱面，磁头，扇区，这种方式称之为CHS方式。</p>
+<p>例如: 磁盘的第一个扇区，位于 1柱面，1磁头，0扇区</p>
+<p><strong>CHS方式表示的容量上限</strong></p>
+<p>这种模式及下，支持的最大柱面数为1024，最大磁头数为16，最大扇区数为63，（每个扇区字节数为512Bit）因此最大访问硬盘容量为：</p>
+<blockquote>
+<p>1024 x 16 x 64 x 512 &#x3D; 528MB</p>
+</blockquote>
+<p>虽然后面又拓展了large模式读取，但是没有解决根本问题。</p>
+<p>所以后来有LBA的读取方式，可以描述更大容量。</p>
+<h2 id="软盘"><a href="#软盘" class="headerlink" title="软盘"></a>软盘</h2><p>一张软盘有80个柱面，2个磁头，18个扇区</p>
+<p>软盘大小为 80x2x18x512&#x3D;1440KB</p>
+<p>较旧的硬盘驱动器，如 MFM 和 RLL 驱动器，将每个柱面划分为相等数量的扇区，并且 CHS 值与驱动器的物理构成相匹配。 CHS 值为 500 x 4 x 32 的驱动器的每个盘片每侧有 500 个磁道，两个盘片，每个柱面有 32 个扇区，总共有 32,768,000 字节（约 31 兆字节）。 大多数现代驱动器都有一个不构成柱面边界的剩余空间。 每个分区应始终在柱面边界处开始和结束。 只有一些最现代的操作系统可能会忽略这一规则，但这会导致一些兼容性问题，尤其是当用户想要在同一驱动器上启动多个操作系统时。</p>
+<p>IDE 驱动器已经取代了 MFM 和 RLL 驱动器，并且在存储数据方面效率更高。 他们使用区域位记录 (ZBR)，其中一个柱面中的扇区数随其在驱动器上的位置而变化。 靠近盘片边缘的柱面比靠近主轴的柱面包含更多扇区，因为在盘片边缘附近的给定磁道中有更多空间。 由于每个柱面的扇区数量不同，CHS 寻址系统不适用于这些驱动器。 IDE 驱动器可以在系统 BIOS 中配置为不超过驱动器容量的柱面、磁头和扇区的任何配置。 驱动器将给定的 CHS 地址转换为特定硬件配置的实际地址。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="读取磁盘-CHS方式"><a href="#读取磁盘-CHS方式" class="headerlink" title="读取磁盘_CHS方式"></a>读取磁盘_CHS方式</h2><h3 id="BIOS读取磁盘"><a href="#BIOS读取磁盘" class="headerlink" title="BIOS读取磁盘"></a>BIOS读取磁盘</h3><p>读取磁盘也是调用BIOS：</p>
+<blockquote>
+<p>中断命令: INT 13H</p>
+</blockquote>
+<p>入口参数</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>说明</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AH</td>
+<td>功能：02H读取扇区</td>
+<td>02H</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>扇区数</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CH</td>
+<td>柱面数</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CL</td>
+<td>扇区</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DH</td>
+<td>磁头</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DL</td>
+<td>驱动器号</td>
+<td>00H-7FH：软盘驱动器号；80H-0FFH：硬盘驱动器号</td>
+</tr>
+<tr>
+<td>ES:BX</td>
+<td>缓冲区的地址</td>
+<td>00H-7FH：软盘驱动器号；80H-0FFH：硬盘驱动器号</td>
+</tr>
+</tbody></table>
+<p>出口参数</p>
+<p>读取成功：</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>说明</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AH</td>
+<td>00H</td>
+<td>—</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>输的扇区数</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<p>读取失败：</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>说明</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AH</td>
+<td>状态代码</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<h3 id="定义磁盘读取函数"><a href="#定义磁盘读取函数" class="headerlink" title="定义磁盘读取函数"></a>定义磁盘读取函数</h3><p><strong>1. 读取一个扇区</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.read_one_sector			</span><br><span class="line">	MOV	AH,0x02				;参数：读扇区</span><br><span class="line">	MOV	AL,1				;参数：读取扇区数</span><br><span class="line">	MOV	BX,0				;参数：</span><br><span class="line">	MOV	DL,0x00				;参数：设置读取驱动器为软盘</span><br><span class="line">	INT	0x13				;调用BIOS中断操作磁盘：读取扇区</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 读取一个扇区函数:ReadDisk0</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 参数:ES:BX 缓冲区地址，CH柱面，DH磁头，CL扇区</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">ReadDisk0:</span><br><span class="line">	MOV	SI,0				;初始化读取失败次数，用于循环计数</span><br><span class="line">	</span><br><span class="line">    ;为了防止读取错误，循环读取5次</span><br><span class="line">    ;调用BIOS读取一个扇区</span><br><span class="line">    ReadFiveLoop:</span><br><span class="line">			MOV	AH,0x02				;BIOS中断参数：读扇区</span><br><span class="line">			MOV	AL,1				;BIOS中断参数：读取扇区数</span><br><span class="line">			MOV	BX,0</span><br><span class="line">			MOV	DL,0x00				;BIOS中断参数：设置读取驱动器为软盘</span><br><span class="line">			INT	0x13				;调用BIOS中断操作磁盘：读取扇区</span><br><span class="line">			JNC	ReadEnd				;条件跳转，操作成功进位标志=0。则跳转执行ReadNextSector</span><br><span class="line">	</span><br><span class="line">			inc	si				;循环读取次数递增+1</span><br><span class="line">			CMP	SI,5				;判断是否已经读取超过5次</span><br><span class="line">			JAE	LoadError			;上面cmp判断(&gt;=)结果为true则跳转到DisplayError</span><br><span class="line">	</span><br><span class="line">			MOV	AH,0x00				;BIOS中断参数：磁盘系统复位</span><br><span class="line">			MOV	DL,0x00				;BIOS中断参数：设置读取驱动器为软盘</span><br><span class="line">			INT	0x13				;调用BIOS中断操作磁盘：磁盘系统复位</span><br><span class="line">			JMP	ReadFiveLoop</span><br><span class="line">	;扇区读取完成</span><br><span class="line">	ReadEnd:</span><br><span class="line">			RET</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2. 读取多个扇区</strong></p>
+<p>读取时要根据 扇区&lt;磁头&lt;柱面 的方式来读取。继续添加代码，读取18个扇区：（即完整的读取了一个柱面）。</p>
+<p>代码如下：</p>
+<p>​	</p>
+<p><strong>3. 读取多个柱面</strong></p>
+<p>继续添加代码，读取10个柱面。</p>
+<p>​	</p>
+<p>然后调用函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">;读取磁盘初始化</span><br><span class="line">	MOV	AX,DISC_ADDR/0x10	;设置磁盘读取的缓冲区基本地址为ES=0x820。[ES:BX]=ES*0x10+BX</span><br><span class="line">	MOV	ES,AX				;BIOS中断参数：ES:BX＝缓冲区的地址</span><br><span class="line"></span><br><span class="line">	MOV	CH,0				;设置柱面为0</span><br><span class="line">	MOV	DH,0				;设置磁头为0</span><br><span class="line">	MOV	CL,2				;设置扇区为2</span><br><span class="line"></span><br><span class="line">ReadSectorLoop:</span><br><span class="line">	CALL ReadDisk0;			;读取一个扇区</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="CHS方式读取（使用LBA值转换后读取）"><a href="#CHS方式读取（使用LBA值转换后读取）" class="headerlink" title="CHS方式读取（使用LBA值转换后读取）"></a>CHS方式读取（使用LBA值转换后读取）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">; ==============================================</span><br><span class="line">; 读取磁盘:Func_readCHS2LBA</span><br><span class="line">; 参数:</span><br><span class="line">; ebx 扇区逻辑号</span><br><span class="line">; cx 读入的扇区数,8位</span><br><span class="line">; es 读取到内存单元的地址</span><br><span class="line">; ==============================================</span><br><span class="line">.reset</span><br><span class="line">    MOV	AH,0x00				;BIOS中断参数：磁盘系统复位</span><br><span class="line">    MOV	DL,0x00				;BIOS中断参数：设置读取驱动器为软盘</span><br><span class="line">    INT	0x13				;调用BIOS中断操作磁盘：磁盘系统复位</span><br><span class="line">    ret</span><br><span class="line">    </span><br><span class="line">.readdisk</span><br><span class="line">				;初始化读取失败次数，用于循环计数</span><br><span class="line">	push cx</span><br><span class="line">	MOV	cx,5	</span><br><span class="line">	</span><br><span class="line">    ;为了防止读取错误，循环读取5次</span><br><span class="line">    ;调用BIOS读取一个扇区</span><br><span class="line">    ReadFiveLoop:</span><br><span class="line">			MOV	AH,0x02				;BIOS中断参数：读扇区</span><br><span class="line">			MOV	AL,1				;BIOS中断参数：读取扇区数</span><br><span class="line">			MOV	BX,0</span><br><span class="line">			MOV	DL,0x00				;BIOS中断参数：设置读取驱动器为软盘</span><br><span class="line">			INT	0x13				;调用BIOS中断操作磁盘：读取扇区</span><br><span class="line">			JNC	.readok				;条件跳转，操作成功进位标志=0。则跳转执行ReadNextSector</span><br><span class="line">	</span><br><span class="line">			inc	si				    ;循环读取次数递增+1</span><br><span class="line">			CMP	SI,5				;判断是否已经读取超过5次</span><br><span class="line">			JAE	.readfail			;上面cmp判断(&gt;=)结果为true则跳转到DisplayError</span><br><span class="line">	</span><br><span class="line">			call .reset</span><br><span class="line">			loop ReadFiveLoop</span><br><span class="line">			</span><br><span class="line">    ;准备下一个扇区</span><br><span class="line">    .readok:</span><br><span class="line">    		</span><br><span class="line">            MOV AX,ES</span><br><span class="line">            ADD AX,0x0020			</span><br><span class="line">            MOV	EX,AX				;内存单元基址后移0x20。[EX+0x20:]</span><br><span class="line">            ADD CL,1				;读取扇区数递增+1</span><br><span class="line">            CMP CL,18				;判断是否读取到18扇区</span><br><span class="line">            JBE readdisk		;上面cmp判断(&lt;=)结果为true则跳转到DisplayError	</span><br><span class="line">            </span><br><span class="line">     .readxx       </span><br><span class="line">     ;读取另一面磁头。循环读取柱面</span><br><span class="line">		MOV CL,1				;设置柱面为0</span><br><span class="line">		ADD DH,1				;设置磁头递增+1:读取下一个磁头</span><br><span class="line">		CMP DH,2				;判断磁头是否读取完毕</span><br><span class="line">		JB ReadSectorLoop		;上面cmp判断(&lt;)结果为true则跳转到DisplayError</span><br><span class="line"></span><br><span class="line">		MOV DH,0				;设置磁头为0</span><br><span class="line">		ADD CH,1				;设置柱面递增+1;读取下一柱面</span><br><span class="line">		CMP	CH,10				;判断是否已经读取10个柱面</span><br><span class="line">		JB	readdisk		;上面cmp判断(&lt;)结果为true则跳转到DisplayError       </span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p>最后，完整的boot.asm文件代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line">; RASTOS BOOT</span><br><span class="line">[bits 16]</span><br><span class="line"></span><br><span class="line">; ----------- loader const ------------------</span><br><span class="line">LOADER_CYLINDER_NUM			equ 10              ; 读取10个柱面</span><br><span class="line">LOADER_SECTOR_CAP		equ 18                 ; 读取18个扇区</span><br><span class="line">LOADER_SECTOR_CHS 		equ 0x1              ; 第2个逻辑扇区开始</span><br><span class="line">LOADER_BASE_ADDR 		equ 0x9000            ; 内存地址0x9000</span><br><span class="line">; -------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">org     0x7c00                           ; 指明程序的偏移的基地址</span><br><span class="line"></span><br><span class="line">                                         ; 启动程序</span><br><span class="line">jmp     Entry</span><br><span class="line">db      0x90</span><br><span class="line">db      &quot;RATSBOOT&quot;                       ; 启动区的名称可以是任意的字符串（8字节）</span><br><span class="line"></span><br><span class="line">                                         ; 程序核心内容</span><br><span class="line">Entry:</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 初始化寄存器</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov ax,0</span><br><span class="line">    mov ss,ax</span><br><span class="line">    mov ds,ax</span><br><span class="line">    mov es,ax</span><br><span class="line">    mov sp,0x7c00</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 清除屏幕</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov ah,0x06</span><br><span class="line">    mov al,0</span><br><span class="line">    mov cx,0</span><br><span class="line">    mov dx,0xffff</span><br><span class="line">    mov bh,0x17                          ; 属性为蓝底白字</span><br><span class="line">    int 0x10</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 光标位置初始化</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov ah,0x02</span><br><span class="line">    mov dx,0</span><br><span class="line">    mov bh,0</span><br><span class="line">    mov dh,0x0</span><br><span class="line">    mov dl,0x0</span><br><span class="line">    int 0x10</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 输出字符串</span><br><span class="line">    ; ---------------------------</span><br><span class="line">    mov  si,BootMsg                      ; 将BootMsg的地址放入si</span><br><span class="line">    mov  dh,0                            ; 设置显示行</span><br><span class="line">    mov  dl,0</span><br><span class="line">    call PutString                       ; 调用函数</span><br><span class="line"></span><br><span class="line">    ; ---------------------------</span><br><span class="line">    ; 读取磁盘</span><br><span class="line">    mov	ax,LOADER_BASE_ADDR/0x10         ; 设置磁盘读取的缓冲区基本地址为ES=0x900。[ES:BX]=ES*0x10+BX</span><br><span class="line">    mov	es,ax                            ; BIOS中断参数：ES:BX＝缓冲区的地址 [0x900:0x0]</span><br><span class="line"></span><br><span class="line">    mov	ch,0                             ; 设置柱面为0</span><br><span class="line">    mov	dh,0                             ; 设置磁头为0</span><br><span class="line">    mov	cl,1                             ; 设置扇区为2</span><br><span class="line"></span><br><span class="line">; ---------------------------</span><br><span class="line">; 循环读取扇区，读取10个柱面</span><br><span class="line">; ---------------------------</span><br><span class="line">ReadSectorLoop:</span><br><span class="line">    call ReadDiskSector                  ; ;读取一个扇区</span><br><span class="line"></span><br><span class="line">    ; 准备下一个扇区</span><br><span class="line">    .readNext:</span><br><span class="line">        mov	ax,es</span><br><span class="line">        add	ax,0x0020</span><br><span class="line">        mov	es,ax                        ; 内存单元基址后移0x20(512字节)。[ES+0x20:]</span><br><span class="line">        add	cl,1                         ; 读取扇区数递增+1</span><br><span class="line">        cmp	cl,LOADER_SECTOR_CAP   		 ; 判断是否读取到18扇区</span><br><span class="line">        jbe	ReadSectorLoop               ; 上面cmp判断(&lt;=)结果为true则跳转到DisplayError</span><br><span class="line"></span><br><span class="line">        ; 读取另一面磁头。循环读取柱面</span><br><span class="line">        mov	cl,1                         ; 设置柱面为0</span><br><span class="line">        add	dh,1                         ; 设置磁头递增+1:读取下一个磁头</span><br><span class="line">        cmp	dh,2                         ; 判断磁头是否读取完毕</span><br><span class="line">        jb	ReadSectorLoop                ; 上面cmp判断(&lt;)结果为true则跳转到DisplayError</span><br><span class="line"></span><br><span class="line">        mov	dh,0                         ; 设置磁头为0</span><br><span class="line">        add	ch,1                         ; 设置柱面递增+1;读取下一柱面</span><br><span class="line">        cmp	ch,LOADER_CYLINDER_NUM       ; 判断是否已经读取10个柱面</span><br><span class="line">        jb	.readFin                      ; 上面cmp判断(&lt;)结果为true则跳转到DisplayError</span><br><span class="line">        jmp     .readNext</span><br><span class="line"></span><br><span class="line">    ; 读取完成</span><br><span class="line">    .readFin:</span><br><span class="line">            mov si,SuccessMsg</span><br><span class="line">            mov dh,1</span><br><span class="line">            mov dl,0</span><br><span class="line">            call PutString               ; 如果加载失败显示加载错误</span><br><span class="line">            ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 读取一个扇区函数:ReadDiskSector</span><br><span class="line">; 参数:</span><br><span class="line">; es:bx = 缓冲区地址，</span><br><span class="line">; ch = 柱面</span><br><span class="line">; dh = 磁头</span><br><span class="line">; cl = 扇区</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">ReadDiskSector:</span><br><span class="line">    mov	si,0                             ; 初始化读取失败次数，用于循环计数</span><br><span class="line"></span><br><span class="line">    ; 为了防止读取错误，循环读取5次</span><br><span class="line">    ; 调用BIOS读取一个扇区</span><br><span class="line">    .readFiveLoop:</span><br><span class="line">            mov	ah,0x02                  ; BIOS中断参数：读扇区</span><br><span class="line">            mov	al,1                     ; BIOS中断参数：读取扇区数</span><br><span class="line">            mov	bx,0</span><br><span class="line">            mov	dl,0x00                  ; BIOS中断参数：设置读取驱动器为软盘</span><br><span class="line">            int	0x13                     ; 调用BIOS中断操作磁盘：读取扇区</span><br><span class="line">            jnc	.readEnd                 ; 条件跳转，操作成功进位标志=0。则跳转执行ReadNextSector</span><br><span class="line"></span><br><span class="line">            add	si,1                     ; 循环读取次数递增+1</span><br><span class="line">            cmp	si,5                     ; 判断是否已经读取超过5次</span><br><span class="line">            jae	.readError               ; 上面cmp判断(&gt;=)结果为true则跳转到readError</span><br><span class="line"></span><br><span class="line">            mov	ah,0x00                  ; BIOS中断参数：磁盘系统复位</span><br><span class="line">            mov	dl,0x00                  ; BIOS中断参数：设置读取驱动器为软盘</span><br><span class="line">            int	0x13                     ; 调用BIOS中断操作磁盘：磁盘系统复位</span><br><span class="line">            jmp	.readFiveLoop</span><br><span class="line"></span><br><span class="line">    ; 读取完成</span><br><span class="line">    .readEnd:</span><br><span class="line">            ret</span><br><span class="line"></span><br><span class="line">    ; 读取错误</span><br><span class="line">    .readError:</span><br><span class="line">            mov si,ErrorMsg</span><br><span class="line">            mov dh,1</span><br><span class="line">            mov dl,0</span><br><span class="line">            call PutString               ; 如果加载失败显示加载错误</span><br><span class="line">            ret</span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 显示字符串函数:PutString</span><br><span class="line">; 参数:</span><br><span class="line">; si = 字符串开始地址,</span><br><span class="line">; dh = 第N行，0开始</span><br><span class="line">; dl = 第N列，0开始</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">PutString:</span><br><span class="line">            mov cx,0     ; BIOS中断参数：显示字符串长度</span><br><span class="line">            mov bx,si</span><br><span class="line">    .s1:                 ; 获取字符串长度</span><br><span class="line">            mov al,[bx]  ; 读取1个字节到al</span><br><span class="line">            add bx,1     ; 读取下个字节</span><br><span class="line">            cmp al,0     ; 是否以0结束</span><br><span class="line">            je .s2</span><br><span class="line">            inc	cx       ; 计数器</span><br><span class="line">            jmp .s1</span><br><span class="line">    .s2:                 ; 显示字符串</span><br><span class="line">            mov bx,si</span><br><span class="line">            mov bp,bx</span><br><span class="line">            mov ax,ds</span><br><span class="line">            mov es,ax    ; BIOS中断参数：计算[ES:BP]为显示字符串开始地址</span><br><span class="line"></span><br><span class="line">            mov ah,0x13  ; BIOS中断参数：中断模式</span><br><span class="line">            mov al,0x01  ; BIOS中断参数：输出方式</span><br><span class="line">            mov bh,0x0   ; BIOS中断参数：指定分页为0</span><br><span class="line">            mov bl,0x1F  ; BIOS中断参数：显示属性，指定白色文字</span><br><span class="line">            int 0x10     ; 调用BIOS中断操作显卡。输出字符串</span><br><span class="line">            ret</span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 准备显示字符串</span><br><span class="line">BootMsg: 	db 	&quot;GloxOS is booting!&quot;,0</span><br><span class="line">SuccessMsg:     db	&quot;load disk Sector success.&quot;,0</span><br><span class="line">ErrorMsg: 	db      &quot;load disk Sector error.&quot;,0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Fill0:</span><br><span class="line">    resb    510-($-$$)                   ; 处理当前行$至结束(1FE)填充0</span><br><span class="line">    db      0x55, 0xaa</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>运行</strong></p>
+<p>创建build.sh脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">NASM=nasm</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">NASM -f bin -o build/boot.bin boot/boot.asm</span></span><br><span class="line">dd if=/dev/zero of=build/gloxos.img bs=512 count=2880</span><br><span class="line">dd if=build/boot.bin  of=build/gloxos.img bs=512 count=1  conv=notrunc</span><br></pre></td></tr></table></figure>
+
+<p>创建run.sh脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">BOCHS=bochs</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">BOCHS -f bochsrc.me</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行结果如下：</p>
+<p><img src="/2_1_1.png" alt="2_1_1.png"></p>
+<h2 id="上面代码的作用"><a href="#上面代码的作用" class="headerlink" title="上面代码的作用"></a>上面代码的作用</h2><p>首先boot.asm会被加载到内存并且执行.后面开始读取磁盘的10个柱面(10*18个扇区).<br>读取的扇区数据复制到 内存 0x8000 开始的位置.<br>然后打印输出”hello,rats os start”</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.8_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B21/" rel="prev" title="chap1.7_显示字符串">
+                  <i class="fa fa-angle-left"></i> chap1.7_显示字符串
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/17/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.5_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_LBA%E6%96%B9%E5%BC%8F/" rel="next" title="chap1.9_读取磁盘_LBA方式">
+                  chap1.9_读取磁盘_LBA方式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

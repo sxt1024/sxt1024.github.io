@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="加载器引导的第三阶段 boot.bin文件，16位汇编文件，引导扇区，系统的入口 loader.bin文件，16位汇编文件，loader文件，负责从16位实模式进入32位保护模式，并且加载c语言文件 loader.bin。 loaderELF.bin文件，32位ELF文件，使用C语言实现，运行在32位保护模式下。  按照正常的逻辑，BIOS载入执行引导扇区后，主引导记录就应该去查询并执行内核文件了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="寒冰小站">
+<meta property="og:url" content="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_loader%E5%8A%A0%E8%BD%BD%E5%99%A8/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="加载器引导的第三阶段 boot.bin文件，16位汇编文件，引导扇区，系统的入口 loader.bin文件，16位汇编文件，loader文件，负责从16位实模式进入32位保护模式，并且加载c语言文件 loader.bin。 loaderELF.bin文件，32位ELF文件，使用C语言实现，运行在32位保护模式下。  按照正常的逻辑，BIOS载入执行引导扇区后，主引导记录就应该去查询并执行内核文件了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-13T14:58:27.489Z">
+<meta property="article:modified_time" content="2024-11-09T11:46:00.571Z">
+<meta property="article:author" content="sxt1024">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_loader%E5%8A%A0%E8%BD%BD%E5%99%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_loader%E5%8A%A0%E8%BD%BD%E5%99%A8/","path":"2024/11/13/操作系统/chap2.2_loader加载器/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%AF%BC%E7%9A%84%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">引导的第三阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">读取加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-loader%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. loader文件的位置</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_loader%E5%8A%A0%E8%BD%BD%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-13 22:58:27" itemprop="dateCreated datePublished" datetime="2024-11-13T22:58:27+08:00">2024-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-09 19:46:00" itemprop="dateModified" datetime="2024-11-09T19:46:00+08:00">2024-11-09</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="加载器"><a href="#加载器" class="headerlink" title="加载器"></a>加载器</h1><h2 id="引导的第三阶段"><a href="#引导的第三阶段" class="headerlink" title="引导的第三阶段"></a>引导的第三阶段</h2><ol>
+<li>boot.bin文件，16位汇编文件，引导扇区，系统的入口</li>
+<li>loader.bin文件，16位汇编文件，loader文件，负责从16位实模式进入32位保护模式，并且加载c语言文件 loader.bin。</li>
+<li>loaderELF.bin文件，32位ELF文件，使用C语言实现，运行在32位保护模式下。</li>
+</ol>
+<p>按照正常的逻辑，BIOS载入执行引导扇区后，主引导记录就应该去查询并执行内核文件了。</p>
+<p>但是存在着下面几个问题：</p>
+<ol>
+<li><p>没有文件系统，就算磁盘有内核的内容，引导代码也不知道应该从哪里加载内核内容执行。</p>
+</li>
+<li><p>主引导记录只有512KB，没有办法做更多的操作</p>
+</li>
+</ol>
+<p>因此需要二阶段的引导，流程如下：</p>
+<p>主引导记录继续加载执行一段第二阶段引导程序，而这段内容可能占据几个扇区。</p>
+<p>第二阶引导程序会构建文件系统，然后根据文件系统查找和执行内核。</p>
+<p>第二阶引导程序我们称之为loader。加载器。</p>
+<h2 id="读取加载器"><a href="#读取加载器" class="headerlink" title="读取加载器"></a>读取加载器</h2><p>磁盘的1扇区为mbr扇区 ，我们规定其后面2-6扇区为loader内容的扇区。流程如下：</p>
+<p>BIOS加载执行引导扇区。</p>
+<p>引导扇区访问磁盘，并读取磁盘的2-6扇区。</p>
+<p>复制磁盘的2-6扇区到内存的0x90000位置，并执行。</p>
+<h3 id="1-loader文件的位置"><a href="#1-loader文件的位置" class="headerlink" title="1. loader文件的位置"></a>1. loader文件的位置</h3><p>1）内存分配</p>
+<p>在boot引导完成后，当前系统的内存分配如下：</p>
+<p>内存 0x7c00-0x7dff ：引导扇区</p>
+<p>内存 0x8000-N      : 读取的磁盘内容 ( 其中的 0xc200-0xc3ff 是loader文件)</p>
+<p>2）loader在内存的位置</p>
+<p>在前面的引导程序里面已经将磁盘的10个柱面加载到了内存单元的0x8000处。而在ima文件中程序的起始位置（也就是引导扇区）在磁盘中的位置是 0x4200。</p>
+<p>同样在内存也是从 0x8000 往后的 0x4200 位置。</p>
+<p>所以loader的内容在内存单元的开始位置为：0x8000+0x4200&#x3D;0xc200位置。</p>
+<p>说明：</p>
+<p>整个磁盘文件包括引导扇区512+磁盘文件sys。loader在sys文件的0x4200位置，引导扇区在此之后。</p>
+<p>因此磁盘文件复制到内存0x8000处，所以得出loader的位置需要0x8000+0x4200所以得出0xc200这个位置。</p>
+<p>但是其实0x4200之前是没什么用的。因此将磁盘引导区原本在磁盘的位置靠后现在给提前了，复制到了8000-81ff的位置，单独放了一块。</p>
+<p>这个和真实磁盘文件放置不同（前后问题），慢慢理解。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_%E6%95%B0%E6%8D%AE%E5%92%8C%E6%8C%87%E4%BB%A4/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.8_%E5%88%B7%E6%96%B0%E6%B5%81%E6%B0%B4%E7%BA%BF/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

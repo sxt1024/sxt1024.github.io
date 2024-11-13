@@ -6,7 +6,7 @@
   <link href="https://blog.sxt1024.fun/atom.xml" rel="self"/>
   
   <link href="https://blog.sxt1024.fun/"/>
-  <updated>2024-10-27T14:55:02.546Z</updated>
+  <updated>2024-11-10T17:30:24.917Z</updated>
   <id>https://blog.sxt1024.fun/</id>
   
   <author>
@@ -17,25 +17,180 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>1.10 Arch搭建Nas系统之十：图书笔记</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
-    <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:55:02.546Z</updated>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap4.3%20%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap4.3%20%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/</id>
+    <published>2024-11-13T14:58:27.540Z</published>
+    <updated>2024-11-10T17:30:24.917Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap4.2_%E5%8A%A0%E8%BD%BD%E5%86%85%E6%A0%B8/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap4.2_%E5%8A%A0%E8%BD%BD%E5%86%85%E6%A0%B8/</id>
+    <published>2024-11-13T14:58:27.537Z</published>
+    <updated>2024-11-10T17:41:19.409Z</updated>
     
     
       
       
-    <summary type="html">&lt;h3 id=&quot;安装电子书管理工具&quot;&gt;&lt;a href=&quot;#安装电子书管理工具&quot; class=&quot;headerlink&quot; title=&quot;安装电子书管理工具&quot;&gt;&lt;/a&gt;安装电子书管理工具&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;calibre客户端工具&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;下载页面：</summary>
+    <summary type="html">&lt;h2 id=&quot;内核地址&quot;&gt;&lt;a href=&quot;#内核地址&quot; class=&quot;headerlink&quot; title=&quot;内核地址&quot;&gt;&lt;/a&gt;内核地址&lt;/h2&gt;&lt;p&gt;内存分配。32G系统最大使用内存为4G。按照linux方式，高位置的1G地址给内核使用，低位置3G的内存给用户使用。&lt;/p&gt;</summary>
       
     
     
     
-    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap4.1_%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap4.1_%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/</id>
+    <published>2024-11-13T14:58:27.534Z</published>
+    <updated>2024-11-11T09:13:03.675Z</updated>
     
     
-    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
+      
+      
+    <summary type="html">&lt;h2 id=&quot;分区方案&quot;&gt;&lt;a href=&quot;#分区方案&quot; class=&quot;headerlink&quot; title=&quot;分区方案&quot;&gt;&lt;/a&gt;分区方案&lt;/h2&gt;&lt;h3 id=&quot;1-MBR分区表&quot;&gt;&lt;a href=&quot;#1-MBR分区表&quot; class=&quot;headerlink&quot; title=&quot;1</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.8_%E4%B8%B4%E6%97%B6%E5%88%86%E9%A1%B5/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.8_%E4%B8%B4%E6%97%B6%E5%88%86%E9%A1%B5/</id>
+    <published>2024-11-13T14:58:27.531Z</published>
+    <updated>2024-11-10T17:39:42.953Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;页目录基址&quot;&gt;&lt;a href=&quot;#页目录基址&quot; class=&quot;headerlink&quot; title=&quot;页目录基址&quot;&gt;&lt;/a&gt;页目录基址&lt;/h2&gt;&lt;p&gt;定义页目录基址为0x100000位置。将此区域设置页目录的保存地址。在0x100000此处写入分页信息。&lt;/p&gt;
+&lt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.7_%E5%88%86%E9%A1%B5%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.7_%E5%88%86%E9%A1%B5%E6%A8%A1%E5%BC%8F/</id>
+    <published>2024-11-13T14:58:27.528Z</published>
+    <updated>2024-11-10T17:37:47.907Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;为什么要分页&quot;&gt;&lt;a href=&quot;#为什么要分页&quot; class=&quot;headerlink&quot; title=&quot;为什么要分页&quot;&gt;&lt;/a&gt;为什么要分页&lt;/h2&gt;&lt;p&gt;**1. 实模式分段:  **&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;原因: cpu段寄存器太小,  和cpu总线</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.6_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.6_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/</id>
+    <published>2024-11-13T14:58:27.525Z</published>
+    <updated>2024-11-10T16:49:41.684Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;内存信息&quot;&gt;&lt;a href=&quot;#内存信息&quot; class=&quot;headerlink&quot; title=&quot;内存信息&quot;&gt;&lt;/a&gt;内存信息&lt;/h1&gt;&lt;h2 id=&quot;检测内存大小&quot;&gt;&lt;a href=&quot;#检测内存大小&quot; class=&quot;headerlink&quot; title=&quot;检测内存大</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.5_%E6%89%93%E5%8D%B0%E8%B0%83%E8%AF%95/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.5_%E6%89%93%E5%8D%B0%E8%B0%83%E8%AF%95/</id>
+    <published>2024-11-13T14:58:27.522Z</published>
+    <updated>2024-11-10T14:12:51.197Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;打印调试&quot;&gt;&lt;a href=&quot;#打印调试&quot; class=&quot;headerlink&quot; title=&quot;打印调试&quot;&gt;&lt;/a&gt;打印调试&lt;/h2&gt;&lt;p&gt;为了方便测试数据，需要在控制台进行数据输出。linux内核的控制台输出使用printk.c文件，调用vprintf方法。&lt;/</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.8_%E5%88%B7%E6%96%B0%E6%B5%81%E6%B0%B4%E7%BA%BF/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.8_%E5%88%B7%E6%96%B0%E6%B5%81%E6%B0%B4%E7%BA%BF/</id>
+    <published>2024-11-13T14:58:27.507Z</published>
+    <updated>2024-11-09T17:38:57.598Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;为什么需要刷新流水线&quot;&gt;&lt;a href=&quot;#为什么需要刷新流水线&quot; class=&quot;headerlink&quot; title=&quot;为什么需要刷新流水线&quot;&gt;&lt;/a&gt;为什么需要刷新流水线&lt;/h2&gt;&lt;p&gt;实模式和保护模式，地址位数不一样，实模式是16位寻址，保护模式是32位寻址。</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_loader%E5%8A%A0%E8%BD%BD%E5%99%A8/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.2_loader%E5%8A%A0%E8%BD%BD%E5%99%A8/</id>
+    <published>2024-11-13T14:58:27.489Z</published>
+    <updated>2024-11-09T11:46:00.571Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;加载器&quot;&gt;&lt;a href=&quot;#加载器&quot; class=&quot;headerlink&quot; title=&quot;加载器&quot;&gt;&lt;/a&gt;加载器&lt;/h1&gt;&lt;h2 id=&quot;引导的第三阶段&quot;&gt;&lt;a href=&quot;#引导的第三阶段&quot; class=&quot;headerlink&quot; title=&quot;引导的第三阶段</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_%E6%95%B0%E6%8D%AE%E5%92%8C%E6%8C%87%E4%BB%A4/"/>
+    <id>https://blog.sxt1024.fun/2024/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.1_%E6%95%B0%E6%8D%AE%E5%92%8C%E6%8C%87%E4%BB%A4/</id>
+    <published>2024-11-13T14:58:27.458Z</published>
+    <updated>2024-11-10T14:40:15.088Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1-数据的描述&quot;&gt;&lt;a href=&quot;#1-数据的描述&quot; class=&quot;headerlink&quot; title=&quot;1 数据的描述&quot;&gt;&lt;/a&gt;1 数据的描述&lt;/h2&gt;&lt;p&gt;对于计算机来说，能识别的只有0和1两个数字。使用0和1这种二进制，位数足够，其实就可以描述无限可能性</summary>
+      
+    
+    
+    
     
   </entry>
   
@@ -63,16 +218,17 @@
   </entry>
   
   <entry>
-    <title>1.13 Arch搭建Nas系统之后篇：安全篇</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/</id>
+    <title>1.10 Arch搭建Nas系统之十：图书笔记</title>
+    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.10%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%8D%81%EF%BC%9A%E5%9B%BE%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
     <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:58:47.434Z</updated>
+    <updated>2024-10-27T14:55:02.546Z</updated>
     
     
       
       
-    <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span c</summary>
+    <summary type="html">&lt;h3 id=&quot;安装电子书管理工具&quot;&gt;&lt;a href=&quot;#安装电子书管理工具&quot; class=&quot;headerlink&quot; title=&quot;安装电子书管理工具&quot;&gt;&lt;/a&gt;安装电子书管理工具&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;calibre客户端工具&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下载页面：</summary>
       
     
     
@@ -95,6 +251,28 @@
       
       
     <summary type="html">&lt;h2 id=&quot;安装homeassistant&quot;&gt;&lt;a href=&quot;#安装homeassistant&quot; class=&quot;headerlink&quot; title=&quot;安装homeassistant&quot;&gt;&lt;/a&gt;安装homeassistant&lt;/h2&gt;&lt;p&gt;mkdir -p &amp;#x2F;nas</summary>
+      
+    
+    
+    
+    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
+    
+    
+    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>1.13 Arch搭建Nas系统之后篇：安全篇</title>
+    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/"/>
+    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.13%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%90%8E%E7%AF%87%EF%BC%9A%E5%AE%89%E5%85%A8%E7%AF%87/</id>
+    <published>2024-10-01T04:27:28.000Z</published>
+    <updated>2024-10-27T14:58:47.434Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span c</summary>
       
     
     
@@ -174,16 +352,16 @@
   </entry>
   
   <entry>
-    <title>1.6 Arch搭建Nas系统之六：云盘和下载</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.6%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%85%AD%EF%BC%9A%E4%BA%91%E7%9B%98%E5%92%8C%E4%B8%8B%E8%BD%BD/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.6%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%85%AD%EF%BC%9A%E4%BA%91%E7%9B%98%E5%92%8C%E4%B8%8B%E8%BD%BD/</id>
+    <title>1.5 Arch搭建Nas系统之五：Docker容器</title>
+    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/"/>
+    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/</id>
     <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:55:12.876Z</updated>
+    <updated>2024-10-27T14:55:15.074Z</updated>
     
     
       
       
-    <summary type="html">&lt;h3 id=&quot;6-1-安装web文件浏览器&quot;&gt;&lt;a href=&quot;#6-1-安装web文件浏览器&quot; class=&quot;headerlink&quot; title=&quot;6.1 安装web文件浏览器&quot;&gt;&lt;/a&gt;6.1 安装web文件浏览器&lt;/h3&gt;&lt;h3 id=&quot;6-2-安装私有云盘：nextcl</summary>
+    <summary type="html">&lt;h2 id=&quot;5-1-安装Docker&quot;&gt;&lt;a href=&quot;#5-1-安装Docker&quot; class=&quot;headerlink&quot; title=&quot;5.1 安装Docker&quot;&gt;&lt;/a&gt;5.1 安装Docker&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;5.1.1 安装docker&lt;/strong</summary>
       
     
     
@@ -196,16 +374,16 @@
   </entry>
   
   <entry>
-    <title>1.5 Arch搭建Nas系统之五：Docker容器</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.5%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%BA%94%EF%BC%9ADocker%E5%AE%B9%E5%99%A8/</id>
+    <title>1.6 Arch搭建Nas系统之六：云盘和下载</title>
+    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.6%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%85%AD%EF%BC%9A%E4%BA%91%E7%9B%98%E5%92%8C%E4%B8%8B%E8%BD%BD/"/>
+    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.6%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%85%AD%EF%BC%9A%E4%BA%91%E7%9B%98%E5%92%8C%E4%B8%8B%E8%BD%BD/</id>
     <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:55:15.074Z</updated>
+    <updated>2024-10-27T14:55:12.876Z</updated>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;5-1-安装Docker&quot;&gt;&lt;a href=&quot;#5-1-安装Docker&quot; class=&quot;headerlink&quot; title=&quot;5.1 安装Docker&quot;&gt;&lt;/a&gt;5.1 安装Docker&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;5.1.1 安装docker&lt;/strong</summary>
+    <summary type="html">&lt;h3 id=&quot;6-1-安装web文件浏览器&quot;&gt;&lt;a href=&quot;#6-1-安装web文件浏览器&quot; class=&quot;headerlink&quot; title=&quot;6.1 安装web文件浏览器&quot;&gt;&lt;/a&gt;6.1 安装web文件浏览器&lt;/h3&gt;&lt;h3 id=&quot;6-2-安装私有云盘：nextcl</summary>
       
     
     
@@ -236,234 +414,6 @@
     
     
     <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>1.8 Arch搭建Nas系统之八：电影刮削</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.8%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%85%AB%EF%BC%9A%E7%94%B5%E5%BD%B1%E5%88%AE%E5%89%8A/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.8%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%85%AB%EF%BC%9A%E7%94%B5%E5%BD%B1%E5%88%AE%E5%89%8A/</id>
-    <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:55:07.352Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1-影音元数据&quot;&gt;&lt;a href=&quot;#1-影音元数据&quot; class=&quot;headerlink&quot; title=&quot;1 影音元数据&quot;&gt;&lt;/a&gt;1 影音元数据&lt;/h2&gt;&lt;p&gt;1）首先介绍一个影音元数据库的网站TMDB。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www</summary>
-      
-    
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>1.9 Arch搭建Nas系统之九：番号刮削</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.9%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B9%9D%EF%BC%9A%E7%95%AA%E5%8F%B7%E5%88%AE%E5%89%8A/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.9%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E4%B9%9D%EF%BC%9A%E7%95%AA%E5%8F%B7%E5%88%AE%E5%89%8A/</id>
-    <published>2024-10-01T04:27:28.000Z</published>
-    <updated>2024-10-27T14:55:04.647Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1-9-番号整理&quot;&gt;&lt;a href=&quot;#1-9-番号整理&quot; class=&quot;headerlink&quot; title=&quot;1.9 番号整理&quot;&gt;&lt;/a&gt;1.9 番号整理&lt;/h2&gt;&lt;h3 id=&quot;1-9-1-软件下载安装&quot;&gt;&lt;a href=&quot;#1-9-1-软件下载安装&quot; cla</summary>
-      
-    
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>1.0 Arch搭建Nas系统之前篇：硬件篇</title>
-    <link href="https://blog.sxt1024.fun/2024/10/01/Nas/1.0%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%89%8D%E7%AF%87%EF%BC%9A%E7%A1%AC%E4%BB%B6%E7%AF%87/"/>
-    <id>https://blog.sxt1024.fun/2024/10/01/Nas/1.0%20Arch%E6%90%AD%E5%BB%BANas%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%89%8D%E7%AF%87%EF%BC%9A%E7%A1%AC%E4%BB%B6%E7%AF%87/</id>
-    <published>2024-10-01T03:27:28.000Z</published>
-    <updated>2024-10-27T14:55:20.084Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1-方案说明&quot;&gt;&lt;a href=&quot;#1-方案说明&quot; class=&quot;headerlink&quot; title=&quot;1 方案说明&quot;&gt;&lt;/a&gt;1 方案说明&lt;/h2&gt;&lt;p&gt;硬件搭配方便，主要做出了一下三种硬件方案。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;省电方案&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ta</summary>
-      
-    
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/categories/nas/"/>
-    
-    
-    <category term="nas" scheme="https://blog.sxt1024.fun/tags/nas/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chap3.2_显示点阵字</title>
-    <link href="https://blog.sxt1024.fun/2019/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.2_%E6%98%BE%E7%A4%BA%E7%82%B9%E9%98%B5%E5%AD%97/"/>
-    <id>https://blog.sxt1024.fun/2019/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.2_%E6%98%BE%E7%A4%BA%E7%82%B9%E9%98%B5%E5%AD%97/</id>
-    <published>2019-02-20T03:27:28.000Z</published>
-    <updated>2024-10-27T13:35:23.027Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;VGA图形模式&quot;&gt;&lt;a href=&quot;#VGA图形模式&quot; class=&quot;headerlink&quot; title=&quot;VGA图形模式&quot;&gt;&lt;/a&gt;VGA图形模式&lt;/h2&gt;&lt;p&gt;include&amp;#x2F;stdint.h&lt;/p&gt;
-&lt;figure class=&quot;highlight</summary>
-      
-    
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chap2.8_C语言调用汇编</title>
-    <link href="https://blog.sxt1024.fun/2019/02/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.8_C%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8%E6%B1%87%E7%BC%96/"/>
-    <id>https://blog.sxt1024.fun/2019/02/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.8_C%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8%E6%B1%87%E7%BC%96/</id>
-    <published>2019-02-07T03:27:28.000Z</published>
-    <updated>2024-10-27T13:35:15.685Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;C语言调用汇编&quot;&gt;&lt;a href=&quot;#C语言调用汇编&quot; class=&quot;headerlink&quot; title=&quot;C语言调用汇编&quot;&gt;&lt;/a&gt;C语言调用汇编&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;C语言头文件&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;include&amp;#x2F;io.h&lt;/</summary>
-      
-    
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chap3.1_VGA显示模式</title>
-    <link href="https://blog.sxt1024.fun/2019/02/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.1_VGA%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://blog.sxt1024.fun/2019/02/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.1_VGA%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F/</id>
-    <published>2019-02-06T03:27:28.000Z</published>
-    <updated>2024-10-27T13:35:20.177Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;VGA显示模式&quot;&gt;&lt;a href=&quot;#VGA显示模式&quot; class=&quot;headerlink&quot; title=&quot;VGA显示模式&quot;&gt;&lt;/a&gt;VGA显示模式&lt;/h1&gt;&lt;h2 id=&quot;VGA图形模式&quot;&gt;&lt;a href=&quot;#VGA图形模式&quot; class=&quot;headerlink</summary>
-      
-    
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chap2.7_解析ELF文件</title>
-    <link href="https://blog.sxt1024.fun/2019/02/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.7_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/"/>
-    <id>https://blog.sxt1024.fun/2019/02/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.7_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/</id>
-    <published>2019-02-03T03:27:28.000Z</published>
-    <updated>2024-10-27T13:35:11.982Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;ELF文件&quot;&gt;&lt;a href=&quot;#ELF文件&quot; class=&quot;headerlink&quot; title=&quot;ELF文件&quot;&gt;&lt;/a&gt;ELF文件&lt;/h2&gt;&lt;p&gt;上次说过了,其实目标文件和可执行文件都是ELF格式文件&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;ELF索引表&lt;/strong&gt;</summary>
-      
-    
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chap2.5_内存规划</title>
-    <link href="https://blog.sxt1024.fun/2019/01/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.5_%E5%86%85%E5%AD%98%E8%A7%84%E5%88%92/"/>
-    <id>https://blog.sxt1024.fun/2019/01/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.5_%E5%86%85%E5%AD%98%E8%A7%84%E5%88%92/</id>
-    <published>2019-01-14T03:27:28.000Z</published>
-    <updated>2024-10-27T13:35:05.589Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;加载器&quot;&gt;&lt;a href=&quot;#加载器&quot; class=&quot;headerlink&quot; title=&quot;加载器&quot;&gt;&lt;/a&gt;加载器&lt;/h1&gt;&lt;h2 id=&quot;引导的第三阶段&quot;&gt;&lt;a href=&quot;#引导的第三阶段&quot; class=&quot;headerlink&quot; title=&quot;引导的第三阶段</summary>
-      
-    
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chap2.6_C语言程序</title>
-    <link href="https://blog.sxt1024.fun/2019/01/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.6_C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/"/>
-    <id>https://blog.sxt1024.fun/2019/01/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.6_C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/</id>
-    <published>2019-01-11T03:27:28.000Z</published>
-    <updated>2024-10-27T13:35:08.373Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;C语言程序&quot;&gt;&lt;a href=&quot;#C语言程序&quot; class=&quot;headerlink&quot; title=&quot;C语言程序&quot;&gt;&lt;/a&gt;C语言程序&lt;/h3&gt;&lt;h2 id=&quot;工具&quot;&gt;&lt;a href=&quot;#工具&quot; class=&quot;headerlink&quot; title=&quot;工具&quot;&gt;&lt;/a&gt;工</summary>
-      
-    
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chap2.4_GDT全局描述符表</title>
-    <link href="https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/"/>
-    <id>https://blog.sxt1024.fun/2019/01/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_GDT%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8/</id>
-    <published>2019-01-06T03:27:28.000Z</published>
-    <updated>2024-10-27T13:35:02.336Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;GDT全局描述符表&quot;&gt;&lt;a href=&quot;#GDT全局描述符表&quot; class=&quot;headerlink&quot; title=&quot;GDT全局描述符表&quot;&gt;&lt;/a&gt;GDT全局描述符表&lt;/h2&gt;&lt;h3 id=&quot;什么是GDT全局描述符表&quot;&gt;&lt;a href=&quot;#什么是GDT全局描述符表&quot;</summary>
-      
-    
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="操作系统" scheme="https://blog.sxt1024.fun/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
