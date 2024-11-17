@@ -21,7 +21,7 @@
 
     <meta name="description" content="ELF文件上次说过了,其实目标文件和可执行文件都是ELF格式文件 ELF索引表 ELF 文件包括三个索引表  ELF Header： ELF文件头  作用：  指定程序入口  定位Program  header  table位置  定位Section  header  table位置     Program  header  table：程序头表。   作用： 1）查询segment的位置（一个s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chap2.7_解析ELF文件">
+<meta property="og:title" content="chap3.2_解析ELF文件">
 <meta property="og:url" content="https://blog.sxt1024.fun/2019/02/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.2_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="寒冰小站">
 <meta property="og:description" content="ELF文件上次说过了,其实目标文件和可执行文件都是ELF格式文件 ELF索引表 ELF 文件包括三个索引表  ELF Header： ELF文件头  作用：  指定程序入口  定位Program  header  table位置  定位Section  header  table位置     Program  header  table：程序头表。   作用： 1）查询segment的位置（一个s">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://blog.sxt1024.fun/images/4_1_1.png">
 <meta property="og:image" content="https://blog.sxt1024.fun/images/4_1_2.png">
 <meta property="article:published_time" content="2019-02-03T03:27:28.000Z">
-<meta property="article:modified_time" content="2024-11-09T16:56:05.351Z">
+<meta property="article:modified_time" content="2024-11-16T16:01:53.149Z">
 <meta property="article:author" content="sxt1024">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
@@ -41,10 +41,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2019/02/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.2_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/","path":"2019/02/03/操作系统/chap3.2_解析ELF文件/","title":"chap2.7_解析ELF文件"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2019/02/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.2_%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6/","path":"2019/02/03/操作系统/chap3.2_解析ELF文件/","title":"chap3.2_解析ELF文件"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>chap2.7_解析ELF文件 | 寒冰小站</title>
+<title>chap3.2_解析ELF文件 | 寒冰小站</title>
   
 
 
@@ -92,7 +92,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
   </ul>
 </nav>
 
@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,12 +181,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="chap2.7_解析ELF文件 | 寒冰小站">
+      <meta itemprop="name" content="chap3.2_解析ELF文件 | 寒冰小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          chap2.7_解析ELF文件
+          chap3.2_解析ELF文件
         </h1>
 
         <div class="post-meta-container">
@@ -204,7 +204,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-11-10 00:56:05" itemprop="dateModified" datetime="2024-11-10T00:56:05+08:00">2024-11-10</time>
+      <time title="修改时间：2024-11-17 00:01:53" itemprop="dateModified" datetime="2024-11-17T00:01:53+08:00">2024-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -615,13 +615,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/01/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.1_C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/" rel="prev" title="chap2.6_C语言程序">
-                  <i class="fa fa-angle-left"></i> chap2.6_C语言程序
+                <a href="/2019/01/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.1_C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/" rel="prev" title="chap3.1_C语言程序">
+                  <i class="fa fa-angle-left"></i> chap3.1_C语言程序
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/02/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.3_%E5%A4%96%E8%AE%BE%E7%AB%AF%E5%8F%A3%E8%AF%BB%E5%86%99/" rel="next" title="4.7_外设端口读写指令">
-                  4.7_外设端口读写指令 <i class="fa fa-angle-right"></i>
+                <a href="/2019/02/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.3_%E5%A4%96%E8%AE%BE%E7%AB%AF%E5%8F%A3%E8%AF%BB%E5%86%99/" rel="next" title="chap3.3_外设端口读写">
+                  chap3.3_外设端口读写 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

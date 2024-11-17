@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="检测内存大小因为需要使用BIOS中断，所以应该在实模式下获取内存信息，并存在固定的内存位置，然后在保护模式下解析出内存信息： INT 15H：System Service 系统服务中断 功能如下三种：  AH &#x3D; 0x88 ：检测内存大小，最多检测出64MB。   入口参数：AH &#x3D; 0x88 出口参数：CF&#x3D;表示为标志位，0调用成功，1调用出错AX&#x3D;扩展内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chap3.6_获取内存信息">
+<meta property="og:url" content="https://blog.sxt1024.fun/2019/02/16/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.6_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="检测内存大小因为需要使用BIOS中断，所以应该在实模式下获取内存信息，并存在固定的内存位置，然后在保护模式下解析出内存信息： INT 15H：System Service 系统服务中断 功能如下三种：  AH &#x3D; 0x88 ：检测内存大小，最多检测出64MB。   入口参数：AH &#x3D; 0x88 出口参数：CF&#x3D;表示为标志位，0调用成功，1调用出错AX&#x3D;扩展内">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-02-16T03:27:28.000Z">
+<meta property="article:modified_time" content="2024-11-17T03:06:40.755Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2019/02/16/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.6_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2019/02/16/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.6_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/","path":"2019/02/16/操作系统/chap3.6_获取内存信息/","title":"chap3.6_获取内存信息"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>chap3.6_获取内存信息 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.</span> <span class="nav-text">检测内存大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARDS%E7%BB%93%E6%9E%84-20%E4%B8%AA%E5%AD%97%E8%8A%82"><span class="nav-number">2.</span> <span class="nav-text">ARDS结构 (20个字节)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8C%E8%AF%AD%E8%A8%80%E4%B8%AD%E8%AF%BB%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">在C语言中读取内存信息</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2019/02/16/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.6_%E8%8E%B7%E5%8F%96%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="chap3.6_获取内存信息 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chap3.6_获取内存信息
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-16 11:27:28" itemprop="dateCreated datePublished" datetime="2019-02-16T11:27:28+08:00">2019-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-17 11:06:40" itemprop="dateModified" datetime="2024-11-17T11:06:40+08:00">2024-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="检测内存大小"><a href="#检测内存大小" class="headerlink" title="检测内存大小"></a>检测内存大小</h2><p>因为需要使用BIOS中断，所以应该在实模式下获取内存信息，并存在固定的内存位置，然后在保护模式下解析出内存信息：</p>
+<p><strong>INT 15H</strong>：System Service 系统服务中断</p>
+<p>功能如下三种：</p>
+<ul>
+<li>AH &#x3D; 0x88 ：检测内存大小，最多检测出64MB。</li>
+</ul>
+<blockquote>
+<p>入口参数：<br>AH &#x3D; 0x88</p>
+<p>出口参数：<br>CF&#x3D;表示为标志位，0调用成功，1调用出错<br>AX&#x3D;扩展内存字节数(以1KB为单位)，不包含低端的1MB内存</p>
+</blockquote>
+<ul>
+<li>AX&#x3D; 0xE801 : 检测内存大小，最多检测出4GB内存。</li>
+</ul>
+<blockquote>
+<p>入口参数：</p>
+<p>AX&#x3D; 0xE801<br>出口参数：<br>CF&#x3D;表示为标志位，0调用成功，1调用出错<br>AX&#x3D;扩展内存字节数(以1KB为单位)，存储15M以下的容量大小.<br>BX&#x3D;扩展内存字节数(以64KB为单位)，存储16MB-4GB的容量大小.</p>
+</blockquote>
+<ul>
+<li>EAX&#x3D;0xE820: 检测内存大小, 全部内存大小</li>
+</ul>
+<blockquote>
+<p>入口参数：<br>EAX&#x3D; 0xE820<br>EBX&#x3D;0, ARDS 的后继值,第一次调用设置为0<br>ECX&#x3D;20 , ARDS字节大小.<br>EDX&#x3D;0x534D4150, 签名标记的默认值.代表字符串SMAP的ASCII码.<br>ES: DI&#x3D; ARDS缓冲区地址,内存信息会写入此区域</p>
+<p>出口参数：<br>CF&#x3D;表示为标志位，0调用成功，1调用出错<br>EAX&#x3D;0x534D4150, 签名标记的默认值.<br>EBX&#x3D; X, ARDS 的后继值, BIOS自动修改调整, 次寄存器无需手动修改. 如果返回为0,表示已经是最后一个 ARDS 的结构.<br>ES: DI&#x3D; ARDS缓冲区地址, 和输入值一样. 内存信息已经被写入此区域.</p>
+</blockquote>
+<h2 id="ARDS结构-20个字节"><a href="#ARDS结构-20个字节" class="headerlink" title="ARDS结构 (20个字节)"></a>ARDS结构 (20个字节)</h2><p>调用内存中断后，BIOS将内存信息存在指定地址，其数据格式为ARDS结构。如下：</p>
+<table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-4</td>
+<td>BaseAddrLow</td>
+<td>基地址的低32位</td>
+</tr>
+<tr>
+<td>4-8</td>
+<td>BaseAddrHigh</td>
+<td>基地址的高32位</td>
+</tr>
+<tr>
+<td>8-12</td>
+<td>LengthLow</td>
+<td>长度(字节)的低32位</td>
+</tr>
+<tr>
+<td>12-16</td>
+<td>LengthHigh</td>
+<td>长度(字节)的高32位</td>
+</tr>
+<tr>
+<td>16-20</td>
+<td>Type</td>
+<td>这个地址范围的地址类型</td>
+</tr>
+</tbody></table>
+<p>其中Type的取值及其意义如下:</p>
+<blockquote>
+<p>Type取值<br>1: AddressRangeMemory,这个内存段是一段可以被OS使用的RAM<br>2:AddressRangeReserved,这个地址段正在被使用,或者被系统保留,所以一定不要被OS使用<br>Other: Undefined,保留为未来使用,任何其它值都必需被OS认为是AddressRangeReserved</p>
+</blockquote>
+<p>定义结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">e820map</span> &#123;</span></span><br><span class="line">	<span class="type">int</span> map_num;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> addr;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> size;</span><br><span class="line">        <span class="type">long</span> type;</span><br><span class="line">    &#125; <span class="built_in">map</span>[E820MAX];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## 中断获取内存信息</span><br><span class="line"></span><br><span class="line">因为需要使用int中断获取内存，所以必须回到实模式下。在loader.bin文件中读取内存信息并存储到一个固定位置。指定0x1000位置</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">代码:</span><br><span class="line"></span><br><span class="line">boot.inc</span><br><span class="line"></span><br><span class="line">```assembly</span><br><span class="line">INFO_MEM_ADDR  equ 0x1000</span><br></pre></td></tr></table></figure>
+
+
+<p>loader.asm</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">;----------------------</span><br><span class="line">;获取内存信息到0x0000</span><br><span class="line">;----------------------</span><br><span class="line">mov ax, INFO_MEM_ADDR/16</span><br><span class="line">mov es, ax</span><br><span class="line">mov di, 4</span><br><span class="line">call  ReadMemInfo    </span><br></pre></td></tr></table></figure>
+
+<p>ReadMemInfo方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">[bits 16]</span><br><span class="line">;----------------------------</span><br><span class="line">;读取内存信息, 读取到 0x0000</span><br><span class="line">;es:di 读取后存储到的内存地址</span><br><span class="line">;----------------------------</span><br><span class="line">ReadMemInfo:</span><br><span class="line">    mov dword [INFO_MEM_ADDR], 0</span><br><span class="line">    mov edx, 0x0534d4150</span><br><span class="line">    mov ebx, 0</span><br><span class="line">    </span><br><span class="line">  .mem_get_loop:                 </span><br><span class="line">    mov eax, 0x0e820  ; 检测内存大小</span><br><span class="line">    mov ecx, 128</span><br><span class="line">    int 0x15</span><br><span class="line">    jc .mem_get_fail</span><br><span class="line">    add di,20</span><br><span class="line">    inc dword [INFO_MEM_ADDR]          ;记录内存ADS数量</span><br><span class="line">    cmp ebx, 0                          ;ebx为0代表全部查找完成</span><br><span class="line">    jnz .mem_get_loop</span><br><span class="line">    jmp .mem_get_ok</span><br><span class="line">  .mem_get_fail:</span><br><span class="line">    mov si,ReadMemFail          ; 地址放入si</span><br><span class="line">    mov dh,0                    ; 设置显示行</span><br><span class="line">    mov dl,0                    ; 设置显示列</span><br><span class="line">    call PrintString            ; 调用函数</span><br><span class="line">    jmp $</span><br><span class="line">  .mem_get_ok: </span><br><span class="line">    ;mov si,ReadMemOk            ; 地址放入si</span><br><span class="line">    ;mov dh,0                    ; 设置显示行</span><br><span class="line">    ;mov dl,0                    ; 设置显示列</span><br><span class="line">    ;call PrintString            ; 调用函数</span><br><span class="line">    ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 显示字符串函数:PrintString</span><br><span class="line">; 参数:</span><br><span class="line">; si = 字符串开始地址,</span><br><span class="line">; dh = 第N行，0开始</span><br><span class="line">; dl = 第N列，0开始</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">PrintString:</span><br><span class="line">			mov cx,0			;BIOS中断参数：显示字符串长度</span><br><span class="line">			mov bx,si</span><br><span class="line">	.s1:;获取字符串长度</span><br><span class="line">			mov al,[bx]			;读取1个字节到al</span><br><span class="line">			add bx,1			;读取下个字节</span><br><span class="line">			cmp al,0			;是否以0结束</span><br><span class="line">			je .s2</span><br><span class="line">			add	cx,1			;计数器</span><br><span class="line">			jmp .s1</span><br><span class="line">	.s2:;显示字符串</span><br><span class="line">			mov bx,si</span><br><span class="line">			mov bp,bx</span><br><span class="line">			mov ax,ds</span><br><span class="line">			mov es,ax			;BIOS中断参数：计算[ES:BP]为显示字符串开始地址</span><br><span class="line"></span><br><span class="line">			mov ah,0x13			;BIOS中断参数：显示文字串</span><br><span class="line">			mov al,0x01			;BIOS中断参数：文本输出方式(40×25 16色 文本)</span><br><span class="line">			mov bh,0x0			;BIOS中断参数：指定分页为0</span><br><span class="line">			mov bl,0x1F			;BIOS中断参数：指定白色文字			</span><br><span class="line">			mov dl,0			;列号为0</span><br><span class="line">			int 0x10			;调用BIOS中断操作显卡。输出字符串</span><br><span class="line">			ret</span><br><span class="line"></span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">; 字符串常量</span><br><span class="line">; ------------------------------------------------------------------------</span><br><span class="line">ReadMemFail: db &quot;read mem fail!&quot;,0x0D,0x0A,0</span><br><span class="line">ReadMemOk:  db &quot;read mem ok!&quot;,0x0D,0x0A,0</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+<h2 id="在C语言中读取内存信息"><a href="#在C语言中读取内存信息" class="headerlink" title="在C语言中读取内存信息"></a>在C语言中读取内存信息</h2><p>我们在loadELF.bin文件尝试读取获取的内存大小</p>
+<p>mem.h</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __LIB_MEM_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __LIB_MEM_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MEM_INFO_ADDR  0x1000</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> E820MAX	128</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">e820map</span> &#123;</span></span><br><span class="line">	<span class="type">int</span> map_num;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">        uint32 addr;</span><br><span class="line">        uint32 addr_unused;</span><br><span class="line">        uint32 size;</span><br><span class="line">        uint32 size_unused;</span><br><span class="line">        uint32 type;</span><br><span class="line">    &#125; <span class="built_in">map</span>[E820MAX];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">init_mem</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>mem.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../include/mem.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../include/printk.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">init_mem</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取内存信息</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">e820map</span> *<span class="title">mem_info</span> =</span> (<span class="keyword">struct</span> e820map *) MEM_INFO_ADDR;</span><br><span class="line">    print_string(<span class="string">&quot;MemInfo:\n&quot;</span>);</span><br><span class="line">    print_string(<span class="string">&quot;MapNum:&quot;</span>);</span><br><span class="line">    print_int16(mem_info-&gt;map_num);</span><br><span class="line">    print_char(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//打印内存信息</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i&lt;mem_info-&gt;map_num;i++) &#123;</span><br><span class="line">        print_string(<span class="string">&quot;Map:&quot;</span>);</span><br><span class="line">        print_pointer(mem_info-&gt;<span class="built_in">map</span>[i].addr);</span><br><span class="line">        print_string(<span class="string">&quot;:&quot;</span>);</span><br><span class="line">        print_pointer(mem_info-&gt;<span class="built_in">map</span>[i].size);</span><br><span class="line">        print_string(<span class="string">&quot;:&quot;</span>);</span><br><span class="line">        print_int32(mem_info-&gt;<span class="built_in">map</span>[i].type);</span><br><span class="line">        print_string(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>执行打印 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../include/printk.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../include/mem.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>  _start()&#123;</span><br><span class="line">    print_string(<span class="string">&quot;rast os system begin start...\n&quot;</span>);</span><br><span class="line">    print_string(<span class="string">&quot;read mem info start...\n&quot;</span>);</span><br><span class="line">    init_mem();</span><br><span class="line">    fin:</span><br><span class="line">    	<span class="keyword">goto</span> fin;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="data:image/png;base64,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0vGzn/1s3lUYlo8++igmApKZXh/ko48+yraP6VlZEGRjY+P69euPHj0ajUZ7e3t37959991w69ZkldOtrXD9etjaOlsqywHJdtL96lcv/vIv//LW1tazzz67srKykV9SNcba2ubmc1+/kv+ReHn726+s3blzb//wJIFhcviMHTNWr1x7ZfT2j966t38YDg9PV3pc26zzc38SLpi6aFhbu/rc9ow6xqrSlpqeREFmxzim3u9kXv/y9isvhzu39w9P803C2ubV7e0r4zv3Zh1dqUMmK7/m4zunb5x9zqODm1jR2tra6uZzX9+I3F+5QoW/tP3Kl8Kd2/tTHbd59bmvXymN7qxeufZKuHMn23tmMg6uvrK9cfD6/szQTXGfAwAAqfjsZz/7i1/84plnnolc7jSLg3z00Uef/exnu67b7Apsb73w87/667d/8ePy4/b29m7durW3txdCGI/HBwcHGxvj0yDI3t5kE9zr10MI4datcHAw2tjYeOmll65fv76Vj5S07ehoksK/GvF7stLBMedpeqKC07Z61iE5aWFkAzvtkI5uYndKK3z/zqu390M4fbKmYk8/fYnzC529HAAAwGBd+eyXv/Brv1KWCTItywr51re+FU4CIgcHe6dZIdkjMCFMQiEHB5PjX3rppZrZHxVV+pHX1q/djn41L8iP8QYqtrDTDlm43u5hqMeWmuwzZElUAABgYcQGQUaj0WlCx2g0+uCDD/b2RuEkK2Q8nmx9urcXRqNJDshLL73UQw4IMA+THZssiQoAACyQ2CDItHxWSPaYzPS7veWAAP072TbGkqgAAMAiqRMEyWeFTG/7srW1JQcEltP9O6/ePloLp9vNWAwEAABYJHWCINOms0Iy2eMwDU8LDNXJzjHb27JAAACAxRK7OwwAAADAgsp2h/nUvKsBAAAA0AdBEAAAACAJgiAAAABAEgRBAAAAgCQIggAAAABJEAQBAAAAkiAIAgAAACRBEAQAAABIgiAIAAAAkARBEAAAACAJKyGEL/zar9y6dWveNQEAAADoxNqXL33yyScyQQAAAIAkXNjeeiGE8P+8/RfzrgkAAABAJ7Loh0wQAAAAIAkr2f/78MMP51sPAAAAgE7JBAEAAACSIAgCAAAAJEEQBAAAAEiCIAgspO9///vf//73P/3pT3/605+ed10AAAAWgyAIAAAAkISVojdG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CAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACghCt//vOfk/zpT3+67JEAAAAAXCCVIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQgBAEAAABKEIIAAAAAJQhBAAAAgBKEIAAAAEAJQhAAAACgBCEIAAAAUIIQBAAAAChBCAIAAACUIAQBAAAAShCCAAAAACUIQQAAAIAShCAAAABACUIQAAAAoAQhCAAAAFCCEAQAAAAoQQgCAAAAlCAEAQAAAEoQggAAAAAlCEEAAACAEoQgAAAAQAlCEAAAAKAEIQgAAABQghAEAAAAKEEIAgAAAJQg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" alt="./images/3_6_1.png"></p>
+<p>转换内容：</p>
+<p>地址1：start&#x3D; 0x00000 ,len&#x3D; 0x9F000,type&#x3D;1</p>
+<p>地址2：start&#x3D; 0x9F000 ,len&#x3D; 0x1000,type&#x3D;2(系统保留)</p>
+<p>地址3：start&#x3D; 0xE8000 ,len&#x3D; 0x18000,type&#x3D;2(系统保留)</p>
+<p>地址4：start&#x3D;0x100000, len&#x3D;0x1EF0000,type&#x3D;1</p>
+<p>地址5：start&#x3D;0x1FF0000, len&#x3D;0x100000,type&#x3D;3</p>
+<p>地址6：start&#x3D;0xFFFC0000, len&#x3D;0x40000,type&#x3D;2(系统保留)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/16/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.7_%E5%88%86%E9%A1%B5%E6%A8%A1%E5%BC%8F/" rel="prev" title="chap3.7_分页模式">
+                  <i class="fa fa-angle-left"></i> chap3.7_分页模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/16/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap3.5_%E6%89%93%E5%8D%B0%E8%B0%83%E8%AF%95%E4%BF%A1%E6%81%AF/" rel="next" title="chap3.5_打印调试信息">
+                  chap3.5_打印调试信息 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

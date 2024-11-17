@@ -21,13 +21,13 @@
 
     <meta name="description" content="实模式[TOC] 实模式分段机制1. 实模式 在32位系统中，CPU有2种工作模式，分别为实模式和保护模式。当电脑一开始启动时，就默认进入实模式下。 2. 为什么要分段 8086cpu有20根地址总线。使用20根CPU总线的寻址范围就为 1&lt;&lt;20 &#x3D; 1M 。 而段寄存器（例如DS段寄存器），只有16位大小。如果只使用单独的段寄存器寻址，使用寻址范围为1&lt;&lt;16">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chap1.5_实模式">
+<meta property="og:title" content="chap1.6_实模式">
 <meta property="og:url" content="https://blog.sxt1024.fun/2018/11/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E5%AE%9E%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="寒冰小站">
 <meta property="og:description" content="实模式[TOC] 实模式分段机制1. 实模式 在32位系统中，CPU有2种工作模式，分别为实模式和保护模式。当电脑一开始启动时，就默认进入实模式下。 2. 为什么要分段 8086cpu有20根地址总线。使用20根CPU总线的寻址范围就为 1&lt;&lt;20 &#x3D; 1M 。 而段寄存器（例如DS段寄存器），只有16位大小。如果只使用单独的段寄存器寻址，使用寻址范围为1&lt;&lt;16">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-11-02T03:27:28.000Z">
-<meta property="article:modified_time" content="2024-11-09T03:38:25.247Z">
+<meta property="article:modified_time" content="2024-11-17T02:50:56.420Z">
 <meta property="article:author" content="sxt1024">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
@@ -37,10 +37,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/11/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E5%AE%9E%E6%A8%A1%E5%BC%8F/","path":"2018/11/02/操作系统/chap1.6_实模式/","title":"chap1.5_实模式"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/11/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.6_%E5%AE%9E%E6%A8%A1%E5%BC%8F/","path":"2018/11/02/操作系统/chap1.6_实模式/","title":"chap1.6_实模式"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>chap1.5_实模式 | 寒冰小站</title>
+<title>chap1.6_实模式 | 寒冰小站</title>
   
 
 
@@ -88,7 +88,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
   </ul>
 </nav>
 
@@ -113,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">实模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%88%86%E6%AE%B5%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">实模式分段机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">指令执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8%E8%B5%8B%E5%80%BC"><span class="nav-number">1.2.1.</span> <span class="nav-text">段寄存器赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%89%A7%E8%A1%8C-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">指令执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE"><span class="nav-number">1.3.</span> <span class="nav-text">数据访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E4%B8%8B%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%E8%8C%83%E5%9B%B4"><span class="nav-number">1.4.</span> <span class="nav-text">实模式下内存访问范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">实模式内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RATSOS%E7%A3%81%E7%9B%98%E5%88%86%E5%B8%83%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">RATSOS磁盘分布配置</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">实模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%88%86%E6%AE%B5%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">实模式分段机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">指令执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8%E8%B5%8B%E5%80%BC"><span class="nav-number">1.2.1.</span> <span class="nav-text">段寄存器赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%89%A7%E8%A1%8C-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">指令执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE"><span class="nav-number">1.3.</span> <span class="nav-text">数据访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E4%B8%8B%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%E8%8C%83%E5%9B%B4"><span class="nav-number">1.4.</span> <span class="nav-text">实模式下内存访问范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%88%B6%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">自制系统实模式内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RASTOS%E7%A3%81%E7%9B%98%E5%88%86%E5%B8%83%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">RASTOS磁盘分布配置</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -177,12 +177,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="chap1.5_实模式 | 寒冰小站">
+      <meta itemprop="name" content="chap1.6_实模式 | 寒冰小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          chap1.5_实模式
+          chap1.6_实模式
         </h1>
 
         <div class="post-meta-container">
@@ -200,7 +200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-11-09 11:38:25" itemprop="dateModified" datetime="2024-11-09T11:38:25+08:00">2024-11-09</time>
+      <time title="修改时间：2024-11-17 10:50:56" itemprop="dateModified" datetime="2024-11-17T10:50:56+08:00">2024-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -237,10 +237,10 @@
 <blockquote>
 <p>CPU总线总线寻址能力：1&lt;&lt;20 &#x3D; 1M<br>段寄存器寻址能力 : 1&lt;&lt;16  &#x3D; 64kb</p>
 </blockquote>
-<p>这此时引入分段机制来解决这个问题，使用一个基址段寄存器，配合一个偏移地址，来配合使用共同寻址。从而达到20位的寻址能力（归根结底还是段寄存器不够大，导致单独一个段寄存器不够用的）。使用DS段值+偏移地址进行计算，换算成20位总线地址。</p>
+<p>此时出现一个矛盾点，64kb寻址范围是无法完整访问1M内存空间的。需要引入分段机制来解决这个问题，使用一个基址段寄存器，配合一个偏移地址，来配合使用共同寻址。从而达到20位的寻址能力（归根结底还是段寄存器不够大，导致单独一个段寄存器不够用的）。使用DS段值+偏移地址进行计算，换算成20位总线地址。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CPU总线寻址: 20位寻址能力 </span><br><span class="line">段寄存器址: 段寄存器(16位) &lt;&lt; 4 +  偏移地址(16位) = 总线寻址能力(20位)</span><br></pre></td></tr></table></figure>
 
-<p>使用一个段寄存器存储基址，配合一个数据寄存器存储偏移地址，来配合使用共同寻址，刚好达到20位寻址能力。</p>
+<p>使用一个段寄存器存储基址，配合一个数据寄存器存储偏移地址，来配合使用共同寻址，刚好达到20位(1M)寻址能力。</p>
 <p>在这种模式下，CPU提供了3个段寄存器：</p>
 <p>段寄存器：</p>
 <ul>
@@ -301,11 +301,8 @@
 <p>例如，执行CS:0x0003H,IP:0x0016H地址的指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JMP 0x0003:0x0016    ;跳转到内存 0x0003H&lt;&lt;4 + 0x0016H处</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li><p>指令的内存地址<br>指令的内存地址使用：CS段寄存器:IP指令指针寄存器 来表示。<br>例如:</p>
-<p>0x0003:0x0016 		;代表内存 0x0003&lt;&lt; 4 + 0x0016处的指令。</p>
-</li>
-</ol>
+<p>指令的内存地址<br>   指令的内存地址使用：CS段寄存器:IP指令指针寄存器 来表示。<br>   例如:</p>
+<p>   0x0003:0x0016 		;代表内存 0x0003&lt;&lt; 4 + 0x0016处的指令。</p>
 <h3 id="数据访问"><a href="#数据访问" class="headerlink" title="数据访问"></a>数据访问</h3><p><strong>1. 内存单元:</strong></p>
 <p>内存单元，一个内存单元的大小是一字节:1B(1BYTE)。</p>
 <p>内存单元的地址：</p>
@@ -351,7 +348,7 @@
 <p>如果没有显式说明段寄存器，默认基本地址使用DS段寄存器。</p>
 <p>访问范围 0x0000 ~  0x10FFEF (0xFFFF &lt;&lt; 4 + 0xFFFF )</p>
 <p>当程序访问0x100000~0x10FFEF这一段地址时，因为其逻辑上是正常的，CPU并不会认为其访问越界而产生异常，但这段地址确实没有实际的物理地址与其对应，会截取掉最高的一位，进行回绕访问。</p>
-<h2 id="实模式内存分配"><a href="#实模式内存分配" class="headerlink" title="实模式内存分配"></a>实模式内存分配</h2><p>首先我们需要对程序在内存中分配的位置有个大概的定义。<br>首先是实模式下的1M空间的内存，分配</p>
+<h2 id="自制系统实模式内存分配"><a href="#自制系统实模式内存分配" class="headerlink" title="自制系统实模式内存分配"></a>自制系统实模式内存分配</h2><p>首先我们需要对程序在内存中分配的位置有个大概的定义。<br>首先是实模式下的1M空间的内存，分配</p>
 <p>这1M大小的内存区域位并不完全位于通常的内存条中，会被BIOS以及显卡等占据一部分。</p>
 <p>其中0x00000<del>0x9FFFF位置是属于内存条的地址。<br>0xA0000</del>0xEFFFF提供给外围设备使用，例如显卡等。<br>而0xF0000~0xFFFFF是属于BIOS的ROM地址。</p>
 <table>
@@ -419,7 +416,7 @@
 </tr>
 </tbody></table>
 <p>运行后应该是进入黑屏无光标的页面（区别是没有光标的哦）。</p>
-<h2 id="RATSOS磁盘分布配置"><a href="#RATSOS磁盘分布配置" class="headerlink" title="RATSOS磁盘分布配置"></a>RATSOS磁盘分布配置</h2><p>0x0000 - ox01ff    引导扇区,1个扇区,512 B<br>0x0200 - 0x09ff    loader文件,4个扇区,2048 B<br>0x0a00 - 0x39ff    内核文件,24个扇区,12288 B</p>
+<h2 id="RASTOS磁盘分布配置"><a href="#RASTOS磁盘分布配置" class="headerlink" title="RASTOS磁盘分布配置"></a>RASTOS磁盘分布配置</h2><p>0x0000 - ox01ff    引导扇区,1个扇区,512 B<br>0x0200 - 0x09ff    loader文件,4个扇区,2048 B<br>0x0a00 - 0x39ff    内核文件,24个扇区,12288 B</p>
 
     </div>
 
@@ -436,13 +433,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/10/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.1_Bochs%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="prev" title="chap2.2_Bochs虚拟机">
-                  <i class="fa fa-angle-left"></i> chap2.2_Bochs虚拟机
+                <a href="/2018/10/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.1_Bochs%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="prev" title="chap2.1_Bochs虚拟机">
+                  <i class="fa fa-angle-left"></i> chap2.1_Bochs虚拟机
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.7_%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F/" rel="next" title="chap1.6_显示字符">
-                  chap1.6_显示字符 <i class="fa fa-angle-right"></i>
+                <a href="/2018/11/05/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.7_%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F/" rel="next" title="chap1.7_文本模式">
+                  chap1.7_文本模式 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

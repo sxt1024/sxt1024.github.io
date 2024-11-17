@@ -19,16 +19,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="工具首先，需要的工具软件列表：  wsl + ubuntu：  nasm编译器：https:&#x2F;&#x2F;www.nasm.us&#x2F;  vitualbox：https:&#x2F;&#x2F;www.virtualbox.org&#x2F;   所需工具  汇编编译器：nasm: https:&#x2F;&#x2F;www.nasm.us&#x2F; 文本编辑器：vscode: https:&#x2F;&#x2F;code.visualstudio.com&#x2F;  vscode插件：x86">
+    <meta name="description" content="工具首先，需要的工具软件列表：  windows + wsl + ubuntu：  nasm编译器：https:&#x2F;&#x2F;www.nasm.us&#x2F;  vitualbox：https:&#x2F;&#x2F;www.virtualbox.org&#x2F;   所需工具  汇编编译器：nasm: https:&#x2F;&#x2F;www.nasm.us&#x2F; 文本编辑器：vscode: https:&#x2F;&#x2F;code.visualstudio.com&#x2F;  vsc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chap1.3_主引导扇区">
+<meta property="og:title" content="chap1.4_主引导扇区">
 <meta property="og:url" content="https://blog.sxt1024.fun/2018/10/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.4_%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA/index.html">
 <meta property="og:site_name" content="寒冰小站">
-<meta property="og:description" content="工具首先，需要的工具软件列表：  wsl + ubuntu：  nasm编译器：https:&#x2F;&#x2F;www.nasm.us&#x2F;  vitualbox：https:&#x2F;&#x2F;www.virtualbox.org&#x2F;   所需工具  汇编编译器：nasm: https:&#x2F;&#x2F;www.nasm.us&#x2F; 文本编辑器：vscode: https:&#x2F;&#x2F;code.visualstudio.com&#x2F;  vscode插件：x86">
+<meta property="og:description" content="工具首先，需要的工具软件列表：  windows + wsl + ubuntu：  nasm编译器：https:&#x2F;&#x2F;www.nasm.us&#x2F;  vitualbox：https:&#x2F;&#x2F;www.virtualbox.org&#x2F;   所需工具  汇编编译器：nasm: https:&#x2F;&#x2F;www.nasm.us&#x2F; 文本编辑器：vscode: https:&#x2F;&#x2F;code.visualstudio.com&#x2F;  vsc">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.sxt1024.fun/images/1_3_3.png">
 <meta property="article:published_time" content="2018-10-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-11-10T14:37:28.145Z">
+<meta property="article:modified_time" content="2024-11-17T02:48:14.151Z">
 <meta property="article:author" content="sxt1024">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
@@ -39,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/10/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.4_%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA/","path":"2018/10/09/操作系统/chap1.4_主引导扇区/","title":"chap1.3_主引导扇区"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/10/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.4_%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA/","path":"2018/10/09/操作系统/chap1.4_主引导扇区/","title":"chap1.4_主引导扇区"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>chap1.3_主引导扇区 | 寒冰小站</title>
+<title>chap1.4_主引导扇区 | 寒冰小站</title>
   
 
 
@@ -90,7 +90,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
   </ul>
 </nav>
 
@@ -115,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85WSl%E5%92%8Cubuntu"><span class="nav-number">1.1.</span> <span class="nav-text">1.安装WSl和ubuntu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85nasm%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">2. 安装nasm编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AE%89%E8%A3%85vitualbox"><span class="nav-number">1.3.</span> <span class="nav-text">3. 安装vitualbox</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">计算机启动过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1 计算机启动过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-BIOS"><span class="nav-number">2.2.</span> <span class="nav-text">2 BIOS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">主引导扇区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA"><span class="nav-number">3.1.</span> <span class="nav-text">编写一个主引导扇区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">二进制编码表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">3.4.</span> <span class="nav-text">查看二进制文件</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85WSL%E5%92%8Cubuntu"><span class="nav-number">1.1.</span> <span class="nav-text">1.安装WSL和ubuntu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85nasm%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">2. 安装nasm编译器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">计算机启动过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1 计算机启动过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-BIOS"><span class="nav-number">2.2.</span> <span class="nav-text">2 BIOS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">主引导扇区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA"><span class="nav-number">3.1.</span> <span class="nav-text">编写一个主引导扇区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">二进制编码表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">3.4.</span> <span class="nav-text">查看二进制文件</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,12 +179,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="chap1.3_主引导扇区 | 寒冰小站">
+      <meta itemprop="name" content="chap1.4_主引导扇区 | 寒冰小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          chap1.3_主引导扇区
+          chap1.4_主引导扇区
         </h1>
 
         <div class="post-meta-container">
@@ -202,7 +202,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-11-10 22:37:28" itemprop="dateModified" datetime="2024-11-10T22:37:28+08:00">2024-11-10</time>
+      <time title="修改时间：2024-11-17 10:48:14" itemprop="dateModified" datetime="2024-11-17T10:48:14+08:00">2024-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -232,7 +232,7 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>首先，需要的工具软件列表：</p>
 <ul>
-<li><p>wsl + ubuntu：</p>
+<li><p>windows + wsl + ubuntu：</p>
 </li>
 <li><p>nasm编译器：<a target="_blank" rel="noopener" href="https://www.nasm.us/">https://www.nasm.us/</a></p>
 </li>
@@ -243,13 +243,14 @@
 <blockquote>
 <p>汇编编译器：nasm: <a target="_blank" rel="noopener" href="https://www.nasm.us/">https://www.nasm.us/</a></p>
 <p>文本编辑器：vscode: <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a> </p>
-<p>vscode插件：x86 and x86_64 Assembly<br>vscode插件：hexdump</p>
+<p>vscode插件：x86 and x86_64 Assembly</p>
+<p>vscode插件：hexdump</p>
 </blockquote>
-<h3 id="1-安装WSl和ubuntu"><a href="#1-安装WSl和ubuntu" class="headerlink" title="1.安装WSl和ubuntu"></a>1.安装WSl和ubuntu</h3><h3 id="2-安装nasm编译器"><a href="#2-安装nasm编译器" class="headerlink" title="2. 安装nasm编译器"></a>2. 安装nasm编译器</h3><p>ubuntu下使用命令安装</p>
+<h3 id="1-安装WSL和ubuntu"><a href="#1-安装WSL和ubuntu" class="headerlink" title="1.安装WSL和ubuntu"></a>1.安装WSL和ubuntu</h3><p>在windows下安装并启用WSL，在WSL中安装ubuntu22版本</p>
+<h3 id="2-安装nasm编译器"><a href="#2-安装nasm编译器" class="headerlink" title="2. 安装nasm编译器"></a>2. 安装nasm编译器</h3><p>ubuntu下使用命令安装</p>
 <blockquote>
 <p>sudo apt-get install nasm</p>
 </blockquote>
-<h3 id="3-安装vitualbox"><a href="#3-安装vitualbox" class="headerlink" title="3. 安装vitualbox"></a>3. 安装vitualbox</h3><p>直接下载deb包并安装即可，最新版本是vitualbox 6.1</p>
 <h2 id="计算机启动过程"><a href="#计算机启动过程" class="headerlink" title="计算机启动过程"></a>计算机启动过程</h2><h3 id="1-计算机启动过程"><a href="#1-计算机启动过程" class="headerlink" title="1 计算机启动过程"></a>1 计算机启动过程</h3><p><strong>1.1 加电自检</strong></p>
 <p>计算器通电后，首先加载执行BIOS代码，由BIOS对系统硬件执行自检查。</p>
 <blockquote>
@@ -442,13 +443,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" rel="prev" title="chap1.2_汇编语言">
-                  <i class="fa fa-angle-left"></i> chap1.2_汇编语言
+                <a href="/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8/" rel="prev" title="chap1.3_汇编语言">
+                  <i class="fa fa-angle-left"></i> chap1.3_汇编语言
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/10/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.5_BIOS%E4%B8%AD%E6%96%AD/" rel="next" title="chap1.4_BIOS中断">
-                  chap1.4_BIOS中断 <i class="fa fa-angle-right"></i>
+                <a href="/2018/10/14/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.5_BIOS%E4%B8%AD%E6%96%AD/" rel="next" title="chap1.5_BIOS中断">
+                  chap1.5_BIOS中断 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

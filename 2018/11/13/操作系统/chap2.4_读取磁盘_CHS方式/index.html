@@ -21,14 +21,14 @@
 
     <meta name="description" content="软盘和硬盘软盘  软盘，目前已经淘汰。  目前主流的硬盘分为两种：  机械硬盘 固态硬盘  硬盘最早分为两种接口方式：  并行接口（PATA），目前已经淘汰。 串行接口（SATA）。  磁盘寻址两种方式：CHS和LBACHS方式, LAB28 和 LAB48 IO操作读取硬盘的三种寻址方式：  chs寻址方式 ：小于8G (8064MB) LBA28寻址方式：小于137GB LBA48寻址方式：小">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chap1.8_读取磁盘_CHS方式">
+<meta property="og:title" content="chap2.4_读取磁盘_CHS方式">
 <meta property="og:url" content="https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="寒冰小站">
 <meta property="og:description" content="软盘和硬盘软盘  软盘，目前已经淘汰。  目前主流的硬盘分为两种：  机械硬盘 固态硬盘  硬盘最早分为两种接口方式：  并行接口（PATA），目前已经淘汰。 串行接口（SATA）。  磁盘寻址两种方式：CHS和LBACHS方式, LAB28 和 LAB48 IO操作读取硬盘的三种寻址方式：  chs寻址方式 ：小于8G (8064MB) LBA28寻址方式：小于137GB LBA48寻址方式：小">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.sxt1024.fun/2_1_1.png">
 <meta property="article:published_time" content="2018-11-13T03:27:28.000Z">
-<meta property="article:modified_time" content="2024-11-09T05:58:19.739Z">
+<meta property="article:modified_time" content="2024-11-17T02:56:04.673Z">
 <meta property="article:author" content="sxt1024">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
@@ -39,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/","path":"2018/11/13/操作系统/chap2.4_读取磁盘_CHS方式/","title":"chap1.8_读取磁盘_CHS方式"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/11/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.4_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_CHS%E6%96%B9%E5%BC%8F/","path":"2018/11/13/操作系统/chap2.4_读取磁盘_CHS方式/","title":"chap2.4_读取磁盘_CHS方式"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>chap1.8_读取磁盘_CHS方式 | 寒冰小站</title>
+<title>chap2.4_读取磁盘_CHS方式 | 寒冰小站</title>
   
 
 
@@ -90,7 +90,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
   </ul>
 </nav>
 
@@ -115,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E7%9B%98%E5%92%8C%E7%A1%AC%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">软盘和硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%AF%BB%E5%9D%80%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9ACHS%E5%92%8CLBA"><span class="nav-number">2.</span> <span class="nav-text">磁盘寻址两种方式：CHS和LBA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHS%E5%92%8CLBA%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">3.</span> <span class="nav-text">CHS和LBA的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%AF%BB%E5%9D%80%EF%BC%9ACHS%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">磁盘寻址：CHS方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E7%9B%98"><span class="nav-number"></span> <span class="nav-text">软盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98-CHS%E6%96%B9%E5%BC%8F"><span class="nav-number"></span> <span class="nav-text">读取磁盘_CHS方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">BIOS读取磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%A3%81%E7%9B%98%E8%AF%BB%E5%8F%96%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">定义磁盘读取函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHS%E6%96%B9%E5%BC%8F%E8%AF%BB%E5%8F%96%EF%BC%88%E4%BD%BF%E7%94%A8LBA%E5%80%BC%E8%BD%AC%E6%8D%A2%E5%90%8E%E8%AF%BB%E5%8F%96%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">CHS方式读取（使用LBA值转换后读取）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E9%9D%A2%E4%BB%A3%E7%A0%81%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number"></span> <span class="nav-text">上面代码的作用</span></a></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E7%9B%98%E5%92%8C%E7%A1%AC%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">软盘和硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%AF%BB%E5%9D%80%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9ACHS%E5%92%8CLBA"><span class="nav-number">2.</span> <span class="nav-text">磁盘寻址两种方式：CHS和LBA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHS%E5%92%8CLBA%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">3.</span> <span class="nav-text">CHS和LBA的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%AF%BB%E5%9D%80%EF%BC%9ACHS%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">磁盘寻址：CHS方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E7%9B%98"><span class="nav-number"></span> <span class="nav-text">软盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98-CHS%E6%96%B9%E5%BC%8F"><span class="nav-number"></span> <span class="nav-text">读取磁盘_CHS方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">BIOS读取磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%A3%81%E7%9B%98%E8%AF%BB%E5%8F%96%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">定义磁盘读取函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHS%E6%96%B9%E5%BC%8F%E8%AF%BB%E5%8F%96%EF%BC%88%E4%BD%BF%E7%94%A8LBA%E5%80%BC%E8%BD%AC%E6%8D%A2%E5%90%8E%E8%AF%BB%E5%8F%96%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">CHS方式读取（使用LBA值转换后读取）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E9%9D%A2%E4%BB%A3%E7%A0%81%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number"></span> <span class="nav-text">上面代码的作用</span></a></div>
         </div>
         <!--/noindex-->
 
@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,12 +179,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="chap1.8_读取磁盘_CHS方式 | 寒冰小站">
+      <meta itemprop="name" content="chap2.4_读取磁盘_CHS方式 | 寒冰小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          chap1.8_读取磁盘_CHS方式
+          chap2.4_读取磁盘_CHS方式
         </h1>
 
         <div class="post-meta-container">
@@ -202,7 +202,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-11-09 13:58:19" itemprop="dateModified" datetime="2024-11-09T13:58:19+08:00">2024-11-09</time>
+      <time title="修改时间：2024-11-17 10:56:04" itemprop="dateModified" datetime="2024-11-17T10:56:04+08:00">2024-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -257,18 +257,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C = LBA / (SPT * HPC)</span><br><span class="line">H = (LBA / SPT ) % HPC</span><br><span class="line">S = (LBA % SPT ) + 1 </span><br></pre></td></tr></table></figure>
 
 <p>C &#x3D;  cylinder : 磁柱编号<br>H &#x3D;  head:  磁头编号<br>S  &#x3D;  sector:  扇区编号<br>HPC&#x3D;heads per cylinder，每个磁柱的磁头数<br>SPT&#x3D;sectors per track，每磁道的扇区数</p>
-<p>功能08H 功能描述：读取驱动器参数 入口参数：</p>
-<p>AH＝08H </p>
-<p>DL＝驱动器，00H<del>7FH：软盘；80H</del>0FFH：硬盘 </p>
-<p>出口参数：</p>
-<p>CF＝1——操作失败，</p>
-<p>AH＝状态代码，参见功能号01H中的说明，否则， BL＝01H — 360K ＝02H — 1.2M ＝03H — 720K ＝04H — 1.44M </p>
-<p>CH＝柱面数的低8位 </p>
-<p>CL的位7-6＝柱面数的该2位</p>
-<p> CL的位5-0＝扇区数 </p>
-<p>DH＝磁头数 </p>
-<p>DL＝驱动器数 </p>
-<p>ES:DI＝磁盘驱动器参数表地址 </p>
 <h3 id="磁盘寻址：CHS方式"><a href="#磁盘寻址：CHS方式" class="headerlink" title="磁盘寻址：CHS方式"></a>磁盘寻址：CHS方式</h3><p>磁盘的三层定位结构分别为</p>
 <ul>
 <li>磁头(Head) ：每张磁盘的正面和反面都有一个磁头，一个磁头对应着一张磁盘的一个面，因此，用第几个磁头就能表示数据在哪个盘面.</li>
@@ -289,11 +277,12 @@
 <p>软盘大小为 80x2x18x512&#x3D;1440KB</p>
 <p>较旧的硬盘驱动器，如 MFM 和 RLL 驱动器，将每个柱面划分为相等数量的扇区，并且 CHS 值与驱动器的物理构成相匹配。 CHS 值为 500 x 4 x 32 的驱动器的每个盘片每侧有 500 个磁道，两个盘片，每个柱面有 32 个扇区，总共有 32,768,000 字节（约 31 兆字节）。 大多数现代驱动器都有一个不构成柱面边界的剩余空间。 每个分区应始终在柱面边界处开始和结束。 只有一些最现代的操作系统可能会忽略这一规则，但这会导致一些兼容性问题，尤其是当用户想要在同一驱动器上启动多个操作系统时。</p>
 <p>IDE 驱动器已经取代了 MFM 和 RLL 驱动器，并且在存储数据方面效率更高。 他们使用区域位记录 (ZBR)，其中一个柱面中的扇区数随其在驱动器上的位置而变化。 靠近盘片边缘的柱面比靠近主轴的柱面包含更多扇区，因为在盘片边缘附近的给定磁道中有更多空间。 由于每个柱面的扇区数量不同，CHS 寻址系统不适用于这些驱动器。 IDE 驱动器可以在系统 BIOS 中配置为不超过驱动器容量的柱面、磁头和扇区的任何配置。 驱动器将给定的 CHS 地址转换为特定硬件配置的实际地址。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="读取磁盘-CHS方式"><a href="#读取磁盘-CHS方式" class="headerlink" title="读取磁盘_CHS方式"></a>读取磁盘_CHS方式</h2><h3 id="BIOS读取磁盘"><a href="#BIOS读取磁盘" class="headerlink" title="BIOS读取磁盘"></a>BIOS读取磁盘</h3><p>读取磁盘也是调用BIOS：</p>
+<h2 id="读取磁盘-CHS方式"><a href="#读取磁盘-CHS方式" class="headerlink" title="读取磁盘_CHS方式"></a>读取磁盘_CHS方式</h2><h3 id="BIOS读取磁盘"><a href="#BIOS读取磁盘" class="headerlink" title="BIOS读取磁盘"></a>BIOS读取磁盘</h3><p><strong>读取磁盘功能02H</strong></p>
+<p>读取磁盘也是调用BIOS：</p>
 <blockquote>
 <p>中断命令: INT 13H</p>
 </blockquote>
-<p>入口参数</p>
+<p>1）入口参数</p>
 <table>
 <thead>
 <tr>
@@ -338,7 +327,7 @@
 <td>00H-7FH：软盘驱动器号；80H-0FFH：硬盘驱动器号</td>
 </tr>
 </tbody></table>
-<p>出口参数</p>
+<p>2）出口参数</p>
 <p>读取成功：</p>
 <table>
 <thead>
@@ -433,13 +422,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.8_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B21/" rel="prev" title="chap1.7_显示字符串">
-                  <i class="fa fa-angle-left"></i> chap1.7_显示字符串
+                <a href="/2018/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.8_%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6/" rel="prev" title="chap1.8_显示字符">
+                  <i class="fa fa-angle-left"></i> chap1.8_显示字符
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/11/17/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.5_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_LBA%E6%96%B9%E5%BC%8F/" rel="next" title="chap1.9_读取磁盘_LBA方式">
-                  chap1.9_读取磁盘_LBA方式 <i class="fa fa-angle-right"></i>
+                <a href="/2018/11/17/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap2.5_%E8%AF%BB%E5%8F%96%E7%A3%81%E7%9B%98_LBA%E6%96%B9%E5%BC%8F/" rel="next" title="chap2.5_读取磁盘_LBA方式">
+                  chap2.5_读取磁盘_LBA方式 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

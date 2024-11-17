@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.sxt1024.fun","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1机器语言与汇编语言1.2 汇编语言简介 人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言比只有0和1组成的机器语言更容易阅读识别 比如 操作：寄存器BX的内容送到AX中 121000100111011000              &#x2F;&#x2F; 机器指令mov ax,bx                    &#x2F;&#x2F; 汇编指令   2 常见的汇编编译器汇编语言目前主要有2种风格式  in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chap1.3_汇编语言">
+<meta property="og:url" content="https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8/index.html">
+<meta property="og:site_name" content="寒冰小站">
+<meta property="og:description" content="1机器语言与汇编语言1.2 汇编语言简介 人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言比只有0和1组成的机器语言更容易阅读识别 比如 操作：寄存器BX的内容送到AX中 121000100111011000              &#x2F;&#x2F; 机器指令mov ax,bx                    &#x2F;&#x2F; 汇编指令   2 常见的汇编编译器汇编语言目前主要有2种风格式  in">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-17T02:46:44.104Z">
+<meta property="article:author" content="sxt1024">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8/","path":"2018/10/04/操作系统/chap1.3_汇编编译器/","title":"chap1.3_汇编语言"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>chap1.3_汇编语言 | 寒冰小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="寒冰小站" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">寒冰小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80%E4%B8%8E%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1机器语言与汇编语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B8%B8%E8%A7%81%E7%9A%84%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2 常见的汇编编译器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NASM%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">NASM汇编编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-nasm%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">1. nasm命令用法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-NASM%E5%88%86%E6%AE%B5"><span class="nav-number">3.2.</span> <span class="nav-text">2. NASM分段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NASM%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">NASM汇编指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%86%85%E5%AD%98%E5%8D%95%E5%85%83"><span class="nav-number">4.1.</span> <span class="nav-text">1. 内存单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="nav-number">4.2.</span> <span class="nav-text">2. 伪指令</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sxt1024</p>
+  <div class="site-description" itemprop="description">寒冰的狂暴区</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.sxt1024.fun/2018/10/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.3_%E6%B1%87%E7%BC%96%E7%BC%96%E8%AF%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sxt1024">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="寒冰小站">
+      <meta itemprop="description" content="寒冰的狂暴区">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="chap1.3_汇编语言 | 寒冰小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chap1.3_汇编语言
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-04 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-04T00:00:00+08:00">2018-10-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-17 10:46:44" itemprop="dateModified" datetime="2024-11-17T10:46:44+08:00">2024-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1机器语言与汇编语言"><a href="#1机器语言与汇编语言" class="headerlink" title="1机器语言与汇编语言"></a>1机器语言与汇编语言</h2><p><strong>1.2 汇编语言简介</strong></p>
+<p>人们通过编写汇编指令，然后使用汇编编译器编译成机器语言。汇编语言比只有0和<br>1组成的机器语言更容易阅读识别</p>
+<p>比如</p>
+<p>操作：寄存器BX的内容送到AX中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1000100111011000              // 机器指令</span><br><span class="line">mov ax,bx                    // 汇编指令</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-常见的汇编编译器"><a href="#2-常见的汇编编译器" class="headerlink" title="2 常见的汇编编译器"></a>2 常见的汇编编译器</h2><p>汇编语言目前主要有2种风格式</p>
+<ol>
+<li>intel风格：intel风格</li>
+<li>AT&amp;T风格：多数在linux系统上使用。</li>
+</ol>
+<p>汇编编译器有以下几种</p>
+<ol>
+<li>gas编译器: 与gcc搭配食用，不用详细说了。</li>
+<li>masm: 微软开发的编译器，可以忽略掉。</li>
+<li>nasm: 目前看比较优雅，我比较喜欢的一个。</li>
+</ol>
+<p><strong>安装nasm编译器</strong></p>
+<p>ubuntu下使用命令安装</p>
+<blockquote>
+<p>sudo apt-get install nasm</p>
+</blockquote>
+<h2 id="NASM汇编编译器"><a href="#NASM汇编编译器" class="headerlink" title="NASM汇编编译器"></a>NASM汇编编译器</h2><h3 id="1-nasm命令用法："><a href="#1-nasm命令用法：" class="headerlink" title="1. nasm命令用法："></a>1. nasm命令用法：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; nasm.exe -f &#123;formart&#125; -o 生成文件 源文件</span><br></pre></td></tr></table></figure>
+
+<p>可以使用查看支持生成的文件的{formart}</p>
+<h3 id="2-NASM分段"><a href="#2-NASM分段" class="headerlink" title="2. NASM分段"></a>2. NASM分段</h3><p>段（Section）： 每个汇编程序都是由段来组成的，有以下的段：</p>
+<ol>
+<li>data:用来声明初始化的数据或常量</li>
+<li>bss:用来声明未初始化的变量</li>
+<li>text:用来存放代码</li>
+</ol>
+<h2 id="NASM汇编指令"><a href="#NASM汇编指令" class="headerlink" title="NASM汇编指令"></a>NASM汇编指令</h2><h3 id="1-内存单元"><a href="#1-内存单元" class="headerlink" title="1. 内存单元"></a>1. 内存单元</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>8 位</td>
+<td>字节</td>
+</tr>
+<tr>
+<td>word</td>
+<td>16 位</td>
+<td>词</td>
+</tr>
+<tr>
+<td>dword</td>
+<td>32 位</td>
+<td>双词</td>
+</tr>
+<tr>
+<td><strong>内存单元表示：[]</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>任何被[]包含的变量都是地址。[]表示一个内存单元。内存单元的段地址为ds中的存储数据，偏移地址为[]里面表示的数据。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov [gs,0x10]   0x3F</span><br></pre></td></tr></table></figure>
+
+
+<p>注释: <code>;</code></p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0x02    ;ax=0x02</span><br></pre></td></tr></table></figure>
+
+<p><strong>数据类型</strong></p>
+<ol>
+<li><p>数据类型,基本的数据类型如下</p>
+<p>byte : byte          字节,8位<br>word : word          字，16位<br>dword : double word  双字,32位<br>qword : quadword     四字,64位</p>
+</li>
+</ol>
+<h3 id="2-伪指令"><a href="#2-伪指令" class="headerlink" title="2. 伪指令"></a>2. 伪指令</h3><p><strong>什么是伪指令</strong></p>
+<p>伪指令(Pseudo Instruction)是用于对汇编过程进行控制的指令，该类指令并不是可执行指令，没有机器代码，只用于汇编过程中为汇编程序提供汇编信息。</p>
+<p>**1) 地址: [] **</p>
+<p>地址的三种表现方式：</p>
+<ol>
+<li>[立即数]，例如 [0xf0]</li>
+<li>[存储器]，例如 [ds]</li>
+<li>[存储器 + 立即数]，例如 [ds,0xf0]</li>
+</ol>
+<p>任何不被[]包含的变量都是地址。[]表示一个内存单元。内存单元的段地址为ds中的存储数据，偏移地址为[]里面表示的数据。</p>
+<p>**1）当前指令开始地址：<code>$</code>	<br>被称为当前位置计数器</p>
+<p>在汇编程序对源程序进行汇编的过程中，使用地址计数器来保证当前正在汇编的指令地址。地址计数器值可用<code>$</code>来表示，汇编语言也允许用户直接用<code>$</code>来引用地址计数器的当前值，因此，<code>ORG $＋5</code>可表示从当前地址开始跳过5个字节存储单元，在指令和伪指令中，也可直接用<code>$</code>表示地址计数器的当前值。</p>
+<p>故<code>jmp $</code>进入了一个无限循环。</p>
+<p>**2）当前段开始地址：<code>$$</code>	**</p>
+<p>例如 <code>$-$$</code> 代表 当前指令开始地址 - 当前段开始地址</p>
+<p><strong>3）写字节：<code>DB，DW，DD</code></strong>	</p>
+<blockquote>
+<p>DB, DW,DD 输出(1个字节，2个字节，4个字节)</p>
+</blockquote>
+<p>说明：</p>
+<ul>
+<li>DB：写出一个字节（BYTE）。会按照字节输出</li>
+<li>DW ：输出一个字(WORD&#x3D;2BYTE).也就是输出2个字节(16位)。</li>
+<li>DD ：输出两个字(DoubleWord&#x3D;4BYTE).也就是输出4个字节(32位)</li>
+</ul>
+<p>**4）填充：RESB, RESW, RESD</p>
+<blockquote>
+<p>RESB, RESW, RESD 填充(1个字节，2个字节，4个字节)</p>
+</blockquote>
+<p>说明：</p>
+<p><code>RESB 510-($-$$)</code>    意思即是510字节位置（0x1fe） 减去这一行现在的字节位置:132。这些都填入0x00</p>
+<p><code>$</code>表示当前行被汇编后的地址，也就是当前行的地址。<code>$$</code>代表一个section节的开始地址。也就是这个section的开始地址。</p>
+<p>也可以使用<code>times 510-($-$$)  db  0</code>来表示上面的意思。</p>
+<p><strong>5）重复指令或数据：times</strong></p>
+<p>说明：</p>
+<p>重复指令或数据<br> 例如：</p>
+<p>times 510-($-$$)  db  0</p>
+<p>imes前缀引起指令被汇编多次。其中<code>$$</code>表示是该程序的初始代码段的地址，故该指令将会被执行<code>510-($-$$)</code>次。也就是用0来填充剩下的空间，达到510字节。</p>
+<p><strong>6）org指令：指定偏移量</strong></p>
+<blockquote>
+<p>格式：ORG 偏移地址</p>
+</blockquote>
+<p>   例如：org 07c00h</p>
+<p>   ORG伪指令用来指出其后的程序段或数据块存放的起始地址的偏移量。汇编程序汇编时把语句中表达式的值作为起始地址，连续存放ORG语句之后的程序和数据，直到出现一个新的ORG指令。若省略ORG语句，则从本段起始地址开始连续存放。偏移地址的范围为(0x0000&#x3D;0xffff)</p>
+<p>   在大多数情况下，不需要用ORG语句设置位置指针。由于段定义语句是段的起点，它的偏移地址为0000H，以后每分配一个字节，位置指针自动加1，所以每条指令都有确定的偏移地址。只有程序要求改变这个位置指针时，才需要安排ORG语句。通常ORG语句可以出现在程序中任何位置上。</p>
+<p>   使用org 07c00h是因为</p>
+<ol>
+<li>首先DS是默认为0的</li>
+<li>引导扇区会被加载在07c00h处，也就是磁盘中的代码和内存的代码有一个偏移量为07c00h<br>当我们设置了org之后，后面的偏移都会默认在0x7c00的基础上。也就是说，如果不加org的话，我们在代码中指定指令时就必须制定 偏移 + 07c00h 来达到相同的效果了。</li>
+</ol>
+<p><strong>7） EQU 定义常量</strong></p>
+<blockquote>
+<p>one equ 1  使用one常量代表1   ​</p>
+</blockquote>
+<p><strong>8) 注释 ;</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.0_%E6%95%B0%E6%8D%AE/" rel="prev" title="chap1.0_数据">
+                  <i class="fa fa-angle-left"></i> chap1.0_数据
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/chap1.4_%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA/" rel="next" title="chap1.4_主引导扇区">
+                  chap1.4_主引导扇区 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sxt1024</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
