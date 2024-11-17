@@ -14,7 +14,6 @@ draft: false
 ## Makefile
 
 
-
 ### 安装make
 
 安装make
@@ -22,9 +21,6 @@ draft: false
 > sudo apt-get install make
 >
 > make -v
-
-
-
 
 
 创建Makefile文件，并执行make命令
